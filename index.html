@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Everything Everything Groceries Platter — complete ingredients, great value, delivered with care.">
+  <title>Everything Everything | Groceries Platter</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="navbar">
+    <a class="brand" href="#home">
+      <span class="brand-mark">🛒</span>
+      <span>EVERYTHING <b>EVERYTHING</b></span>
+    </a>
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#shop">Shop</a>
+      <a href="#build">Build a Platter</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <button class="cart-button" onclick="openCart()">Cart <span id="cartCount">0</span></button>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="hero-content">
+        <p class="eyebrow">ONE PLATTER. EVERYTHING YOU NEED.</p>
+        <h1>Groceries made <span>easy.</span></h1>
+        <p class="hero-text">Complete ingredients. Great value. Delivered with care.</p>
+        <div class="hero-actions">
+          <a class="btn primary" href="#shop">Shop Now</a>
+          <a class="btn secondary" href="#build">Build Your Own</a>
+        </div>
+        <div class="trust-row">
+          <span>✓ Wide variety</span>
+          <span>✓ Affordable prices</span>
+          <span>✓ Fast delivery</span>
+        </div>
+      </div>
+      <div class="hero-image">
+        <img src="assets/flyer.jpeg" alt="Everything Everything Groceries Platter flyer">
+      </div>
+    </section>
+
+    <section class="section" id="shop">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">SHOP EVERYTHING</p>
+          <h2>Our Platter Packs</h2>
+        </div>
+        <p>Prices are temporary demo prices from GH₵50–GH₵120. You can change them in the code later.</p>
+      </div>
+      <div class="products" id="products"></div>
+    </section>
+
+    <section class="build section" id="build">
+      <div>
+        <p class="eyebrow">MAKE IT YOURS</p>
+        <h2>Build Your Own Platter</h2>
+        <p>Choose your meal, protein and extras. The total updates automatically.</p>
+      </div>
+      <div class="builder-card">
+        <label>Meal
+          <select id="meal">
+            <option value="40">Jollof — GH₵40</option>
+            <option value="40">Rice & Stew — GH₵40</option>
+            <option value="40">Fried Rice — GH₵40</option>
+            <option value="30">Fufu — GH₵30</option>
+            <option value="35">English Breakfast — GH₵35</option>
+          </select>
+        </label>
+        <label>Protein
+          <select id="protein">
+            <option value="20">Chicken — GH₵20</option>
+            <option value="15">Sausage — GH₵15</option>
+            <option value="20">Gizzard — GH₵20</option>
+            <option value="25">Meat — GH₵25</option>
+            <option value="25">Fish — GH₵25</option>
+          </select>
+        </label>
+        <label>Extras
+          <select id="extras">
+            <option value="10">Standard ingredients — GH₵10</option>
+            <option value="20">More ingredients — GH₵20</option>
+            <option value="30">Extra-large ingredient pack — GH₵30</option>
+          </select>
+        </label>
+        <div class="builder-total">
+          <span>Your platter</span>
+          <strong id="builderTotal">GH₵70</strong>
+        </div>
+        <button class="btn primary full" onclick="addCustomPlatter()">Add to Cart</button>
+      </div>
+    </section>
+
+    <section class="section about" id="about">
+      <div class="about-card">
+        <p class="eyebrow">WHY EVERYTHING EVERYTHING?</p>
+        <h2>Everything you need, in one place.</h2>
+        <p>We make grocery shopping simpler by putting the ingredients you need for everyday meals together in convenient packs.</p>
+        <div class="features">
+          <div><b>🧺 Wide Variety</b><span>Meal essentials in convenient packs.</span></div>
+          <div><b>💰 Affordable Prices</b><span>Great value for your everyday shopping.</span></div>
+          <div><b>🛵 Reliable Delivery</b><span>We deliver your groceries with care.</span></div>
+          <div><b>✨ Flexible Shopping</b><span>Buy a platter or individual items.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section contact" id="contact">
+      <div>
+        <p class="eyebrow">READY TO ORDER?</p>
+        <h2>Let's get your groceries to you.</h2>
+        <p>Place an order through WhatsApp and we'll confirm availability, delivery and payment.</p>
+      </div>
+      <a class="whatsapp" href="https://wa.me/233547026348" target="_blank">💬 Order on WhatsApp</a>
+    </section>
+  </main>
+
+  <footer>
+    <div>
+      <strong>EVERYTHING EVERYTHING</strong>
+      <p>Your One-Stop Groceries Platter.</p>
+    </div>
+    <div>
+      <p>📞 +233 54 702 6348</p>
+      <p>📞 +233 24 705 1791</p>
+    </div>
+    <p>© 2026 Everything Everything</p>
+  </footer>
+
+  <div class="cart-overlay" id="cartOverlay" onclick="closeCart(event)">
+    <aside class="cart" onclick="event.stopPropagation()">
+      <div class="cart-header">
+        <h2>Your Cart</h2>
+        <button onclick="closeCart()">×</button>
+      </div>
+      <div id="cartItems"></div>
+      <div class="cart-total">
+        <span>Total</span><strong id="cartTotal">GH₵0</strong>
+      </div>
+      <label class="checkout-label">Your name
+        <input id="customerName" placeholder="Enter your name">
+      </label>
+      <label class="checkout-label">Delivery location
+        <input id="customerLocation" placeholder="e.g. UPSA, Accra">
+      </label>
+      <button class="btn primary full" onclick="checkoutWhatsApp()">Order via WhatsApp</button>
+    </aside>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
