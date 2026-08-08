@@ -7,7 +7,7 @@ A free, mobile-friendly starter website with:
 - Custom platter builder
 - WhatsApp checkout
 - Responsive design
-- Your original flyer included in `e210406f-4dd8-4f7f-9aa7-61c8f5078857.jpeg/e210406f-4dd8-4f7f-9aa7-61c8f5078857.jpeg`
+- Your original flyer included in `assets/flier`
 
 ## Change prices
 Open `script.js` and edit the `price` values in the `products` list.
