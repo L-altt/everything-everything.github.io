@@ -24,3 +24,91 @@ footer{background:#063f25;color:#dbe9e1;padding:35px 7%;display:flex;justify-con
 .cart-overlay{display:none;position:fixed;inset:0;background:#0007;z-index:50}.cart-overlay.open{display:block}.cart{position:absolute;right:0;top:0;height:100%;width:min(440px,100%);background:#fff;padding:25px;overflow:auto}.cart-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}.cart-header h2{font-size:30px}.cart-header button{border:0;background:#eee;border-radius:50%;width:35px;height:35px;font-size:24px;cursor:pointer}.cart-item{display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid var(--line);padding:15px 0}.cart-item small{color:var(--muted)}.remove{border:0;background:none;color:#b23b2a;cursor:pointer}.cart-total{display:flex;justify-content:space-between;font-size:19px;font-weight:900;padding:20px 0}.cart-total strong{color:var(--orange)}.checkout-label input{font-weight:500}
 @media(max-width:1000px){nav{display:none}.products{grid-template-columns:repeat(2,1fr)}.hero{grid-template-columns:1fr}.features{grid-template-columns:repeat(2,1fr)}.build{grid-template-columns:1fr}}
 @media(max-width:600px){.navbar{padding:0 4%}.brand{font-size:12px}.section,.hero{padding:55px 5%}.products{grid-template-columns:1fr}.features{grid-template-columns:1fr}.contact{display:block}.contact .whatsapp{display:inline-block;margin-top:25px}.trust-row{gap:10px;font-size:11px}h1{letter-spacing:-2px}}
+/* ======================================
+   CUSTOM INGREDIENT BUILDER
+====================================== */
+
+.ingredient-heading {
+  margin: 20px 0 10px;
+  color: var(--green);
+}
+
+.ingredient-heading strong {
+  display: block;
+  font-size: 15px;
+}
+
+.ingredient-heading small {
+  display: block;
+  margin-top: 3px;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.ingredient-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  max-height: 390px;
+  overflow-y: auto;
+  padding: 5px 2px;
+  margin-bottom: 10px;
+}
+
+.ingredient-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #fff;
+  cursor: pointer;
+  transition: .15s ease;
+}
+
+.ingredient-option:hover {
+  border-color: var(--green2);
+  background: #f8fcf9;
+}
+
+.ingredient-option input {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--green);
+  cursor: pointer;
+}
+
+.ingredient-icon {
+  font-size: 22px;
+}
+
+.ingredient-info {
+  min-width: 0;
+}
+
+.ingredient-info strong {
+  display: block;
+  color: var(--green);
+  font-size: 13px;
+}
+
+.ingredient-info small {
+  display: block;
+  color: var(--muted);
+  font-size: 11px;
+  margin-top: 2px;
+}
+
+@media(max-width:600px) {
+
+  .ingredient-list {
+    grid-template-columns: 1fr;
+    max-height: 420px;
+  }
+
+  .ingredient-option {
+    padding: 12px;
+  }
+
+}
