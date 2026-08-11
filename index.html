@@ -55,45 +55,96 @@
       <div class="products" id="products"></div>
     </section>
 
-    <section class="build section" id="build">
-      <div>
-        <p class="eyebrow">MAKE IT YOURS</p>
-        <h2>Build Your Own Platter</h2>
-        <p>Choose your meal, protein and extras. The total updates automatically.</p>
-      </div>
-      <div class="builder-card">
-        <label>Meal
-          <select id="meal">
-            <option value="40">Jollof — GH₵40</option>
-            <option value="40">Rice & Stew — GH₵40</option>
-            <option value="40">Fried Rice — GH₵40</option>
-            <option value="30">Fufu — GH₵30</option>
-            <option value="35">English Breakfast — GH₵35</option>
-          </select>
-        </label>
-        <label>Protein
-          <select id="protein">
-            <option value="20">Chicken — GH₵20</option>
-            <option value="15">Sausage — GH₵15</option>
-            <option value="20">Gizzard — GH₵20</option>
-            <option value="25">Meat — GH₵25</option>
-            <option value="25">Fish — GH₵25</option>
-          </select>
-        </label>
-        <label>Extras
-          <select id="extras">
-            <option value="10">Standard ingredients — GH₵10</option>
-            <option value="20">More ingredients — GH₵20</option>
-            <option value="30">Extra-large ingredient pack — GH₵30</option>
-          </select>
-        </label>
-        <div class="builder-total">
-          <span>Your platter</span>
-          <strong id="builderTotal">GH₵70</strong>
-        </div>
-        <button class="btn primary full" onclick="addCustomPlatter()">Add to Cart</button>
-      </div>
-    </section>
+   <section class="build section" id="build">
+
+  <div>
+    <p class="eyebrow">MAKE IT YOURS</p>
+
+    <h2>Build Your Grocery Platter</h2>
+
+    <p>
+      Choose a meal category, then select the ingredients you want.
+      Your total updates automatically.
+    </p>
+  </div>
+
+  <div class="builder-card">
+
+    <label>
+      Meal
+
+      <select id="meal">
+
+        <option value="English Breakfast">
+          English Breakfast
+        </option>
+
+        <option value="Rice & Stew">
+          Rice & Stew
+        </option>
+
+        <option value="Jollof">
+          Jollof
+        </option>
+
+        <option value="Fried Rice">
+          Fried Rice
+        </option>
+
+        <option value="Fufu">
+          Fufu
+        </option>
+
+        <option value="Waakye">
+          Waakye
+        </option>
+
+        <option value="Banku & Tilapia">
+          Banku & Tilapia
+        </option>
+
+        <option value="Kenkey & Fish">
+          Kenkey & Fish
+        </option>
+
+      </select>
+
+    </label>
+
+
+    <div class="ingredient-heading">
+      <strong>Choose your ingredients</strong>
+
+      <small>
+        Select only what you want in your platter.
+      </small>
+    </div>
+
+
+    <div id="ingredientList" class="ingredient-list"></div>
+
+
+    <div class="builder-total">
+
+      <span>Your platter</span>
+
+      <strong id="builderTotal">
+        GH₵0
+      </strong>
+
+    </div>
+
+
+    <button
+      class="btn primary full"
+      onclick="addCustomPlatter()"
+    >
+      Add to Cart
+    </button>
+
+  </div>
+
+</section> 
 
     <section class="section about" id="about">
       <div class="about-card">
