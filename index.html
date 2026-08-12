@@ -44,107 +44,245 @@
       </div>
     </section>
 
-    <section class="section" id="shop">
-      <div class="section-heading">
-        <div>
-          <p class="eyebrow">SHOP EVERYTHING</p>
-          <h2>Our Platter Packs</h2>
-        </div>
-        <p>Prices are temporary demo prices from GH₵50–GH₵120. You can change them in the code later.</p>
-      </div>
-      <div class="products" id="products"></div>
-    </section>
+    <section class="section shop-section" id="shop">
 
-   <section class="build section" id="build">
-
-  <div>
-    <p class="eyebrow">MAKE IT YOURS</p>
-
-    <h2>Build Your Grocery Platter</h2>
+  <div class="section-heading">
+    <div>
+      <p class="eyebrow">SHOP EVERYTHING</p>
+      <h2>Explore Our Store</h2>
+    </div>
 
     <p>
-      Choose a meal category, then select the ingredients you want.
-      Your total updates automatically.
+      Choose from groceries, clothing, jewelry, gifts and more.
+      We're constantly expanding our collection.
     </p>
   </div>
 
-  <div class="builder-card">
 
-    <label>
-      Meal
+  <!-- FOOD & GROCERIES -->
 
-      <select id="meal">
+  <div class="shop-category">
 
-        <option value="English Breakfast">
-          English Breakfast
-        </option>
+    <div class="category-heading">
+      <div>
+        <p class="eyebrow">FOOD & GROCERIES</p>
+        <h3>Build Your Meal</h3>
+      </div>
 
-        <option value="Rice & Stew">
-          Rice & Stew
-        </option>
-
-        <option value="Jollof">
-          Jollof
-        </option>
-
-        <option value="Fried Rice">
-          Fried Rice
-        </option>
-
-        <option value="Fufu">
-          Fufu
-        </option>
-
-        <option value="Waakye">
-          Waakye
-        </option>
-
-        <option value="Banku & Tilapia">
-          Banku & Tilapia
-        </option>
-
-        <option value="Kenkey & Fish">
-          Kenkey & Fish
-        </option>
-
-      </select>
-
-    </label>
-
-
-    <div class="ingredient-heading">
-      <strong>Choose your ingredients</strong>
-
-      <small>
-        Select only what you want in your platter.
-      </small>
+      <p>
+        Choose a meal and customize your grocery ingredients
+        exactly the way you want them.
+      </p>
     </div>
 
 
-    <div id="ingredientList" class="ingredient-list"></div>
+    <div class="category-products">
 
 
-    <div class="builder-total">
+      <article class="category-card">
+        <div class="category-icon">🍳</div>
 
-      <span>Your platter</span>
+        <div>
+          <h4>English Breakfast</h4>
+          <p>Everything you need for a hearty English breakfast.</p>
+        </div>
 
-      <strong id="builderTotal">
-        GH₵0
-      </strong>
+        <button
+          class="btn primary"
+          onclick="chooseMeal('English Breakfast')"
+        >
+          Customize
+        </button>
+      </article>
+
+
+      <article class="category-card">
+        <div class="category-icon">🍚</div>
+
+        <div>
+          <h4>Rice & Stew</h4>
+          <p>Choose your rice, stew ingredients and protein.</p>
+        </div>
+
+        <button
+          class="btn primary"
+          onclick="chooseMeal('Rice & Stew')"
+        >
+          Customize
+        </button>
+      </article>
+
+
+      <article class="category-card">
+        <div class="category-icon">🍲</div>
+
+        <div>
+          <h4>Jollof</h4>
+          <p>Build your own Jollof grocery platter.</p>
+        </div>
+
+        <button
+          class="btn primary"
+          onclick="chooseMeal('Jollof')"
+        >
+          Customize
+        </button>
+      </article>
+
+
+      <article class="category-card">
+        <div class="category-icon">🥘</div>
+
+        <div>
+          <h4>Fried Rice</h4>
+          <p>Select the ingredients and extras you want.</p>
+        </div>
+
+        <button
+          class="btn primary"
+          onclick="chooseMeal('Fried Rice')"
+        >
+          Customize
+        </button>
+      </article>
+
+
+      <article class="category-card">
+        <div class="category-icon">🥣</div>
+
+        <div>
+          <h4>Fufu</h4>
+          <p>Choose your fufu ingredients, soup and protein.</p>
+        </div>
+
+        <button
+          class="btn primary"
+          onclick="chooseMeal('Fufu')"
+        >
+          Customize
+        </button>
+      </article>
+
+
+      <article class="category-card">
+        <div class="category-icon">🍛</div>
+
+        <div>
+          <h4>Waakye</h4>
+          <p>Build a Waakye grocery platter to your preference.</p>
+        </div>
+
+        <button
+          class="btn primary"
+          onclick="chooseMeal('Waakye')"
+        >
+          Customize
+        </button>
+      </article>
+
+
+      <article class="category-card">
+        <div class="category-icon">🐟</div>
+
+        <div>
+          <h4>Banku & Tilapia</h4>
+          <p>Choose your banku, tilapia and accompaniments.</p>
+        </div>
+
+        <button
+          class="btn primary"
+          onclick="chooseMeal('Banku & Tilapia')"
+        >
+          Customize
+        </button>
+      </article>
+
+
+      <article class="category-card">
+        <div class="category-icon">🍽️</div>
+
+        <div>
+          <h4>Kenkey & Fish</h4>
+          <p>Customize your kenkey and fish grocery selection.</p>
+        </div>
+
+        <button
+          class="btn primary"
+          onclick="chooseMeal('Kenkey & Fish')"
+        >
+          Customize
+        </button>
+      </article>
 
     </div>
-
-
-    <button
-      class="btn primary full"
-      onclick="addCustomPlatter()"
-    >
-      Add to Cart
-    </button>
 
   </div>
 
-</section> 
+
+  <!-- OTHER STORE CATEGORIES -->
+
+  <div class="other-categories">
+
+    <article class="store-category-card clothing-card">
+
+      <div class="store-category-icon">👕</div>
+
+      <div>
+        <p class="eyebrow">FASHION</p>
+        <h3>Clothing</h3>
+
+        <p>
+          Everyday clothing and fashion pieces.
+          Our collection is coming soon.
+        </p>
+      </div>
+
+      <span class="coming-soon">COMING SOON</span>
+
+    </article>
+
+
+    <article class="store-category-card jewelry-card">
+
+      <div class="store-category-icon">💎</div>
+
+      <div>
+        <p class="eyebrow">ACCESSORIES</p>
+        <h3>Jewelry</h3>
+
+        <p>
+          Jewelry and accessories for every occasion.
+          Our collection is coming soon.
+        </p>
+      </div>
+
+      <span class="coming-soon">COMING SOON</span>
+
+    </article>
+
+
+    <article class="store-category-card gifts-card">
+
+      <div class="store-category-icon">🎁</div>
+
+      <div>
+        <p class="eyebrow">SPECIAL OCCASIONS</p>
+        <h3>Gifts</h3>
+
+        <p>
+          Gift ideas for birthdays, celebrations and
+          special moments.
+        </p>
+      </div>
+
+      <span class="coming-soon">COMING SOON</span>
+
+    </article>
+
+  </div>
+
+</section>
+
 
     <section class="section about" id="about">
       <div class="about-card">
