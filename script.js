@@ -770,3 +770,17 @@ mealSelect.addEventListener("change", function () {
 showIngredients(mealSelect.value);
 
 updateCart();
+function chooseMeal(mealName) {
+
+  const mealSelect = document.getElementById("meal");
+
+  mealSelect.value = mealName;
+
+  showIngredients(mealName);
+
+  document
+    .getElementById("build")
+    .scrollIntoView({
+      behavior: "smooth"
+    });
+}
