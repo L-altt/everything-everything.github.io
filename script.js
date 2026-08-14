@@ -783,3 +783,245 @@ function chooseMeal(mealName) {
   });
 
 }
+/* =========================================================
+   EVERYTHING EVERYTHING
+   FASHION / JEWELRY / GIFTS FILTERS
+========================================================= */
+
+
+/* ---------------------------------------------------------
+   MAIN CATEGORY FILTER
+--------------------------------------------------------- */
+
+const eeCategoryButtons =
+    document.querySelectorAll(".ee-category-btn");
+
+const eeFashionCards =
+    document.querySelectorAll(".ee-fashion-card");
+
+
+eeCategoryButtons.forEach(button => {
+
+    button.addEventListener("click", () => {
+
+        eeCategoryButtons.forEach(btn => {
+            btn.classList.remove("active");
+        });
+
+        button.classList.add("active");
+
+        const category = button.dataset.category;
+
+        eeFashionCards.forEach(card => {
+
+            const cardCategory = card.dataset.category;
+
+            if (
+                category === "all" ||
+                cardCategory === category
+            ) {
+                card.classList.remove("ee-hidden");
+            } else {
+                card.classList.add("ee-hidden");
+            }
+
+        });
+
+    });
+
+});
+
+
+/* ---------------------------------------------------------
+   GIFT FILTER
+--------------------------------------------------------- */
+
+const eeGiftButtons =
+    document.querySelectorAll(".ee-gift-btn");
+
+const eeGiftCards =
+    document.querySelectorAll(".ee-gift-card");
+
+
+eeGiftButtons.forEach(button => {
+
+    button.addEventListener("click", () => {
+
+        eeGiftButtons.forEach(btn => {
+            btn.classList.remove("active");
+        });
+
+        button.classList.add("active");
+
+        const giftType = button.dataset.gift;
+
+        eeGiftCards.forEach(card => {
+
+            const cardGiftType =
+                card.dataset.giftType;
+
+            if (
+                giftType === "all" ||
+                cardGiftType === giftType
+            ) {
+                card.classList.remove("ee-hidden");
+            } else {
+                card.classList.add("ee-hidden");
+            }
+
+        });
+
+    });
+
+});
+
+
+/* ---------------------------------------------------------
+   SIZE SELECTION
+--------------------------------------------------------- */
+
+document.querySelectorAll(".ee-size-options")
+    .forEach(sizeContainer => {
+
+        const sizeButtons =
+            sizeContainer.querySelectorAll("button");
+
+        sizeButtons.forEach(button => {
+
+            button.addEventListener("click", () => {
+
+                sizeButtons.forEach(btn => {
+                    btn.classList.remove("selected");
+                });
+
+                button.classList.add("selected");
+
+            });
+
+        });
+
+    });
+
+
+/* ---------------------------------------------------------
+   ADD FASHION PRODUCT TO CART
+--------------------------------------------------------- */
+
+document.querySelectorAll(".ee-add-fashion-cart")
+    .forEach(button => {
+
+        button.addEventListener("click", () => {
+
+            const name =
+                button.dataset.name;
+
+            const price =
+                Number(button.dataset.price);
+
+            const category =
+                button.dataset.category;
+
+            const card =
+                button.closest(".ee-fashion-card");
+
+            let size = "";
+
+            if (card) {
+
+                const selectedSize =
+                    card.querySelector(
+                        ".ee-size-options button.selected"
+                    );
+
+                if (selectedSize) {
+                    size = selectedSize.dataset.size;
+                }
+
+            }
+
+
+            /*
+             * If a product has size choices,
+             * require the customer to select one.
+             */
+
+            const hasSizeOptions =
+                card &&
+                card.querySelector(".ee-size-options");
+
+            if (hasSizeOptions && !size) {
+
+                alert(
+                    "Please select a size before adding this item to your cart."
+                );
+
+                return;
+            }
+
+
+            /*
+             * Use the existing cart system if it
+             * exposes addToCart().
+             */
+
+            if (typeof addToCart === "function") {
+
+                addToCart({
+                    name: name,
+                    price: price,
+                    category: category,
+                    size: size,
+                    quantity: 1
+                });
+
+            } else {
+
+                /*
+                 * Fallback cart for the new section.
+                 * This prevents the products from
+                 * becoming unusable if the existing
+                 * cart function has a different name.
+                 */
+
+                let fashionCart =
+                    JSON.parse(
+                        localStorage.getItem(
+                            "eeFashionCart"
+                        )
+                    ) || [];
+
+                fashionCart.push({
+                    id:
+                        Date.now() +
+                        "-" +
+                        Math.random()
+                            .toString(36)
+                            .substring(2, 8),
+
+                    name: name,
+
+                    price: price,
+
+                    category: category,
+
+                    size: size,
+
+                    quantity: 1
+                });
+
+                localStorage.setItem(
+                    "eeFashionCart",
+                    JSON.stringify(fashionCart)
+                );
+
+                alert(
+                    name +
+                    (size ? " (" + size + ")" : "") +
+                    " has been added to your cart."
+                );
+
+            }
+
+        });
+
+    });
