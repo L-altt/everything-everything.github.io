@@ -291,3 +291,387 @@ footer{background:#063f25;color:#dbe9e1;padding:35px 7%;display:flex;justify-con
   }
 
 }
+/* =========================================================
+   EVERYTHING EVERYTHING
+   FASHION / JEWELRY / GIFTS
+========================================================= */
+
+.ee-shop-section,
+.ee-size-guide {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 70px 20px;
+}
+
+.ee-section-heading {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.ee-section-heading span,
+.ee-subsection-title span {
+    display: block;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    opacity: .65;
+}
+
+.ee-section-heading h2 {
+    margin: 8px 0;
+    font-size: clamp(30px, 5vw, 46px);
+}
+
+.ee-section-heading p {
+    max-width: 650px;
+    margin: 0 auto;
+    line-height: 1.7;
+    opacity: .75;
+}
+
+
+/* CATEGORY TABS */
+
+.ee-category-tabs,
+.ee-gift-filter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 45px;
+}
+
+.ee-category-btn,
+.ee-gift-btn {
+    border: 1px solid #ddd;
+    background: transparent;
+    padding: 11px 20px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: .25s ease;
+}
+
+.ee-category-btn:hover,
+.ee-category-btn.active,
+.ee-gift-btn:hover,
+.ee-gift-btn.active {
+    background: #111;
+    color: #fff;
+    border-color: #111;
+}
+
+
+/* SUBSECTIONS */
+
+.ee-fashion-subsection {
+    margin-bottom: 75px;
+}
+
+.ee-subsection-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.ee-subsection-title h3 {
+    margin: 5px 0 0;
+    font-size: 28px;
+}
+
+.ee-product-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 25px;
+}
+
+
+/* PRODUCT CARD */
+
+.ee-fashion-card {
+    background: #fff;
+    border: 1px solid #e8e8e8;
+    border-radius: 18px;
+    overflow: hidden;
+    transition: transform .25s ease, box-shadow .25s ease;
+}
+
+.ee-fashion-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0,0,0,.10);
+}
+
+.ee-fashion-image {
+    position: relative;
+    height: 330px;
+    overflow: hidden;
+    background: #f3f3f3;
+}
+
+.ee-fashion-image img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+}
+
+.ee-badge {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    background: #111;
+    color: #fff;
+    padding: 7px 11px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.ee-fashion-info {
+    padding: 22px;
+}
+
+.ee-fashion-info h4 {
+    margin: 0 0 10px;
+    font-size: 20px;
+}
+
+.ee-product-description {
+    min-height: 65px;
+    line-height: 1.55;
+    font-size: 14px;
+    opacity: .7;
+}
+
+.ee-price {
+    font-size: 21px;
+    font-weight: 800;
+    margin: 18px 0;
+}
+
+.ee-size-label {
+    font-size: 12px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: .8px;
+}
+
+.ee-size-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-bottom: 18px;
+}
+
+.ee-size-options button {
+    min-width: 38px;
+    height: 36px;
+    padding: 0 8px;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.ee-size-options button:hover,
+.ee-size-options button.selected {
+    background: #111;
+    color: #fff;
+    border-color: #111;
+}
+
+.ee-add-fashion-cart {
+    width: 100%;
+    border: none;
+    border-radius: 9px;
+    padding: 13px;
+    background: #111;
+    color: #fff;
+    font-weight: 700;
+    cursor: pointer;
+    transition: .25s ease;
+}
+
+.ee-add-fashion-cart:hover {
+    opacity: .8;
+}
+
+
+/* COMPLETE LOOKS */
+
+.ee-look-intro {
+    max-width: 650px;
+    line-height: 1.7;
+    opacity: .7;
+    margin-bottom: 30px;
+}
+
+.ee-look-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 25px;
+}
+
+.ee-look-card {
+    border: 1px solid #e5e5e5;
+    border-radius: 18px;
+    overflow: hidden;
+    background: #fff;
+}
+
+.ee-look-image {
+    height: 400px;
+}
+
+.ee-look-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.ee-look-content {
+    padding: 25px;
+}
+
+.ee-look-content > span {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    opacity: .6;
+}
+
+.ee-look-content h4 {
+    font-size: 24px;
+    margin: 8px 0;
+}
+
+.ee-look-content p {
+    opacity: .7;
+    line-height: 1.6;
+}
+
+.ee-look-content strong {
+    display: block;
+    font-size: 20px;
+    margin: 20px 0;
+}
+
+
+/* SIZE GUIDE */
+
+.ee-size-guide {
+    background: #fafafa;
+}
+
+.ee-size-table-wrapper {
+    background: #fff;
+    padding: 25px;
+    border-radius: 16px;
+    border: 1px solid #e5e5e5;
+    margin-bottom: 25px;
+    overflow-x: auto;
+}
+
+.ee-size-table-wrapper h3 {
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+.ee-size-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 500px;
+}
+
+.ee-size-table th,
+.ee-size-table td {
+    padding: 14px;
+    border-bottom: 1px solid #eee;
+    text-align: left;
+}
+
+.ee-size-table th {
+    background: #111;
+    color: #fff;
+    font-size: 13px;
+}
+
+.ee-size-table td {
+    font-size: 14px;
+}
+
+
+/* HIDDEN FILTERED PRODUCTS */
+
+.ee-fashion-card.ee-hidden {
+    display: none;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 900px) {
+
+    .ee-product-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .ee-look-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .ee-fashion-image {
+        height: 300px;
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .ee-shop-section,
+    .ee-size-guide {
+        padding: 45px 15px;
+    }
+
+    .ee-product-grid {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+
+    .ee-fashion-image {
+        height: 360px;
+    }
+
+    .ee-subsection-title h3 {
+        font-size: 24px;
+    }
+
+    .ee-look-image {
+        height: 350px;
+    }
+
+    .ee-category-tabs,
+    .ee-gift-filter {
+        justify-content: flex-start;
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        padding-bottom: 5px;
+    }
+
+    .ee-category-btn,
+    .ee-gift-btn {
+        white-space: nowrap;
+    }
+
+    .ee-size-table-wrapper {
+        padding: 15px;
+    }
+
+}
