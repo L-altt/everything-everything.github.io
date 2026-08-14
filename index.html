@@ -282,6 +282,46 @@
   </div>
 
 </section>
+    <section class="section build" id="build">
+
+  <div>
+    <p class="eyebrow">BUILD YOUR OWN</p>
+    <h2>Create your <span>custom platter.</span></h2>
+    <p>Pick a meal, tick off exactly the ingredients you need, and we'll put together a grocery platter priced to match.</p>
+  </div>
+
+  <div class="builder-card">
+
+    <label for="meal">Choose a meal</label>
+    <select id="meal">
+      <option value="English Breakfast">English Breakfast</option>
+      <option value="Rice &amp; Stew">Rice &amp; Stew</option>
+      <option value="Jollof">Jollof</option>
+      <option value="Fried Rice">Fried Rice</option>
+      <option value="Fufu">Fufu</option>
+      <option value="Waakye">Waakye</option>
+      <option value="Banku &amp; Tilapia">Banku &amp; Tilapia</option>
+      <option value="Kenkey &amp; Fish">Kenkey &amp; Fish</option>
+    </select>
+
+    <div class="ingredient-heading">
+      <strong>Select your ingredients</strong>
+      <small>Tick everything you'd like included</small>
+    </div>
+
+    <div class="ingredient-list" id="ingredientList"></div>
+
+    <div class="builder-total">
+      <span>Total</span>
+      <strong id="builderTotal">GH₵0</strong>
+    </div>
+
+    <button class="btn primary full" onclick="addCustomPlatter()">Add to Cart</button>
+
+  </div>
+
+</section>
+
 
 
     <section class="section about" id="about">
