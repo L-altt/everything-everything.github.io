@@ -778,9 +778,8 @@ function chooseMeal(mealName) {
 
   showIngredients(mealName);
 
-  document
-    .getElementById("build")
-    .scrollIntoView({
-      behavior: "smooth"
-    });
+  document.getElementById("build").scrollIntoView({
+    behavior: "smooth"
+  });
+
 }
