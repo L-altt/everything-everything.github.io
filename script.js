@@ -5,7 +5,7 @@
 // ===============================
 
 // ---- FILL THESE IN ----
-const SUPABASE_URL = "https://YOUR-PROJECT.supabase.co";
+const SUPABASE_URL = "https://spplkkeeisaozamrsfwg.supabase.co/rest/v1/";
 const SUPABASE_ANON_KEY = "YOUR-ANON-PUBLIC-KEY";
 const PAYSTACK_PUBLIC_KEY = "pk_test_XXXXXXXXXXXXXXXXXXXXXXXXXXXX"; // switch to pk_live_ when ready
 const VERIFY_FUNCTION_URL = `${SUPABASE_URL}/functions/v1/verify-payment`;
