@@ -1,505 +1,74 @@
 // ===============================
 // EVERYTHING EVERYTHING
 // Custom Grocery Platter System
+// Now backed by Supabase (data) + Paystack (payments)
 // ===============================
 
-// Temporary prices.
-// Change these prices whenever you get your actual market/selling prices.
-
-const ingredients = {
-
-  // GENERAL
-  rice: {
-    name: "Rice",
-    price: 30,
-    unit: "1 kg",
-    icon: "🍚"
-  },
-
-  tomatoes: {
-    name: "Tomatoes",
-    price: 15,
-    unit: "portion",
-    icon: "🍅"
-  },
-
-  onions: {
-    name: "Onions",
-    price: 10,
-    unit: "portion",
-    icon: "🧅"
-  },
-
-  pepper: {
-    name: "Pepper",
-    price: 5,
-    unit: "portion",
-    icon: "🌶️"
-  },
-
-  cookingOil: {
-    name: "Cooking Oil",
-    price: 30,
-    unit: "500 ml",
-    icon: "🫗"
-  },
-
-  ginger: {
-    name: "Ginger",
-    price: 5,
-    unit: "portion",
-    icon: "🫚"
-  },
-
-  garlic: {
-    name: "Garlic",
-    price: 5,
-    unit: "portion",
-    icon: "🧄"
-  },
-
-  seasoning: {
-    name: "Seasoning",
-    price: 5,
-    unit: "pack",
-    icon: "🧂"
-  },
-
-  salt: {
-    name: "Salt",
-    price: 3,
-    unit: "pack",
-    icon: "🧂"
-  },
-
-  eggs: {
-    name: "Eggs",
-    price: 25,
-    unit: "6 eggs",
-    icon: "🥚"
-  },
-
-  chicken: {
-    name: "Chicken",
-    price: 35,
-    unit: "portion",
-    icon: "🍗"
-  },
-
-  beef: {
-    name: "Beef",
-    price: 40,
-    unit: "portion",
-    icon: "🥩"
-  },
-
-  fish: {
-    name: "Fish",
-    price: 35,
-    unit: "portion",
-    icon: "🐟"
-  },
-
-
-  // ENGLISH BREAKFAST
-  bread: {
-    name: "Bread",
-    price: 15,
-    unit: "loaf",
-    icon: "🍞"
-  },
-
-  sausages: {
-    name: "Sausages",
-    price: 25,
-    unit: "pack",
-    icon: "🌭"
-  },
-
-  bakedBeans: {
-    name: "Baked Beans",
-    price: 15,
-    unit: "tin",
-    icon: "🥫"
-  },
-
-  milk: {
-    name: "Milk",
-    price: 30,
-    unit: "1 litre",
-    icon: "🥛"
-  },
-
-  tea: {
-    name: "Tea",
-    price: 15,
-    unit: "pack",
-    icon: "🫖"
-  },
-
-  coffee: {
-    name: "Coffee",
-    price: 25,
-    unit: "pack",
-    icon: "☕"
-  },
-
-  sugar: {
-    name: "Sugar",
-    price: 15,
-    unit: "500 g",
-    icon: "🍬"
-  },
-
-  margarine: {
-    name: "Butter / Margarine",
-    price: 20,
-    unit: "pack",
-    icon: "🧈"
-  },
-
-
-  // JOLLOF
-  tomatoPaste: {
-    name: "Tomato Paste",
-    price: 10,
-    unit: "tin",
-    icon: "🥫"
-  },
-
-  curry: {
-    name: "Curry Powder",
-    price: 8,
-    unit: "pack",
-    icon: "🧂"
-  },
-
-  thyme: {
-    name: "Thyme",
-    price: 8,
-    unit: "pack",
-    icon: "🌿"
-  },
-
-  bayLeaves: {
-    name: "Bay Leaves",
-    price: 5,
-    unit: "pack",
-    icon: "🌿"
-  },
-
-  carrots: {
-    name: "Carrots",
-    price: 10,
-    unit: "portion",
-    icon: "🥕"
-  },
-
-  greenBeans: {
-    name: "Green Beans",
-    price: 10,
-    unit: "portion",
-    icon: "🫛"
-  },
-
-  greenPepper: {
-    name: "Green Pepper",
-    price: 10,
-    unit: "portion",
-    icon: "🫑"
-  },
-
-
-  // FRIED RICE
-  sweetCorn: {
-    name: "Sweet Corn",
-    price: 15,
-    unit: "tin",
-    icon: "🌽"
-  },
-
-  springOnions: {
-    name: "Spring Onions",
-    price: 8,
-    unit: "bunch",
-    icon: "🌱"
-  },
-
-  soySauce: {
-    name: "Soy Sauce",
-    price: 15,
-    unit: "bottle",
-    icon: "🫙"
-  },
-
-
-  // FUFU
-  cassava: {
-    name: "Cassava",
-    price: 20,
-    unit: "portion",
-    icon: "🥔"
-  },
-
-  plantain: {
-    name: "Plantain",
-    price: 20,
-    unit: "bunch",
-    icon: "🍌"
-  },
-
-  groundnutPaste: {
-    name: "Groundnut Paste",
-    price: 25,
-    unit: "pack",
-    icon: "🥜"
-  },
-
-  palmNut: {
-    name: "Palm Nut",
-    price: 25,
-    unit: "pack",
-    icon: "🥥"
-  },
-
-
-  // WAAKYE
-  blackEyedBeans: {
-    name: "Black-eyed Beans",
-    price: 20,
-    unit: "500 g",
-    icon: "🫘"
-  },
-
-  waakyeLeaves: {
-    name: "Waakye Leaves",
-    price: 5,
-    unit: "pack",
-    icon: "🌿"
-  },
-
-  gari: {
-    name: "Gari",
-    price: 15,
-    unit: "500 g",
-    icon: "🌾"
-  },
-
-  spaghetti: {
-    name: "Spaghetti",
-    price: 15,
-    unit: "pack",
-    icon: "🍝"
-  },
-
-  friedPlantain: {
-    name: "Plantain",
-    price: 20,
-    unit: "portion",
-    icon: "🍌"
-  },
-
-  shito: {
-    name: "Shito",
-    price: 20,
-    unit: "bottle",
-    icon: "🌶️"
-  },
-
-
-  // BANKU
-  cornDough: {
-    name: "Corn Dough",
-    price: 20,
-    unit: "portion",
-    icon: "🌽"
-  },
-
-  cassavaDough: {
-    name: "Cassava Dough",
-    price: 15,
-    unit: "portion",
-    icon: "🥔"
-  },
-
-  tilapia: {
-    name: "Tilapia",
-    price: 45,
-    unit: "fish",
-    icon: "🐟"
-  },
-
-  gardenEggs: {
-    name: "Garden Eggs",
-    price: 10,
-    unit: "portion",
-    icon: "🍆"
-  },
-
-
-  // KENKEY
-  kenkey: {
-    name: "Kenkey",
-    price: 10,
-    unit: "serving",
-    icon: "🍚"
-  },
-
-  smokedFish: {
-    name: "Smoked Fish",
-    price: 30,
-    unit: "portion",
-    icon: "🐟"
-  }
-};
-
-
-// ======================================
-// MEAL CATEGORIES
-// ======================================
-
-const mealCategories = {
-
-  "English Breakfast": [
-    "bread",
-    "eggs",
-    "sausages",
-    "bakedBeans",
-    "milk",
-    "tea",
-    "coffee",
-    "sugar",
-    "margarine"
-  ],
-
-  "Rice & Stew": [
-    "rice",
-    "tomatoes",
-    "tomatoPaste",
-    "onions",
-    "pepper",
-    "cookingOil",
-    "ginger",
-    "garlic",
-    "seasoning",
-    "salt",
-    "chicken",
-    "beef",
-    "fish"
-  ],
-
-  "Jollof": [
-    "rice",
-    "tomatoes",
-    "tomatoPaste",
-    "onions",
-    "pepper",
-    "cookingOil",
-    "ginger",
-    "garlic",
-    "seasoning",
-    "salt",
-    "curry",
-    "thyme",
-    "bayLeaves",
-    "chicken",
-    "beef",
-    "sausages",
-    "carrots",
-    "greenBeans",
-    "greenPepper"
-  ],
-
-  "Fried Rice": [
-    "rice",
-    "carrots",
-    "greenBeans",
-    "sweetCorn",
-    "greenPepper",
-    "onions",
-    "springOnions",
-    "cookingOil",
-    "eggs",
-    "chicken",
-    "sausages",
-    "soySauce",
-    "seasoning",
-    "salt",
-    "ginger",
-    "garlic"
-  ],
-
-  "Fufu": [
-    "cassava",
-    "plantain",
-    "tomatoes",
-    "pepper",
-    "onions",
-    "ginger",
-    "garlic",
-    "seasoning",
-    "salt",
-    "groundnutPaste",
-    "palmNut",
-    "chicken",
-    "beef",
-    "fish"
-  ],
-
-  "Waakye": [
-    "rice",
-    "blackEyedBeans",
-    "waakyeLeaves",
-    "salt",
-    "cookingOil",
-    "onions",
-    "pepper",
-    "tomatoes",
-    "gari",
-    "spaghetti",
-    "friedPlantain",
-    "eggs",
-    "chicken",
-    "beef",
-    "fish",
-    "shito"
-  ],
-
-  "Banku & Tilapia": [
-    "cornDough",
-    "cassavaDough",
-    "salt",
-    "tilapia",
-    "onions",
-    "pepper",
-    "ginger",
-    "garlic",
-    "seasoning",
-    "cookingOil",
-    "tomatoes",
-    "shito",
-    "gardenEggs"
-  ],
-
-  "Kenkey & Fish": [
-    "kenkey",
-    "fish",
-    "smokedFish",
-    "tomatoes",
-    "onions",
-    "pepper",
-    "shito",
-    "cookingOil",
-    "gardenEggs"
-  ]
-};
-
-
-// ======================================
-// CART
-// ======================================
-
+// ---- FILL THESE IN ----
+const SUPABASE_URL = "https://YOUR-PROJECT.supabase.co";
+const SUPABASE_ANON_KEY = "YOUR-ANON-PUBLIC-KEY";
+const PAYSTACK_PUBLIC_KEY = "pk_test_XXXXXXXXXXXXXXXXXXXXXXXXXXXX"; // switch to pk_live_ when ready
+const VERIFY_FUNCTION_URL = `${SUPABASE_URL}/functions/v1/verify-payment`;
+// ------------------------
+
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+let ingredients = {};   // filled from DB: { id: {name, price, unit, icon} }
+let mealCategories = {}; // filled from DB: { "Meal Name": [ingredientId, ...] }
 let cart = [];
+
+
+// ======================================
+// LOAD DATA FROM SUPABASE
+// ======================================
+
+async function loadData() {
+  const { data: ingredientRows, error: ingErr } = await supabase
+    .from("ingredients")
+    .select("*")
+    .eq("in_stock", true);
+
+  const { data: mealRows, error: mealErr } = await supabase
+    .from("meals")
+    .select("*");
+
+  if (ingErr || mealErr) {
+    console.error(ingErr || mealErr);
+    document.getElementById("ingredientList").innerHTML =
+      "<p>Sorry, we couldn't load the menu right now. Please refresh.</p>";
+    return;
+  }
+
+  ingredients = {};
+  ingredientRows.forEach(row => {
+    ingredients[row.id] = {
+      name: row.name,
+      price: Number(row.price),
+      unit: row.unit,
+      icon: row.icon
+    };
+  });
+
+  mealCategories = {};
+  mealRows.forEach(row => {
+    mealCategories[row.name] = row.ingredient_ids;
+  });
+
+  populateMealSelect();
+}
+
+function populateMealSelect() {
+  const mealSelect = document.getElementById("meal");
+  mealSelect.innerHTML = Object.keys(mealCategories)
+    .map(name => `<option value="${name}">${name}</option>`)
+    .join("");
+
+  showIngredients(mealSelect.value);
+
+  mealSelect.addEventListener("change", function () {
+    showIngredients(this.value);
+  });
+}
 
 
 // ======================================
@@ -509,7 +78,6 @@ let cart = [];
 function showIngredients(mealName) {
 
   const container = document.getElementById("ingredientList");
-
   const selectedIngredients = mealCategories[mealName];
 
   if (!selectedIngredients) {
@@ -518,26 +86,19 @@ function showIngredients(mealName) {
   }
 
   container.innerHTML = selectedIngredients.map(key => {
-
     const item = ingredients[key];
+    if (!item) return "";
 
     return `
       <label class="ingredient-option">
-        <input
-          type="checkbox"
-          value="${key}"
-          onchange="updateCustomTotal()"
-        >
-
+        <input type="checkbox" value="${key}" onchange="updateCustomTotal()">
         <span class="ingredient-icon">${item.icon}</span>
-
         <span class="ingredient-info">
           <strong>${item.name}</strong>
           <small>GH₵${item.price} / ${item.unit}</small>
         </span>
       </label>
     `;
-
   }).join("");
 
   updateCustomTotal();
@@ -549,32 +110,20 @@ function showIngredients(mealName) {
 // ======================================
 
 function updateCustomTotal() {
-
-  const selected = document.querySelectorAll(
-    "#ingredientList input[type='checkbox']:checked"
-  );
-
+  const selected = document.querySelectorAll("#ingredientList input[type='checkbox']:checked");
   let total = 0;
-
-  selected.forEach(input => {
-    total += ingredients[input.value].price;
-  });
-
+  selected.forEach(input => { total += ingredients[input.value].price; });
   document.getElementById("builderTotal").textContent = `GH₵${total}`;
 }
 
 
 // ======================================
-// ADD CUSTOM PLATTER
+// ADD CUSTOM PLATTER TO CART
 // ======================================
 
 function addCustomPlatter() {
-
   const meal = document.getElementById("meal").value;
-
-  const selected = document.querySelectorAll(
-    "#ingredientList input[type='checkbox']:checked"
-  );
+  const selected = document.querySelectorAll("#ingredientList input[type='checkbox']:checked");
 
   if (selected.length === 0) {
     alert("Please select at least one ingredient.");
@@ -582,21 +131,12 @@ function addCustomPlatter() {
   }
 
   const selectedItems = [];
-
   selected.forEach(input => {
     const item = ingredients[input.value];
-
-    selectedItems.push({
-      name: item.name,
-      price: item.price,
-      unit: item.unit
-    });
+    selectedItems.push({ name: item.name, price: item.price, unit: item.unit });
   });
 
-  const total = selectedItems.reduce(
-    (sum, item) => sum + item.price,
-    0
-  );
+  const total = selectedItems.reduce((sum, item) => sum + item.price, 0);
 
   cart.push({
     name: `${meal} Grocery Platter`,
@@ -615,141 +155,139 @@ function addCustomPlatter() {
 // ======================================
 
 function updateCart() {
-
   document.getElementById("cartCount").textContent = cart.length;
-
   const box = document.getElementById("cartItems");
 
   if (!cart.length) {
-
-    box.innerHTML =
-      '<p style="color:#65736c;padding:20px 0">Your cart is empty.</p>';
-
+    box.innerHTML = '<p style="color:#65736c;padding:20px 0">Your cart is empty.</p>';
     document.getElementById("cartTotal").textContent = "GH₵0";
-
     return;
   }
 
   box.innerHTML = cart.map((item, i) => `
-
     <div class="cart-item">
-
       <div>
-        <b>${item.icon} ${item.name}</b>
-
-        <br>
-
-        <small>${item.desc}</small>
-
-        <br>
-
+        <b>${item.icon} ${item.name}</b><br>
+        <small>${item.desc}</small><br>
         <small>GH₵${item.price}</small>
       </div>
-
-      <button
-        class="remove"
-        onclick="removeItem(${i})"
-      >
-        Remove
-      </button>
-
+      <button class="remove" onclick="removeItem(${i})">Remove</button>
     </div>
-
   `).join("");
 
-  const total = cart.reduce(
-    (sum, item) => sum + item.price,
-    0
-  );
-
-  document.getElementById("cartTotal").textContent =
-    `GH₵${total}`;
+  const total = cart.reduce((sum, item) => sum + item.price, 0);
+  document.getElementById("cartTotal").textContent = `GH₵${total}`;
 }
-
 
 function removeItem(i) {
-
   cart.splice(i, 1);
-
   updateCart();
 }
-
-
-// ======================================
-// CART OPEN / CLOSE
-// ======================================
 
 function openCart() {
-
-  document
-    .getElementById("cartOverlay")
-    .classList.add("open");
-
+  document.getElementById("cartOverlay").classList.add("open");
   updateCart();
 }
 
-
 function closeCart(e) {
-
-  if (
-    !e ||
-    e.target.id === "cartOverlay"
-  ) {
-    document
-      .getElementById("cartOverlay")
-      .classList.remove("open");
+  if (!e || e.target.id === "cartOverlay") {
+    document.getElementById("cartOverlay").classList.remove("open");
   }
 }
 
 
 // ======================================
-// WHATSAPP CHECKOUT
+// CHECKOUT — PAYSTACK
 // ======================================
 
-function checkoutWhatsApp() {
-
+function checkoutPaystack() {
   if (!cart.length) {
-
     alert("Please add something to your cart first.");
-
     return;
   }
 
-  const name =
-    document.getElementById("customerName").value.trim()
-    || "Customer";
+  const name = document.getElementById("customerName").value.trim();
+  const location = document.getElementById("customerLocation").value.trim();
+  const email = document.getElementById("customerEmail").value.trim();
+  const phone = document.getElementById("customerPhone")?.value.trim() || "";
 
-  const location =
-    document.getElementById("customerLocation").value.trim()
-    || "Not provided";
+  if (!name || !location || !email) {
+    alert("Please fill in your name, delivery location, and email.");
+    return;
+  }
 
-  const total = cart.reduce(
-    (sum, item) => sum + item.price,
-    0
-  );
+  const total = cart.reduce((sum, item) => sum + item.price, 0);
+  const reference = "EE_" + Date.now() + "_" + Math.floor(Math.random() * 100000);
 
-  const items = cart.map(item =>
-    `• ${item.name} — GH₵${item.price}\n  ${item.desc}`
-  ).join("\n\n");
+  const handler = PaystackPop.setup({
+    key: PAYSTACK_PUBLIC_KEY,
+    email: email,
+    amount: Math.round(total * 100), // pesewas
+    currency: "GHS",
+    ref: reference,
+    metadata: { name, phone, location },
+    callback: function (response) {
+      // Payment succeeded on Paystack's side — now verify server-side and save the order
+      finalizeOrder(response.reference, { name, phone, location, email }, total);
+    },
+    onClose: function () {
+      // user closed the payment popup without paying — nothing to do
+    }
+  });
 
-  const message =
-`Hello Everything Everything! I'd like to place an order.
+  handler.openIframe();
+}
 
-${items}
+async function finalizeOrder(reference, customer, total) {
+  const itemsSnapshot = cart.map(item => ({
+    name: item.name,
+    price: item.price,
+    desc: item.desc
+  }));
 
-Total: GH₵${total}
+  try {
+    const res = await fetch(VERIFY_FUNCTION_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${SUPABASE_ANON_KEY}`
+      },
+      body: JSON.stringify({
+        reference,
+        customer,
+        items: itemsSnapshot,
+        total
+      })
+    });
 
-Name: ${name}
-Delivery location: ${location}`;
+    const result = await res.json();
 
-  // CURRENT WHATSAPP NUMBER
-  // Change this number later if necessary.
-  const whatsappNumber = "233547026348";
+    if (!res.ok || result.error) {
+      alert("Payment received, but we couldn't confirm your order automatically. Please message us on WhatsApp with your payment reference: " + reference);
+      return;
+    }
 
-  window.open(
-    `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`,
-    "_blank"
-  );
+    cart = [];
+    updateCart();
+    closeCart();
+    alert(`Payment successful! Your order is confirmed.\nReference: ${reference}\nWe'll be in touch about delivery.`);
+
+  } catch (err) {
+    console.error(err);
+    alert("Payment received, but something went wrong confirming your order. Please message us on WhatsApp with your payment reference: " + reference);
+  }
+}
+
+
+// ======================================
+// BUILD SECTION SCROLL HELPER
+// ======================================
+
+function chooseMeal(mealName) {
+  const mealSelect = document.getElementById("meal");
+  mealSelect.value = mealName;
+  showIngredients(mealName);
+  document.getElementById("build").scrollIntoView({ behavior: "smooth" });
 }
 
 
@@ -757,271 +295,5 @@ Delivery location: ${location}`;
 // INITIAL SETUP
 // ======================================
 
-const mealSelect = document.getElementById("meal");
-
-mealSelect.addEventListener("change", function () {
-
-  showIngredients(this.value);
-
-});
-
-
-// Show first meal immediately
-showIngredients(mealSelect.value);
-
+loadData();
 updateCart();
-function chooseMeal(mealName) {
-
-  const mealSelect = document.getElementById("meal");
-
-  mealSelect.value = mealName;
-
-  showIngredients(mealName);
-
-  document.getElementById("build").scrollIntoView({
-    behavior: "smooth"
-  });
-
-}
-/* =========================================================
-   EVERYTHING EVERYTHING
-   FASHION / JEWELRY / GIFTS FILTERS
-========================================================= */
-
-
-/* ---------------------------------------------------------
-   MAIN CATEGORY FILTER
---------------------------------------------------------- */
-
-const eeCategoryButtons =
-    document.querySelectorAll(".ee-category-btn");
-
-const eeFashionCards =
-    document.querySelectorAll(".ee-fashion-card");
-
-
-eeCategoryButtons.forEach(button => {
-
-    button.addEventListener("click", () => {
-
-        eeCategoryButtons.forEach(btn => {
-            btn.classList.remove("active");
-        });
-
-        button.classList.add("active");
-
-        const category = button.dataset.category;
-
-        eeFashionCards.forEach(card => {
-
-            const cardCategory = card.dataset.category;
-
-            if (
-                category === "all" ||
-                cardCategory === category
-            ) {
-                card.classList.remove("ee-hidden");
-            } else {
-                card.classList.add("ee-hidden");
-            }
-
-        });
-
-    });
-
-});
-
-
-/* ---------------------------------------------------------
-   GIFT FILTER
---------------------------------------------------------- */
-
-const eeGiftButtons =
-    document.querySelectorAll(".ee-gift-btn");
-
-const eeGiftCards =
-    document.querySelectorAll(".ee-gift-card");
-
-
-eeGiftButtons.forEach(button => {
-
-    button.addEventListener("click", () => {
-
-        eeGiftButtons.forEach(btn => {
-            btn.classList.remove("active");
-        });
-
-        button.classList.add("active");
-
-        const giftType = button.dataset.gift;
-
-        eeGiftCards.forEach(card => {
-
-            const cardGiftType =
-                card.dataset.giftType;
-
-            if (
-                giftType === "all" ||
-                cardGiftType === giftType
-            ) {
-                card.classList.remove("ee-hidden");
-            } else {
-                card.classList.add("ee-hidden");
-            }
-
-        });
-
-    });
-
-});
-
-
-/* ---------------------------------------------------------
-   SIZE SELECTION
---------------------------------------------------------- */
-
-document.querySelectorAll(".ee-size-options")
-    .forEach(sizeContainer => {
-
-        const sizeButtons =
-            sizeContainer.querySelectorAll("button");
-
-        sizeButtons.forEach(button => {
-
-            button.addEventListener("click", () => {
-
-                sizeButtons.forEach(btn => {
-                    btn.classList.remove("selected");
-                });
-
-                button.classList.add("selected");
-
-            });
-
-        });
-
-    });
-
-
-/* ---------------------------------------------------------
-   ADD FASHION PRODUCT TO CART
---------------------------------------------------------- */
-
-document.querySelectorAll(".ee-add-fashion-cart")
-    .forEach(button => {
-
-        button.addEventListener("click", () => {
-
-            const name =
-                button.dataset.name;
-
-            const price =
-                Number(button.dataset.price);
-
-            const category =
-                button.dataset.category;
-
-            const card =
-                button.closest(".ee-fashion-card");
-
-            let size = "";
-
-            if (card) {
-
-                const selectedSize =
-                    card.querySelector(
-                        ".ee-size-options button.selected"
-                    );
-
-                if (selectedSize) {
-                    size = selectedSize.dataset.size;
-                }
-
-            }
-
-
-            /*
-             * If a product has size choices,
-             * require the customer to select one.
-             */
-
-            const hasSizeOptions =
-                card &&
-                card.querySelector(".ee-size-options");
-
-            if (hasSizeOptions && !size) {
-
-                alert(
-                    "Please select a size before adding this item to your cart."
-                );
-
-                return;
-            }
-
-
-            /*
-             * Use the existing cart system if it
-             * exposes addToCart().
-             */
-
-            if (typeof addToCart === "function") {
-
-                addToCart({
-                    name: name,
-                    price: price,
-                    category: category,
-                    size: size,
-                    quantity: 1
-                });
-
-            } else {
-
-                /*
-                 * Fallback cart for the new section.
-                 * This prevents the products from
-                 * becoming unusable if the existing
-                 * cart function has a different name.
-                 */
-
-                let fashionCart =
-                    JSON.parse(
-                        localStorage.getItem(
-                            "eeFashionCart"
-                        )
-                    ) || [];
-
-                fashionCart.push({
-                    id:
-                        Date.now() +
-                        "-" +
-                        Math.random()
-                            .toString(36)
-                            .substring(2, 8),
-
-                    name: name,
-
-                    price: price,
-
-                    category: category,
-
-                    size: size,
-
-                    quantity: 1
-                });
-
-                localStorage.setItem(
-                    "eeFashionCart",
-                    JSON.stringify(fashionCart)
-                );
-
-                alert(
-                    name +
-                    (size ? " (" + size + ")" : "") +
-                    " has been added to your cart."
-                );
-
-            }
-
-        });
-
-    });
