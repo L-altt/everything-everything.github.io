@@ -1,5 +1,5 @@
 *{box-sizing:border-box;margin:0;padding:0}
-:root{--green:#075b35;--green2:#0b7a46;--orange:#f36b21;--cream:#fffdf8;--ink:#18332a;--muted:#65736c;--line:#e4e9e5}
+:root{--green:#0a4fb0;--green2:#1565d8;--orange:#0a4fb0;--cream:#ffffff;--ink:#0b1f3a;--muted:#5b6b7d;--line:#dde5ee}
 html{scroll-behavior:smooth}
 body{font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--cream);color:var(--ink);line-height:1.5}
 a{text-decoration:none;color:inherit}
@@ -359,9 +359,9 @@ footer{background:#063f25;color:#dbe9e1;padding:35px 7%;display:flex;justify-con
 .ee-category-btn.active,
 .ee-gift-btn:hover,
 .ee-gift-btn.active {
-    background: #111;
+    background: #0a4fb0;
     color: #fff;
-    border-color: #111;
+    border-color: #0a4fb0;
 }
 
 
@@ -423,7 +423,7 @@ footer{background:#063f25;color:#dbe9e1;padding:35px 7%;display:flex;justify-con
     position: absolute;
     top: 15px;
     left: 15px;
-    background: #111;
+    background: #0a4fb0;
     color: #fff;
     padding: 7px 11px;
     border-radius: 20px;
@@ -481,9 +481,9 @@ footer{background:#063f25;color:#dbe9e1;padding:35px 7%;display:flex;justify-con
 
 .ee-size-options button:hover,
 .ee-size-options button.selected {
-    background: #111;
+    background: #0a4fb0;
     color: #fff;
-    border-color: #111;
+    border-color: #0a4fb0;
 }
 
 .ee-add-fashion-cart {
@@ -491,7 +491,7 @@ footer{background:#063f25;color:#dbe9e1;padding:35px 7%;display:flex;justify-con
     border: none;
     border-radius: 9px;
     padding: 13px;
-    background: #111;
+    background: #0a4fb0;
     color: #fff;
     font-weight: 700;
     cursor: pointer;
@@ -597,7 +597,7 @@ footer{background:#063f25;color:#dbe9e1;padding:35px 7%;display:flex;justify-con
 }
 
 .ee-size-table th {
-    background: #111;
+    background: #0a4fb0;
     color: #fff;
     font-size: 13px;
 }
