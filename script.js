@@ -5,7 +5,7 @@
 // ===============================
 
 // ---- FILL THESE IN ----
-const SUPABASE_URL = "https://spplkkeeisaozamrsfwg.supabase.co/rest/v1/";
+const SUPABASE_URL = "https://spplkkeeisaozamrsfwg.supabase.co";
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNwcGxra2VlaXNhb3phbXJzZndnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY3NDUwNjcsImV4cCI6MjEwMjMyMTA2N30.FcDkhkXE5SezAH8NoQE04hODDsToC2fNpDFU4m0RHkg";
 const PAYSTACK_PUBLIC_KEY = "pk_test_XXXXXXXXXXXXXXXXXXXXXXXXXXXX"; // switch to pk_live_ when ready
 const VERIFY_FUNCTION_URL = `${SUPABASE_URL}/functions/v1/verify-payment`;
