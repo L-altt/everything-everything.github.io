@@ -1,22 +1,20 @@
 /* =========================================================
    EVERYTHING EVERYTHING
-   SITE-WIDE JAVASCRIPT
+   MAIN SITE JAVASCRIPT
    =========================================================
-
-   Preserved functionality:
-
-   ✓ Supabase grocery data
-   ✓ Shared cart
-   ✓ LocalStorage cart
-   ✓ Clothing sizes
-   ✓ Jewelry sizes
-   ✓ Gift filters
-   ✓ Custom grocery platters
-   ✓ Combined platter
-   ✓ WhatsApp checkout
-   ✓ Paystack checkout
-   ✓ Cart drawer
-   ✓ Cart toast
+   Features:
+   - Shared cart
+   - LocalStorage persistence
+   - Supabase grocery data
+   - Grocery/custom platter builder
+   - Clothing sizes
+   - Jewelry sizes
+   - Gift filters
+   - Platter page
+   - WhatsApp checkout
+   - Paystack checkout
+   - Mobile navigation
+   - Smooth navigation
 ========================================================= */
 
 
@@ -53,11 +51,10 @@ if (
     window.supabase &&
     typeof window.supabase.createClient === "function"
 ) {
-    supabase =
-        window.supabase.createClient(
-            SUPABASE_URL,
-            SUPABASE_ANON_KEY
-        );
+    supabase = window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_ANON_KEY
+    );
 }
 
 
@@ -66,30 +63,205 @@ if (
 ========================================================= */
 
 let ingredients = {};
-
 let mealCategories = {};
 
 let cart = loadCart();
 
 
 /* =========================================================
-   4. PAGE DETECTION
+   4. DOM READY
 ========================================================= */
 
-const currentPage =
-    window.location.pathname
-        .split("/")
-        .pop()
-        .toLowerCase() || "index.html";
+document.addEventListener(
+    "DOMContentLoaded",
+    initializeSite
+);
 
 
-function isPage(pageName) {
-    return currentPage === pageName;
+function initializeSite() {
+
+    /*
+       Core site functions
+    */
+
+    updateCart();
+    updatePlatter();
+
+    initializeNavigation();
+    initializeCartButtons();
+
+    initializeProductButtons();
+    initializeSizeButtons();
+    initializeGiftFilters();
+
+    initializeStockButtons();
+
+    loadData();
+    handleMealURL();
+
 }
 
 
 /* =========================================================
-   5. LOAD CART
+   5. NAVIGATION
+========================================================= */
+
+function initializeNavigation() {
+
+    const menuButton =
+        document.querySelector(
+            "[data-menu-toggle]"
+        );
+
+    const mobileMenu =
+        document.querySelector(
+            "[data-mobile-menu]"
+        );
+
+
+    if (
+        menuButton &&
+        mobileMenu
+    ) {
+
+        menuButton.addEventListener(
+            "click",
+            function () {
+
+                mobileMenu.classList.toggle(
+                    "open"
+                );
+
+                menuButton.classList.toggle(
+                    "active"
+                );
+
+            }
+        );
+
+
+        mobileMenu
+            .querySelectorAll("a")
+            .forEach(link => {
+
+                link.addEventListener(
+                    "click",
+                    function () {
+
+                        mobileMenu.classList.remove(
+                            "open"
+                        );
+
+                        menuButton.classList.remove(
+                            "active"
+                        );
+
+                    }
+                );
+
+            });
+
+    }
+
+
+    /*
+       Smooth scrolling for internal links.
+    */
+
+    document
+        .querySelectorAll(
+            'a[href^="#"]'
+        )
+        .forEach(link => {
+
+            link.addEventListener(
+                "click",
+                function(event) {
+
+                    const targetID =
+                        this.getAttribute("href");
+
+
+                    if (
+                        !targetID ||
+                        targetID === "#"
+                    ) {
+                        return;
+                    }
+
+
+                    const target =
+                        document.querySelector(
+                            targetID
+                        );
+
+
+                    if (!target) {
+                        return;
+                    }
+
+
+                    event.preventDefault();
+
+
+                    target.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start"
+                    });
+
+                }
+            );
+
+        });
+
+}
+
+
+/* =========================================================
+   6. STOCK BUTTONS
+========================================================= */
+
+function initializeStockButtons() {
+
+    document
+        .querySelectorAll(
+            "[data-stock-link]"
+        )
+        .forEach(button => {
+
+            button.addEventListener(
+                "click",
+                function(event) {
+
+                    const target =
+                        document.getElementById(
+                            "stock"
+                        );
+
+
+                    if (!target) {
+                        return;
+                    }
+
+
+                    event.preventDefault();
+
+
+                    target.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start"
+                    });
+
+                }
+            );
+
+        });
+
+}
+
+
+/* =========================================================
+   7. CART STORAGE
 ========================================================= */
 
 function loadCart() {
@@ -101,32 +273,34 @@ function loadCart() {
                 CART_STORAGE_KEY
             );
 
+
         if (!saved) {
             return [];
         }
 
+
         const parsed =
             JSON.parse(saved);
+
 
         return Array.isArray(parsed)
             ? parsed
             : [];
 
-    } catch (error) {
+
+    } catch(error) {
 
         console.error(
-            "Could not load cart:",
+            "Cart loading error:",
             error
         );
 
         return [];
+
     }
+
 }
 
-
-/* =========================================================
-   6. SAVE CART
-========================================================= */
 
 function saveCart() {
 
@@ -137,517 +311,43 @@ function saveCart() {
             JSON.stringify(cart)
         );
 
-    } catch (error) {
+
+    } catch(error) {
 
         console.error(
-            "Could not save cart:",
-            error
-        );
-    }
-}
-
-
-/* =========================================================
-   7. SUPABASE GROCERY DATA
-========================================================= */
-
-async function loadData() {
-
-    const ingredientList =
-        document.getElementById(
-            "ingredientList"
-        );
-
-    const mealSelect =
-        document.getElementById(
-            "meal"
-        );
-
-
-    if (
-        !ingredientList ||
-        !mealSelect
-    ) {
-        return;
-    }
-
-
-    if (!supabase) {
-
-        ingredientList.innerHTML = `
-            <p>
-                Grocery data could not be connected.
-                Please refresh the page.
-            </p>
-        `;
-
-        console.error(
-            "Supabase client is not available."
-        );
-
-        return;
-    }
-
-
-    try {
-
-        const [
-            ingredientResponse,
-            mealResponse
-        ] =
-            await Promise.all([
-
-                supabase
-                    .from("ingredients")
-                    .select("*")
-                    .eq("in_stock", true),
-
-                supabase
-                    .from("meals")
-                    .select("*")
-
-            ]);
-
-
-        const {
-            data: ingredientRows,
-            error: ingredientError
-        } = ingredientResponse;
-
-
-        const {
-            data: mealRows,
-            error: mealError
-        } = mealResponse;
-
-
-        if (ingredientError) {
-            throw ingredientError;
-        }
-
-
-        if (mealError) {
-            throw mealError;
-        }
-
-
-        ingredients = {};
-
-
-        (ingredientRows || [])
-            .forEach(row => {
-
-                ingredients[row.id] = {
-
-                    id:
-                        row.id,
-
-                    name:
-                        row.name,
-
-                    price:
-                        Number(row.price) || 0,
-
-                    unit:
-                        row.unit || "",
-
-                    icon:
-                        row.icon || "🛒"
-
-                };
-
-            });
-
-
-        mealCategories = {};
-
-
-        (mealRows || [])
-            .forEach(row => {
-
-                let ids =
-                    row.ingredient_ids;
-
-
-                if (
-                    typeof ids === "string"
-                ) {
-
-                    try {
-
-                        ids =
-                            JSON.parse(ids);
-
-                    } catch {
-
-                        ids = [];
-
-                    }
-
-                }
-
-
-                if (!Array.isArray(ids)) {
-                    ids = [];
-                }
-
-
-                mealCategories[row.name] =
-                    ids;
-
-            });
-
-
-        populateMealSelect();
-
-    } catch (error) {
-
-        console.error(
-            "Supabase grocery loading error:",
+            "Cart saving error:",
             error
         );
 
-
-        ingredientList.innerHTML = `
-            <p>
-                Sorry, we couldn't load the grocery menu.
-                Please refresh the page.
-            </p>
-        `;
     }
+
 }
 
 
 /* =========================================================
-   8. POPULATE MEALS
+   8. CART BUTTONS
 ========================================================= */
 
-function populateMealSelect() {
-
-    const mealSelect =
-        document.getElementById(
-            "meal"
-        );
-
-
-    if (!mealSelect) {
-        return;
-    }
-
-
-    const meals =
-        Object.keys(
-            mealCategories
-        );
-
-
-    if (!meals.length) {
-
-        mealSelect.innerHTML = `
-            <option>
-                No meals available
-            </option>
-        `;
-
-        return;
-    }
-
-
-    mealSelect.innerHTML =
-        meals
-            .map(meal => `
-                <option
-                    value="${escapeHTML(meal)}"
-                >
-                    ${escapeHTML(meal)}
-                </option>
-            `)
-            .join("");
-
-
-    showIngredients(
-        mealSelect.value
-    );
-
-
-    if (
-        !mealSelect.dataset.listenerAttached
-    ) {
-
-        mealSelect.addEventListener(
-            "change",
-            function () {
-
-                showIngredients(
-                    this.value
-                );
-
-            }
-        );
-
-
-        mealSelect.dataset.listenerAttached =
-            "true";
-    }
-}
-
-
-/* =========================================================
-   9. SHOW INGREDIENTS
-========================================================= */
-
-function showIngredients(mealName) {
-
-    const container =
-        document.getElementById(
-            "ingredientList"
-        );
-
-
-    if (!container) {
-        return;
-    }
-
-
-    const selectedIngredients =
-        mealCategories[mealName];
-
-
-    if (!selectedIngredients) {
-
-        container.innerHTML = "";
-
-        updateCustomTotal();
-
-        return;
-    }
-
-
-    container.innerHTML =
-        selectedIngredients
-            .map(id => {
-
-                const item =
-                    ingredients[id];
-
-
-                if (!item) {
-                    return "";
-                }
-
-
-                return `
-                    <label
-                        class="ingredient-option"
-                    >
-
-                        <input
-                            type="checkbox"
-                            value="${escapeHTML(item.id)}"
-                            onchange="updateCustomTotal()"
-                        >
-
-                        <span
-                            class="ingredient-icon"
-                        >
-                            ${item.icon}
-                        </span>
-
-                        <span
-                            class="ingredient-info"
-                        >
-
-                            <strong>
-                                ${escapeHTML(item.name)}
-                            </strong>
-
-                            <small>
-                                GH₵${formatMoney(item.price)}
-                                ${escapeHTML(item.unit)}
-                            </small>
-
-                        </span>
-
-                    </label>
-                `;
-
-            })
-            .join("");
-
-
-    updateCustomTotal();
-}
-
-
-/* =========================================================
-   10. CUSTOM TOTAL
-========================================================= */
-
-function updateCustomTotal() {
-
-    const container =
-        document.getElementById(
-            "ingredientList"
-        );
-
-    const totalElement =
-        document.getElementById(
-            "builderTotal"
-        );
-
-
-    if (
-        !container ||
-        !totalElement
-    ) {
-        return;
-    }
-
-
-    const selected =
-        container.querySelectorAll(
-            "input[type='checkbox']:checked"
-        );
-
-
-    let total = 0;
-
-
-    selected.forEach(input => {
-
-        const item =
-            ingredients[input.value];
-
-
-        if (item) {
-            total += item.price;
-        }
-
-    });
-
-
-    totalElement.textContent =
-        `GH₵${formatMoney(total)}`;
-}
-
-
-/* =========================================================
-   11. ADD CUSTOM PLATTER
-========================================================= */
-
-function addCustomPlatter() {
-
-    const mealSelect =
-        document.getElementById(
-            "meal"
-        );
-
-    const ingredientList =
-        document.getElementById(
-            "ingredientList"
-        );
-
-
-    if (
-        !mealSelect ||
-        !ingredientList
-    ) {
-        return;
-    }
-
-
-    const meal =
-        mealSelect.value;
-
-
-    const selected =
-        ingredientList.querySelectorAll(
-            "input[type='checkbox']:checked"
-        );
-
-
-    if (!selected.length) {
-
-        alert(
-            "Please select at least one ingredient."
-        );
-
-        return;
-    }
-
-
-    const selectedItems = [];
-
-
-    selected.forEach(input => {
-
-        const item =
-            ingredients[input.value];
-
-
-        if (!item) {
-            return;
-        }
-
-
-        selectedItems.push({
-
-            name:
-                item.name,
-
-            price:
-                item.price,
-
-            unit:
-                item.unit,
-
-            icon:
-                item.icon
+function initializeCartButtons() {
+
+    document
+        .querySelectorAll(
+            "[data-open-cart]"
+        )
+        .forEach(button => {
+
+            button.addEventListener(
+                "click",
+                openCart
+            );
 
         });
 
-    });
-
-
-    const total =
-        selectedItems.reduce(
-            (sum, item) =>
-                sum + Number(item.price),
-            0
-        );
-
-
-    addToCart({
-
-        name:
-            `${meal} Grocery Platter`,
-
-        price:
-            total,
-
-        icon:
-            "🧺",
-
-        category:
-            "Groceries",
-
-        desc:
-            selectedItems
-                .map(item => item.name)
-                .join(", "),
-
-        details:
-            selectedItems
-
-    });
-
-
-    openCart();
 }
 
 
 /* =========================================================
-   12. ADD TO CART
+   9. ADD TO CART
 ========================================================= */
 
 function addToCart(item) {
@@ -663,8 +363,7 @@ function addToCart(item) {
             "Product",
 
         price:
-            Number(item.price) ||
-            0,
+            Number(item.price) || 0,
 
         icon:
             item.icon ||
@@ -687,8 +386,7 @@ function addToCart(item) {
             null,
 
         quantity:
-            Number(item.quantity) ||
-            1
+            Number(item.quantity) || 1
 
     };
 
@@ -696,17 +394,10 @@ function addToCart(item) {
     const existingIndex =
         cart.findIndex(existing =>
 
-            existing.name ===
-                cartItem.name &&
-
-            existing.price ===
-                cartItem.price &&
-
-            existing.size ===
-                cartItem.size &&
-
-            existing.desc ===
-                cartItem.desc
+            existing.name === cartItem.name &&
+            existing.price === cartItem.price &&
+            existing.size === cartItem.size &&
+            existing.desc === cartItem.desc
 
         );
 
@@ -716,16 +407,12 @@ function addToCart(item) {
         !cartItem.details
     ) {
 
-        cart[
-            existingIndex
-        ].quantity +=
+        cart[existingIndex].quantity +=
             cartItem.quantity;
 
     } else {
 
-        cart.push(
-            cartItem
-        );
+        cart.push(cartItem);
 
     }
 
@@ -733,17 +420,17 @@ function addToCart(item) {
     saveCart();
 
     updateCart();
-
     updatePlatter();
 
     showCartToast(
-        `${cartItem.name} added to basket`
+        `${cartItem.name} added to cart`
     );
+
 }
 
 
 /* =========================================================
-   13. UNIQUE CART ID
+   10. CART ID
 ========================================================= */
 
 function createCartItemId() {
@@ -756,11 +443,12 @@ function createCartItemId() {
             .toString(36)
             .substring(2, 9)
     );
+
 }
 
 
 /* =========================================================
-   14. UPDATE CART
+   11. UPDATE CART
 ========================================================= */
 
 function updateCart() {
@@ -806,45 +494,30 @@ function updateCart() {
     if (!cart.length) {
 
         cartItems.innerHTML = `
-            <div
-                style="
-                    padding:30px 0;
-                    color:#5b6b7d;
-                    text-align:center;
-                "
-            >
-
-                <div
-                    style="
-                        font-size:38px;
-                        margin-bottom:10px;
-                    "
-                >
-                    🛒
-                </div>
-
-                <p>
-                    Your basket is empty.
-                </p>
-
+            <div class="empty-cart">
+                <div class="empty-cart-icon">🛒</div>
+                <h3>Your cart is empty</h3>
+                <p>Add something from our stock to get started.</p>
             </div>
         `;
 
 
         if (cartTotal) {
+
             cartTotal.textContent =
                 "GH₵0.00";
+
         }
 
-
         return;
+
     }
 
 
     cartItems.innerHTML =
         cart
             .map(
-                (item, index) => {
+                (item,index) => {
 
                     const quantity =
                         item.quantity || 1;
@@ -856,91 +529,97 @@ function updateCart() {
 
 
                     return `
-                        <div
-                            class="cart-item"
-                        >
+                        <div class="cart-item">
 
-                            <div
-                                class="cart-item-info"
-                            >
+                            <div class="cart-item-info">
 
-                                <b>
-                                    ${item.icon}
-                                    ${escapeHTML(item.name)}
-                                </b>
+                                <div class="cart-item-name">
+
+                                    <span>
+                                        ${item.icon}
+                                    </span>
+
+                                    <strong>
+                                        ${escapeHTML(item.name)}
+                                    </strong>
+
+                                </div>
+
 
                                 ${
                                     item.category
-                                        ? `
-                                            <small>
-                                                ${escapeHTML(item.category)}
-                                            </small>
-                                          `
-                                        : ""
+                                    ? `
+                                        <small>
+                                            ${escapeHTML(item.category)}
+                                        </small>
+                                    `
+                                    : ""
                                 }
+
 
                                 ${
                                     item.size
-                                        ? `
-                                            <small>
-                                                Size:
-                                                ${escapeHTML(item.size)}
-                                            </small>
-                                          `
-                                        : ""
+                                    ? `
+                                        <small>
+                                            Size:
+                                            ${escapeHTML(item.size)}
+                                        </small>
+                                    `
+                                    : ""
                                 }
+
 
                                 ${
                                     item.desc
-                                        ? `
-                                            <small>
-                                                ${escapeHTML(item.desc)}
-                                            </small>
-                                          `
-                                        : ""
+                                    ? `
+                                        <small>
+                                            ${escapeHTML(item.desc)}
+                                        </small>
+                                    `
+                                    : ""
                                 }
 
-                                <strong>
+
+                                <strong class="cart-item-price">
                                     GH₵${formatMoney(subtotal)}
                                 </strong>
 
                             </div>
 
 
-                            <div
-                                class="cart-item-actions"
-                            >
+                            <div class="cart-item-actions">
 
                                 ${
                                     !item.details
-                                        ? `
-                                            <div
-                                                class="quantity-controls"
+                                    ? `
+                                        <div class="quantity-controls">
+
+                                            <button
+                                                type="button"
+                                                onclick="changeQuantity(${index}, -1)"
                                             >
+                                                −
+                                            </button>
 
-                                                <button
-                                                    onclick="changeQuantity(${index}, -1)"
-                                                >
-                                                    −
-                                                </button>
+                                            <span>
+                                                ${quantity}
+                                            </span>
 
-                                                <span>
-                                                    ${quantity}
-                                                </span>
+                                            <button
+                                                type="button"
+                                                onclick="changeQuantity(${index}, 1)"
+                                            >
+                                                +
+                                            </button>
 
-                                                <button
-                                                    onclick="changeQuantity(${index}, 1)"
-                                                >
-                                                    +
-                                                </button>
-
-                                            </div>
-                                          `
-                                        : ""
+                                        </div>
+                                    `
+                                    : ""
                                 }
 
 
                                 <button
+                                    type="button"
                                     class="remove"
                                     onclick="removeItem(${index})"
                                 >
@@ -967,17 +646,15 @@ function updateCart() {
             `GH₵${formatMoney(total)}`;
 
     }
+
 }
 
 
 /* =========================================================
-   15. QUANTITY
+   12. CHANGE QUANTITY
 ========================================================= */
 
-function changeQuantity(
-    index,
-    amount
-) {
+function changeQuantity(index, amount) {
 
     if (!cart[index]) {
         return;
@@ -993,10 +670,7 @@ function changeQuantity(
         cart[index].quantity <= 0
     ) {
 
-        cart.splice(
-            index,
-            1
-        );
+        cart.splice(index,1);
 
     }
 
@@ -1004,13 +678,13 @@ function changeQuantity(
     saveCart();
 
     updateCart();
-
     updatePlatter();
+
 }
 
 
 /* =========================================================
-   16. REMOVE ITEM
+   13. REMOVE ITEM
 ========================================================= */
 
 function removeItem(index) {
@@ -1023,22 +697,18 @@ function removeItem(index) {
     }
 
 
-    cart.splice(
-        index,
-        1
-    );
-
+    cart.splice(index,1);
 
     saveCart();
 
     updateCart();
-
     updatePlatter();
+
 }
 
 
 /* =========================================================
-   17. OPEN CART
+   14. OPEN CART
 ========================================================= */
 
 function openCart() {
@@ -1060,11 +730,12 @@ function openCart() {
 
 
     updateCart();
+
 }
 
 
 /* =========================================================
-   18. CLOSE CART
+   15. CLOSE CART
 ========================================================= */
 
 function closeCart(event) {
@@ -1090,186 +761,725 @@ function closeCart(event) {
         );
 
     }
+
 }
 
 
 /* =========================================================
-   19. FASHION / JEWELRY / GIFTS
+   16. SUPABASE GROCERY DATA
 ========================================================= */
 
-function initializeProductButtons() {
+async function loadData() {
 
-    const buttons =
-        document.querySelectorAll(
-            ".ee-add-fashion-cart"
+    const ingredientList =
+        document.getElementById(
+            "ingredientList"
+        );
+
+    const mealSelect =
+        document.getElementById(
+            "meal"
         );
 
 
-    buttons.forEach(button => {
+    /*
+       No grocery builder on this page.
+    */
+
+    if (
+        !ingredientList ||
+        !mealSelect
+    ) {
+
+        return;
+
+    }
+
+
+    if (!supabase) {
+
+        ingredientList.innerHTML = `
+            <p>
+                Grocery data could not be connected.
+                Please refresh the page.
+            </p>
+        `;
+
+        return;
+
+    }
+
+
+    try {
+
+        const [
+            ingredientResponse,
+            mealResponse
+        ] =
+            await Promise.all([
+
+                supabase
+                    .from("ingredients")
+                    .select("*")
+                    .eq("in_stock",true),
+
+                supabase
+                    .from("meals")
+                    .select("*")
+
+            ]);
+
 
         if (
-            button.dataset.cartListener
+            ingredientResponse.error
         ) {
-            return;
+
+            throw ingredientResponse.error;
+
         }
 
 
-        button.addEventListener(
-            "click",
-            function () {
+        if (
+            mealResponse.error
+        ) {
 
-                const name =
-                    this.dataset.name ||
-                    "Product";
+            throw mealResponse.error;
 
-
-                const price =
-                    Number(
-                        this.dataset.price
-                    ) || 0;
+        }
 
 
-                const category =
-                    this.dataset.category ||
-                    "General";
+        ingredients = {};
 
 
-                const card =
-                    this.closest(
-                        ".ee-fashion-card"
-                    );
+        (
+            ingredientResponse.data ||
+            []
+        )
+        .forEach(row => {
+
+            ingredients[row.id] = {
+
+                id:
+                    row.id,
+
+                name:
+                    row.name,
+
+                price:
+                    Number(row.price) || 0,
+
+                unit:
+                    row.unit || "",
+
+                icon:
+                    row.icon || "🛒"
+
+            };
+
+        });
 
 
-                let selectedSize =
-                    "";
+        mealCategories = {};
 
 
-                if (card) {
+        (
+            mealResponse.data ||
+            []
+        )
+        .forEach(row => {
 
-                    const selected =
-                        card.querySelector(
-                            ".ee-size-options button.selected"
-                        );
+            let ids =
+                row.ingredient_ids;
 
 
-                    if (selected) {
+            if (
+                typeof ids ===
+                "string"
+            ) {
 
-                        selectedSize =
-                            selected.dataset.size ||
-                            selected.textContent.trim();
+                try {
 
-                    }
+                    ids =
+                        JSON.parse(ids);
+
+                } catch {
+
+                    ids = [];
 
                 }
-
-
-                const hasSizes =
-                    card &&
-                    card.querySelector(
-                        ".ee-size-options"
-                    );
-
-
-                if (
-                    hasSizes &&
-                    !selectedSize
-                ) {
-
-                    alert(
-                        "Please select a size before adding this item."
-                    );
-
-                    return;
-                }
-
-
-                addToCart({
-
-                    name,
-
-                    price,
-
-                    category,
-
-                    size:
-                        selectedSize,
-
-                    icon:
-                        getProductIcon(
-                            category
-                        )
-
-                });
 
             }
+
+
+            if (
+                !Array.isArray(ids)
+            ) {
+
+                ids = [];
+
+            }
+
+
+            mealCategories[
+                row.name
+            ] = ids;
+
+        });
+
+
+        populateMealSelect();
+
+
+    } catch(error) {
+
+        console.error(
+            "Supabase error:",
+            error
         );
 
 
-        button.dataset.cartListener =
-            "true";
-    });
+        ingredientList.innerHTML = `
+            <p>
+                Sorry, we couldn't load the grocery menu.
+                Please refresh the page.
+            </p>
+        `;
+
+    }
+
 }
 
 
 /* =========================================================
-   20. SIZE BUTTONS
+   17. MEAL SELECT
 ========================================================= */
 
-function initializeSizeButtons() {
+function populateMealSelect() {
 
-    const sizeButtons =
-        document.querySelectorAll(
-            ".ee-size-options button"
+    const mealSelect =
+        document.getElementById(
+            "meal"
         );
 
 
-    sizeButtons.forEach(button => {
-
-        if (
-            button.dataset.sizeListener
-        ) {
-            return;
-        }
+    if (!mealSelect) {
+        return;
+    }
 
 
-        button.addEventListener(
-            "click",
-            function () {
-
-                const container =
-                    this.parentElement;
+    const meals =
+        Object.keys(
+            mealCategories
+        );
 
 
-                container
-                    .querySelectorAll(
-                        "button"
-                    )
-                    .forEach(btn => {
+    if (!meals.length) {
 
-                        btn.classList.remove(
-                            "selected"
-                        );
+        mealSelect.innerHTML = `
+            <option>
+                No meals available
+            </option>
+        `;
 
-                    });
+        return;
+
+    }
 
 
-                this.classList.add(
-                    "selected"
+    mealSelect.innerHTML =
+        meals
+            .map(
+                meal => `
+                    <option value="${escapeHTML(meal)}">
+                        ${escapeHTML(meal)}
+                    </option>
+                `
+            )
+            .join("");
+
+
+    showIngredients(
+        mealSelect.value
+    );
+
+
+    if (
+        !mealSelect.dataset.listenerAttached
+    ) {
+
+        mealSelect.addEventListener(
+            "change",
+            function() {
+
+                showIngredients(
+                    this.value
                 );
 
             }
         );
 
 
-        button.dataset.sizeListener =
+        mealSelect.dataset.listenerAttached =
             "true";
 
-    });
+    }
+
 }
 
 
 /* =========================================================
-   21. PRODUCT ICON
+   18. INGREDIENTS
+========================================================= */
+
+function showIngredients(
+    mealName
+) {
+
+    const container =
+        document.getElementById(
+            "ingredientList"
+        );
+
+
+    if (!container) {
+        return;
+    }
+
+
+    const selectedIngredients =
+        mealCategories[
+            mealName
+        ];
+
+
+    if (!selectedIngredients) {
+
+        container.innerHTML = "";
+
+        updateCustomTotal();
+
+        return;
+
+    }
+
+
+    container.innerHTML =
+        selectedIngredients
+            .map(
+                id => {
+
+                    const item =
+                        ingredients[id];
+
+
+                    if (!item) {
+                        return "";
+                    }
+
+
+                    return `
+                        <label class="ingredient-option">
+
+                            <input
+                                type="checkbox"
+                                value="${escapeHTML(item.id)}"
+                                onchange="updateCustomTotal()"
+                            >
+
+                            <span class="ingredient-icon">
+                                ${item.icon}
+                            </span>
+
+                            <span class="ingredient-info">
+
+                                <strong>
+                                    ${escapeHTML(item.name)}
+                                </strong>
+
+                                <small>
+                                    GH₵${formatMoney(item.price)}
+                                    ${escapeHTML(item.unit)}
+                                </small>
+
+                            </span>
+
+                        </label>
+                    `;
+
+                }
+            )
+            .join("");
+
+
+    updateCustomTotal();
+
+}
+
+
+/* =========================================================
+   19. CUSTOM TOTAL
+========================================================= */
+
+function updateCustomTotal() {
+
+    const container =
+        document.getElementById(
+            "ingredientList"
+        );
+
+    const totalElement =
+        document.getElementById(
+            "builderTotal"
+        );
+
+
+    if (
+        !container ||
+        !totalElement
+    ) {
+
+        return;
+
+    }
+
+
+    const selected =
+        container.querySelectorAll(
+            "input[type='checkbox']:checked"
+        );
+
+
+    let total = 0;
+
+
+    selected.forEach(
+        input => {
+
+            const item =
+                ingredients[
+                    input.value
+                ];
+
+
+            if (item) {
+
+                total +=
+                    item.price;
+
+            }
+
+        }
+    );
+
+
+    totalElement.textContent =
+        `GH₵${formatMoney(total)}`;
+
+}
+
+
+/* =========================================================
+   20. ADD CUSTOM PLATTER
+========================================================= */
+
+function addCustomPlatter() {
+
+    const mealSelect =
+        document.getElementById(
+            "meal"
+        );
+
+    const ingredientList =
+        document.getElementById(
+            "ingredientList"
+        );
+
+
+    if (
+        !mealSelect ||
+        !ingredientList
+    ) {
+
+        return;
+
+    }
+
+
+    const selected =
+        ingredientList.querySelectorAll(
+            "input[type='checkbox']:checked"
+        );
+
+
+    if (!selected.length) {
+
+        alert(
+            "Please select at least one ingredient."
+        );
+
+        return;
+
+    }
+
+
+    const selectedItems = [];
+
+
+    selected.forEach(
+        input => {
+
+            const item =
+                ingredients[
+                    input.value
+                ];
+
+
+            if (!item) {
+                return;
+            }
+
+
+            selectedItems.push({
+
+                name:
+                    item.name,
+
+                price:
+                    item.price,
+
+                unit:
+                    item.unit,
+
+                icon:
+                    item.icon
+
+            });
+
+        }
+    );
+
+
+    const total =
+        selectedItems.reduce(
+            (sum,item) =>
+                sum +
+                Number(item.price),
+            0
+        );
+
+
+    addToCart({
+
+        name:
+            `${mealSelect.value} Grocery Platter`,
+
+        price:
+            total,
+
+        icon:
+            "🧺",
+
+        category:
+            "Groceries",
+
+        desc:
+            selectedItems
+                .map(
+                    item => item.name
+                )
+                .join(", "),
+
+        details:
+            selectedItems
+
+    });
+
+
+    openCart();
+
+}
+
+
+/* =========================================================
+   21. PRODUCT BUTTONS
+========================================================= */
+
+function initializeProductButtons() {
+
+    document
+        .querySelectorAll(
+            ".ee-add-fashion-cart"
+        )
+        .forEach(
+            button => {
+
+                if (
+                    button.dataset.cartListener
+                ) {
+                    return;
+                }
+
+
+                button.addEventListener(
+                    "click",
+                    function() {
+
+                        const name =
+                            this.dataset.name ||
+                            "Product";
+
+
+                        const price =
+                            Number(
+                                this.dataset.price
+                            ) || 0;
+
+
+                        const category =
+                            this.dataset.category ||
+                            "General";
+
+
+                        const card =
+                            this.closest(
+                                ".ee-fashion-card"
+                            );
+
+
+                        let selectedSize =
+                            "";
+
+
+                        if (card) {
+
+                            const selected =
+                                card.querySelector(
+                                    ".ee-size-options button.selected"
+                                );
+
+
+                            if (selected) {
+
+                                selectedSize =
+                                    selected.dataset.size ||
+                                    selected.textContent.trim();
+
+                            }
+
+                        }
+
+
+                        const hasSizes =
+                            card &&
+                            card.querySelector(
+                                ".ee-size-options"
+                            );
+
+
+                        if (
+                            hasSizes &&
+                            !selectedSize
+                        ) {
+
+                            alert(
+                                "Please select a size before adding this item."
+                            );
+
+                            return;
+
+                        }
+
+
+                        addToCart({
+
+                            name,
+
+                            price,
+
+                            category,
+
+                            size:
+                                selectedSize,
+
+                            icon:
+                                getProductIcon(
+                                    category
+                                )
+
+                        });
+
+                    }
+                );
+
+
+                button.dataset.cartListener =
+                    "true";
+
+            }
+        );
+
+}
+
+
+/* =========================================================
+   22. SIZE BUTTONS
+========================================================= */
+
+function initializeSizeButtons() {
+
+    document
+        .querySelectorAll(
+            ".ee-size-options button"
+        )
+        .forEach(
+            button => {
+
+                if (
+                    button.dataset.sizeListener
+                ) {
+                    return;
+                }
+
+
+                button.addEventListener(
+                    "click",
+                    function() {
+
+                        const container =
+                            this.parentElement;
+
+
+                        container
+                            .querySelectorAll(
+                                "button"
+                            )
+                            .forEach(
+                                btn =>
+                                    btn.classList.remove(
+                                        "selected"
+                                    )
+                            );
+
+
+                        this.classList.add(
+                            "selected"
+                        );
+
+                    }
+                );
+
+
+                button.dataset.sizeListener =
+                    "true";
+
+            }
+        );
+
+}
+
+
+/* =========================================================
+   23. PRODUCT ICON
 ========================================================= */
 
 function getProductIcon(
@@ -1317,11 +1527,12 @@ function getProductIcon(
 
 
     return "🛍️";
+
 }
 
 
 /* =========================================================
-   22. GIFT FILTER
+   24. GIFT FILTERS
 ========================================================= */
 
 function initializeGiftFilters() {
@@ -1330,7 +1541,6 @@ function initializeGiftFilters() {
         document.querySelectorAll(
             ".ee-gift-btn"
         );
-
 
     const cards =
         document.querySelectorAll(
@@ -1343,60 +1553,66 @@ function initializeGiftFilters() {
     }
 
 
-    buttons.forEach(button => {
+    buttons.forEach(
+        button => {
 
-        button.addEventListener(
-            "click",
-            function () {
+            button.addEventListener(
+                "click",
+                function() {
 
-                const filter =
-                    this.dataset.gift;
+                    const filter =
+                        this.dataset.gift;
 
 
-                buttons.forEach(btn =>
-                    btn.classList.remove(
+                    buttons.forEach(
+                        btn =>
+                            btn.classList.remove(
+                                "active"
+                            )
+                    );
+
+
+                    this.classList.add(
                         "active"
-                    )
-                );
+                    );
 
 
-                this.classList.add(
-                    "active"
-                );
+                    cards.forEach(
+                        card => {
+
+                            const type =
+                                card.dataset.giftType;
 
 
-                cards.forEach(card => {
+                            if (
+                                filter === "all" ||
+                                type === filter
+                            ) {
 
-                    const type =
-                        card.dataset.giftType;
+                                card.style.display =
+                                    "";
 
+                            } else {
 
-                    if (
-                        filter === "all" ||
-                        type === filter
-                    ) {
+                                card.style.display =
+                                    "none";
 
-                        card.style.display =
-                            "";
+                            }
 
-                    } else {
+                        }
+                    );
 
-                        card.style.display =
-                            "none";
+                }
+            );
 
-                    }
+        }
+    );
 
-                });
-
-            }
-        );
-
-    });
 }
 
 
 /* =========================================================
-   23. PLATTER PAGE
+   25. PLATTER
 ========================================================= */
 
 function updatePlatter() {
@@ -1422,7 +1638,7 @@ function updatePlatter() {
         container.innerHTML = `
             <div class="empty-platter">
 
-                <div>
+                <div class="empty-platter-icon">
                     🍽️
                 </div>
 
@@ -1431,9 +1647,8 @@ function updatePlatter() {
                 </h3>
 
                 <p>
-                    Visit Groceries, Clothing,
-                    Jewelry or Gifts and add
-                    something to your platter.
+                    Browse our stock and add
+                    something to your order.
                 </p>
 
             </div>
@@ -1447,15 +1662,15 @@ function updatePlatter() {
 
         }
 
-
         return;
+
     }
 
 
     container.innerHTML =
         cart
             .map(
-                (item, index) => {
+                (item,index) => {
 
                     const quantity =
                         item.quantity || 1;
@@ -1467,20 +1682,14 @@ function updatePlatter() {
 
 
                     return `
-                        <div
-                            class="platter-item-row"
-                        >
+                        <div class="platter-item-row">
 
-                            <div
-                                class="platter-item-icon"
-                            >
+                            <div class="platter-item-icon">
                                 ${item.icon}
                             </div>
 
 
-                            <div
-                                class="platter-item-info"
-                            >
+                            <div class="platter-item-info">
 
                                 <strong>
                                     ${escapeHTML(item.name)}
@@ -1492,31 +1701,30 @@ function updatePlatter() {
 
                                 ${
                                     item.size
-                                        ? `
-                                            <small>
-                                                Size:
-                                                ${escapeHTML(item.size)}
-                                            </small>
-                                          `
-                                        : ""
+                                    ? `
+                                        <small>
+                                            Size:
+                                            ${escapeHTML(item.size)}
+                                        </small>
+                                    `
+                                    : ""
                                 }
+
 
                                 ${
                                     item.desc
-                                        ? `
-                                            <small>
-                                                ${escapeHTML(item.desc)}
-                                            </small>
-                                          `
-                                        : ""
+                                    ? `
+                                        <small>
+                                            ${escapeHTML(item.desc)}
+                                        </small>
+                                    `
+                                    : ""
                                 }
 
                             </div>
 
 
-                            <div
-                                class="platter-item-price"
-                            >
+                            <div class="platter-item-price">
 
                                 GH₵${formatMoney(subtotal)}
 
@@ -1536,27 +1744,26 @@ function updatePlatter() {
             .join("");
 
 
-    const total =
-        getCartTotal();
-
-
     if (totalElement) {
 
         totalElement.textContent =
-            `GH₵${formatMoney(total)}`;
+            `GH₵${formatMoney(
+                getCartTotal()
+            )}`;
 
     }
+
 }
 
 
 /* =========================================================
-   24. CART TOTAL
+   26. CART TOTAL
 ========================================================= */
 
 function getCartTotal() {
 
     return cart.reduce(
-        (sum, item) =>
+        (sum,item) =>
             sum +
             (
                 Number(item.price) *
@@ -1564,11 +1771,12 @@ function getCartTotal() {
             ),
         0
     );
+
 }
 
 
 /* =========================================================
-   25. WHATSAPP CHECKOUT
+   27. WHATSAPP CHECKOUT
 ========================================================= */
 
 function checkoutWhatsApp() {
@@ -1576,10 +1784,11 @@ function checkoutWhatsApp() {
     if (!cart.length) {
 
         alert(
-            "Please add something to your basket first."
+            "Please add something to your cart first."
         );
 
         return;
+
     }
 
 
@@ -1605,60 +1814,63 @@ function checkoutWhatsApp() {
         );
 
         return;
+
     }
 
 
-    const total =
-        getCartTotal();
-
-
     const lines =
-        cart.map(item => {
+        cart.map(
+            item => {
 
-            const quantity =
-                item.quantity || 1;
-
-
-            const subtotal =
-                Number(item.price) *
-                quantity;
+                const quantity =
+                    item.quantity || 1;
 
 
-            let line =
-                `• ${item.name}`;
+                const subtotal =
+                    Number(item.price) *
+                    quantity;
 
 
-            if (quantity > 1) {
+                let line =
+                    `• ${item.name}`;
+
+
+                if (
+                    quantity > 1
+                ) {
+
+                    line +=
+                        ` × ${quantity}`;
+
+                }
+
+
+                if (item.size) {
+
+                    line +=
+                        ` — Size: ${item.size}`;
+
+                }
+
 
                 line +=
-                    ` × ${quantity}`;
+                    ` — GH₵${formatMoney(
+                        subtotal
+                    )}`;
+
+
+                if (item.desc) {
+
+                    line +=
+                        ` (${item.desc})`;
+
+                }
+
+
+                return line;
 
             }
-
-
-            if (item.size) {
-
-                line +=
-                    ` — Size: ${item.size}`;
-
-            }
-
-
-            line +=
-                ` — GH₵${formatMoney(subtotal)}`;
-
-
-            if (item.desc) {
-
-                line +=
-                    ` (${item.desc})`;
-
-            }
-
-
-            return line;
-
-        });
+        );
 
 
     const message =
@@ -1666,14 +1878,18 @@ function checkoutWhatsApp() {
 
 ${lines.join("\n")}
 
-Total: GH₵${formatMoney(total)}
+Total: GH₵${formatMoney(
+        getCartTotal()
+    )}
 
 Name: ${name}
 Delivery location: ${location}`;
 
 
     const url =
-        `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+        `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
+            message
+        )}`;
 
 
     window.open(
@@ -1681,11 +1897,12 @@ Delivery location: ${location}`;
         "_blank",
         "noopener"
     );
+
 }
 
 
 /* =========================================================
-   26. SHOW EMAIL
+   28. PAYSTACK EMAIL
 ========================================================= */
 
 function showEmailThenPay() {
@@ -1701,6 +1918,7 @@ function showEmailThenPay() {
         checkoutPaystack();
 
         return;
+
     }
 
 
@@ -1721,20 +1939,24 @@ function showEmailThenPay() {
 
 
         if (emailInput) {
+
             emailInput.focus();
+
         }
 
 
         return;
+
     }
 
 
     checkoutPaystack();
+
 }
 
 
 /* =========================================================
-   27. PAYSTACK CHECKOUT
+   29. PAYSTACK
 ========================================================= */
 
 function checkoutPaystack() {
@@ -1742,10 +1964,11 @@ function checkoutPaystack() {
     if (!cart.length) {
 
         alert(
-            "Please add something to your basket first."
+            "Please add something to your cart first."
         );
 
         return;
+
     }
 
 
@@ -1784,6 +2007,7 @@ function checkoutPaystack() {
         );
 
         return;
+
     }
 
 
@@ -1799,6 +2023,7 @@ function checkoutPaystack() {
         );
 
         return;
+
     }
 
 
@@ -1812,6 +2037,7 @@ function checkoutPaystack() {
         );
 
         return;
+
     }
 
 
@@ -1872,36 +2098,40 @@ function checkoutPaystack() {
             location,
 
             cart:
-                cart.map(item => ({
+                cart.map(
+                    item => ({
 
-                    name:
-                        item.name,
+                        name:
+                            item.name,
 
-                    price:
-                        item.price,
+                        price:
+                            item.price,
 
-                    quantity:
-                        item.quantity ||
-                        1,
+                        quantity:
+                            item.quantity ||
+                            1,
 
-                    category:
-                        item.category,
+                        category:
+                            item.category,
 
-                    size:
-                        item.size ||
-                        "",
+                        size:
+                            item.size ||
+                            "",
 
-                    desc:
-                        item.desc ||
-                        ""
+                        desc:
+                            item.desc ||
+                            ""
 
-                }))
+                    })
+                )
 
         },
 
 
         onSuccess:
-            async function(transaction) {
+            async function(
+                transaction
+            ) {
 
                 const paymentReference =
                     transaction.reference ||
@@ -1921,7 +2151,7 @@ function checkoutPaystack() {
             function() {
 
                 console.log(
-                    "Paystack payment cancelled."
+                    "Payment cancelled."
                 );
 
             },
@@ -1943,11 +2173,12 @@ function checkoutPaystack() {
             }
 
     });
+
 }
 
 
 /* =========================================================
-   28. PAYMENT REFERENCE
+   30. PAYMENT REFERENCE
 ========================================================= */
 
 function createPaymentReference() {
@@ -1960,11 +2191,12 @@ function createPaymentReference() {
             Math.random() * 100000
         )
     );
+
 }
 
 
 /* =========================================================
-   29. FINALIZE ORDER
+   31. FINALIZE ORDER
 ========================================================= */
 
 async function finalizeOrder(
@@ -1974,27 +2206,32 @@ async function finalizeOrder(
 ) {
 
     const itemsSnapshot =
-        cart.map(item => ({
+        cart.map(
+            item => ({
 
-            name:
-                item.name,
+                name:
+                    item.name,
 
-            price:
-                Number(item.price),
+                price:
+                    Number(item.price),
 
-            quantity:
-                item.quantity || 1,
+                quantity:
+                    item.quantity ||
+                    1,
 
-            category:
-                item.category,
+                category:
+                    item.category,
 
-            size:
-                item.size || "",
+                size:
+                    item.size ||
+                    "",
 
-            desc:
-                item.desc || ""
+                desc:
+                    item.desc ||
+                    ""
 
-        }));
+            })
+        );
 
 
     try {
@@ -2045,42 +2282,39 @@ async function finalizeOrder(
         ) {
 
             console.error(
-                "Order verification failed:",
+                "Verification failed:",
                 result
             );
 
 
             alert(
-                "Payment was completed, but we couldn't automatically confirm the order. " +
-                "Please contact us on WhatsApp and provide payment reference: " +
+                "Payment was completed, but we couldn't automatically confirm the order.\n\n" +
+                "Payment reference: " +
                 reference
             );
 
 
             return;
+
         }
 
 
         cart = [];
 
-
         saveCart();
 
         updateCart();
-
         updatePlatter();
 
         closeCart();
 
 
         alert(
-            `Payment successful!\n\n` +
-            `Reference: ${reference}\n\n` +
-            `We'll be in touch about delivery.`
+            `Payment successful!\n\nReference: ${reference}`
         );
 
 
-    } catch (error) {
+    } catch(error) {
 
         console.error(
             "Order finalization error:",
@@ -2089,17 +2323,18 @@ async function finalizeOrder(
 
 
         alert(
-            "Payment was completed, but there was a problem confirming your order. " +
-            "Please contact us on WhatsApp with payment reference: " +
+            "Payment was completed, but there was a problem confirming your order.\n\n" +
+            "Payment reference: " +
             reference
         );
 
     }
+
 }
 
 
 /* =========================================================
-   30. CHOOSE MEAL
+   32. CHOOSE MEAL
 ========================================================= */
 
 function chooseMeal(
@@ -2114,10 +2349,18 @@ function chooseMeal(
 
     if (!mealSelect) {
 
+        const url =
+            `index.html?meal=${encodeURIComponent(
+                mealName
+            )}#stock`;
+
+
         window.location.href =
-            `groceries.html?meal=${encodeURIComponent(mealName)}`;
+            url;
+
 
         return;
+
     }
 
 
@@ -2144,11 +2387,12 @@ function chooseMeal(
         });
 
     }
+
 }
 
 
 /* =========================================================
-   31. HANDLE MEAL URL
+   33. MEAL URL
 ========================================================= */
 
 function handleMealURL() {
@@ -2160,7 +2404,9 @@ function handleMealURL() {
 
 
     const meal =
-        params.get("meal");
+        params.get(
+            "meal"
+        );
 
 
     if (!meal) {
@@ -2196,13 +2442,14 @@ function handleMealURL() {
             }
 
         },
-        300
+        500
     );
+
 }
 
 
 /* =========================================================
-   32. CART TOAST
+   34. CART TOAST
 ========================================================= */
 
 function showCartToast(
@@ -2263,11 +2510,12 @@ function showCartToast(
             },
             2200
         );
+
 }
 
 
 /* =========================================================
-   33. GET INPUT
+   35. INPUT HELPER
 ========================================================= */
 
 function getInputValue(
@@ -2283,11 +2531,12 @@ function getInputValue(
     return element
         ? element.value.trim()
         : "";
+
 }
 
 
 /* =========================================================
-   34. MONEY
+   36. MONEY
 ========================================================= */
 
 function formatMoney(
@@ -2297,11 +2546,12 @@ function formatMoney(
     return Number(
         value || 0
     ).toFixed(2);
+
 }
 
 
 /* =========================================================
-   35. HTML ESCAPE
+   37. HTML ESCAPE
 ========================================================= */
 
 function escapeHTML(
@@ -2311,84 +2561,25 @@ function escapeHTML(
     return String(
         value ?? ""
     )
-        .replace(
-            /&/g,
-            "&amp;"
-        )
-        .replace(
-            /</g,
-            "&lt;"
-        )
-        .replace(
-            />/g,
-            "&gt;"
-        )
-        .replace(
-            /"/g,
-            "&quot;"
-        )
-        .replace(
-            /'/g,
-            "&#039;"
-        );
+    .replace(
+        /&/g,
+        "&amp;"
+    )
+    .replace(
+        /</g,
+        "&lt;"
+    )
+    .replace(
+        />/g,
+        "&gt;"
+    )
+    .replace(
+        /"/g,
+        "&quot;"
+    )
+    .replace(
+        /'/g,
+        "&#039;"
+    );
+
 }
-
-
-/* =========================================================
-   36. INITIALIZE
-========================================================= */
-
-document.addEventListener(
-    "DOMContentLoaded",
-    function () {
-
-        /*
-           Cart works everywhere.
-        */
-
-        updateCart();
-
-
-        /*
-           Platter page.
-        */
-
-        updatePlatter();
-
-
-        /*
-           Grocery builder.
-        */
-
-        loadData();
-
-
-        /*
-           Clothing / Jewelry / Gifts.
-        */
-
-        initializeProductButtons();
-
-
-        /*
-           Sizes.
-        */
-
-        initializeSizeButtons();
-
-
-        /*
-           Gift filters.
-        */
-
-        initializeGiftFilters();
-
-
-        /*
-           Grocery meal URL.
-        */
-
-        handleMealURL();
-
-    }
-);
