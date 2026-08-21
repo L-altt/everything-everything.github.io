@@ -1,1010 +1,665 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Everything Everything Groceries Platter — complete ingredients, great value, delivered with care.">
-  <title>Everything Everything | Groceries Platter</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="description"
+        content="Everything Everything — groceries, clothing, jewelry, gifts and custom platters."
+    >
+
+    <title>Everything Everything | Home</title>
+
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-  <header class="navbar">
-    <a class="brand" href="#home">
-      <span class="brand-mark">🛒</span>
-      <span>EVERYTHING <b>EVERYTHING</b></span>
+
+<!-- =========================================================
+     NAVIGATION
+========================================================= -->
+
+<header class="navbar">
+
+    <a class="brand" href="index.html">
+        <span class="brand-mark">🛒</span>
+
+        <span>
+            EVERYTHING <b>EVERYTHING</b>
+        </span>
     </a>
-    <nav>
-      <a href="#home">Home</a>
-      <a href="#categories">Shop</a>
-      <a href="#build">Build a Platter</a>
-      <a href="#about">About</a>
-      <a href="#contact">Contact</a>
+
+
+    <nav class="main-nav">
+
+        <a href="index.html" class="active">
+            Home
+        </a>
+
+        <a href="groceries.html">
+            Groceries
+        </a>
+
+        <a href="clothing.html">
+            Clothing
+        </a>
+
+        <a href="jewelry.html">
+            Jewelry
+        </a>
+
+        <a href="gifts.html">
+            Gifts
+        </a>
+
+        <a href="platter.html">
+            Platter
+        </a>
+
     </nav>
-    <button class="cart-button" onclick="openCart()">Cart <span id="cartCount">0</span></button>
-  </header>
 
-  <main>
-    <section class="hero" id="home">
-      <div class="hero-content">
-        <p class="eyebrow">ONE PLATTER. EVERYTHING YOU NEED.</p>
-        <h1>Groceries made <span>easy.</span></h1>
-        <p class="hero-text">Complete ingredients. Great value. Delivered with care.</p>
+
+    <button
+        class="cart-button"
+        onclick="openCart()"
+    >
+        Cart
+        <span id="cartCount">0</span>
+    </button>
+
+</header>
+
+
+<!-- =========================================================
+     MAIN
+========================================================= -->
+
+<main>
+
+
+<!-- =========================================================
+     HOME HERO
+========================================================= -->
+
+<section class="hero" id="home">
+
+    <div class="hero-content">
+
+        <p class="eyebrow">
+            EVERYTHING YOU NEED. ALL IN ONE PLACE.
+        </p>
+
+        <h1>
+            Everything,
+            <span>for everyone.</span>
+        </h1>
+
+        <p class="hero-text">
+            Shop groceries, clothing, jewelry and gifts —
+            or combine your favourites into one custom platter.
+        </p>
+
+
         <div class="hero-actions">
-          <a class="btn primary" href="#categories">Shop Now</a>
-          <a class="btn secondary" href="#build">Build Your Own</a>
+
+            <a
+                class="btn primary"
+                href="groceries.html"
+            >
+                Shop Groceries
+            </a>
+
+            <a
+                class="btn secondary"
+                href="platter.html"
+            >
+                Build Your Platter
+            </a>
+
         </div>
+
+
         <div class="trust-row">
-          <span>✓ Wide variety</span>
-          <span>✓ Affordable prices</span>
-          <span>✓ Fast delivery</span>
-        </div>
-      </div>
-      <div class="hero-image">
-        <img src="Assets.jpeg" alt="Everything Everything Groceries Platter flyer">
-      </div>
-    </section>
 
-    <section class="section shop-section" id="shop">
+            <span>✓ Wide variety</span>
 
-  <div class="section-heading">
-    <div>
-      <p class="eyebrow">SHOP EVERYTHING</p>
-      <h2>Explore Our Store</h2>
-    </div>
+            <span>✓ Affordable prices</span>
 
-    <p>
-      Choose from groceries, clothing, jewelry, gifts and more.
-      We're constantly expanding our collection.
-    </p>
-  </div>
+            <span>✓ One convenient store</span>
 
-
-  <!-- =========================================================
-       CATEGORY OVERVIEW
-  ========================================================= -->
-
-  <div class="category-overview" id="categories">
-
-    <div class="category-overview-grid">
-
-      <a class="category-overview-card" href="#groceries-section">
-        <span class="category-overview-icon">🛒</span>
-        <h4>Groceries</h4>
-        <p>Fresh ingredients &amp; meal platters.</p>
-      </a>
-
-      <a class="category-overview-card" href="#clothing-section">
-        <span class="category-overview-icon">👗</span>
-        <h4>Clothing</h4>
-        <p>Women's &amp; men's fashion.</p>
-      </a>
-
-      <a class="category-overview-card" href="#jewelry-section">
-        <span class="category-overview-icon">💍</span>
-        <h4>Jewelry</h4>
-        <p>Necklaces, rings, watches &amp; sets.</p>
-      </a>
-
-      <a class="category-overview-card" href="#gifts-section">
-        <span class="category-overview-icon">🎁</span>
-        <h4>Gifts</h4>
-        <p>Thoughtful gifts for every occasion.</p>
-      </a>
-
-    </div>
-
-  </div>
-
-
-  <!-- FOOD & GROCERIES -->
-
-  <div class="shop-category" id="groceries-section">
-
-    <div class="category-heading">
-      <div>
-        <p class="eyebrow">FOOD & GROCERIES</p>
-        <h3>Build Your Meal</h3>
-      </div>
-
-      <p>
-        Choose a meal and customize your grocery ingredients
-        exactly the way you want them.
-      </p>
-    </div>
-
-
-    <div class="category-products">
-
-
-      <article class="category-card">
-        <div class="category-icon">🍳</div>
-
-        <div>
-          <h4>English Breakfast</h4>
-          <p>Everything you need for a hearty English breakfast.</p>
         </div>
 
-        <button
-          class="btn primary"
-          onclick="chooseMeal('English Breakfast')"
+    </div>
+
+
+    <div class="hero-image">
+
+        <img
+            src="Assets.jpeg"
+            alt="Everything Everything"
         >
-          Customize
-        </button>
-      </article>
-
-
-      <article class="category-card">
-        <div class="category-icon">🍚</div>
-
-        <div>
-          <h4>Rice & Stew</h4>
-          <p>Choose your rice, stew ingredients and protein.</p>
-        </div>
-
-        <button
-          class="btn primary"
-          onclick="chooseMeal('Rice & Stew')"
-        >
-          Customize
-        </button>
-      </article>
-
-
-      <article class="category-card">
-        <div class="category-icon">🍲</div>
-
-        <div>
-          <h4>Jollof</h4>
-          <p>Build your own Jollof grocery platter.</p>
-        </div>
-
-        <button
-          class="btn primary"
-          onclick="chooseMeal('Jollof')"
-        >
-          Customize
-        </button>
-      </article>
-
-
-      <article class="category-card">
-        <div class="category-icon">🥘</div>
-
-        <div>
-          <h4>Fried Rice</h4>
-          <p>Select the ingredients and extras you want.</p>
-        </div>
-
-        <button
-          class="btn primary"
-          onclick="chooseMeal('Fried Rice')"
-        >
-          Customize
-        </button>
-      </article>
-
-
-      <article class="category-card">
-        <div class="category-icon">🥣</div>
-
-        <div>
-          <h4>Fufu</h4>
-          <p>Choose your fufu ingredients, soup and protein.</p>
-        </div>
-
-        <button
-          class="btn primary"
-          onclick="chooseMeal('Fufu')"
-        >
-          Customize
-        </button>
-      </article>
-
-
-      <article class="category-card">
-        <div class="category-icon">🍛</div>
-
-        <div>
-          <h4>Waakye</h4>
-          <p>Build a Waakye grocery platter to your preference.</p>
-        </div>
-
-        <button
-          class="btn primary"
-          onclick="chooseMeal('Waakye')"
-        >
-          Customize
-        </button>
-      </article>
-
-
-      <article class="category-card">
-        <div class="category-icon">🐟</div>
-
-        <div>
-          <h4>Banku & Tilapia</h4>
-          <p>Choose your banku, tilapia and accompaniments.</p>
-        </div>
-
-        <button
-          class="btn primary"
-          onclick="chooseMeal('Banku & Tilapia')"
-        >
-          Customize
-        </button>
-      </article>
-
-
-      <article class="category-card">
-        <div class="category-icon">🍽️</div>
-
-        <div>
-          <h4>Kenkey & Fish</h4>
-          <p>Customize your kenkey and fish grocery selection.</p>
-        </div>
-
-        <button
-          class="btn primary"
-          onclick="chooseMeal('Kenkey & Fish')"
-        >
-          Customize
-        </button>
-      </article>
 
     </div>
-
-  </div>
-
-
-    <!-- =========================================================
-       CLOTHING
-  ========================================================= -->
-
-  <div class="shop-category" id="clothing-section">
-
-    <div class="category-heading">
-      <div>
-        <p class="eyebrow">APPAREL</p>
-        <h3>Clothing</h3>
-      </div>
-      <p>
-        Women's and men's pieces you can mix, match, or shop
-        as a complete look.
-      </p>
-    </div>
-
-    <!-- WOMEN'S FASHION -->
-    <div class="ee-fashion-subsection">
-
-        <div class="ee-subsection-title">
-            <div>
-                <span>WOMEN</span>
-                <h3>Women's Collection</h3>
-            </div>
-        </div>
-
-        <div class="ee-product-grid">
-
-            <article class="ee-fashion-card" data-category="women" data-type="dress" data-gender="women">
-                <div class="ee-fashion-image">
-                    <img src="images/fashion/women-elegant-dress.jpg" alt="Elegant women's dress" onerror="this.src='images/placeholder.jpg'">
-                    <span class="ee-badge">DRESS</span>
-                </div>
-                <div class="ee-fashion-info">
-                    <h4>Elegant Women's Dress</h4>
-                    <p class="ee-product-description">Elegant versatile dress suitable for casual outings, church, dinners and special occasions.</p>
-                    <div class="ee-price">GH₵250.00</div>
-                    <div class="ee-size-label">Available Sizes</div>
-                    <div class="ee-size-options">
-                        <button data-size="XS">XS</button>
-                        <button data-size="S">S</button>
-                        <button data-size="M">M</button>
-                        <button data-size="L">L</button>
-                        <button data-size="XL">XL</button>
-                        <button data-size="XXL">XXL</button>
-                    </div>
-                    <button class="ee-add-fashion-cart" data-name="Elegant Women's Dress" data-price="250" data-category="Women">Add to Cart</button>
-                </div>
-            </article>
-
-            <article class="ee-fashion-card" data-category="women" data-type="top" data-gender="women">
-                <div class="ee-fashion-image">
-                    <img src="images/fashion/women-top.jpg" alt="Women's top" onerror="this.src='images/placeholder.jpg'">
-                    <span class="ee-badge">TOP</span>
-                </div>
-                <div class="ee-fashion-info">
-                    <h4>Classic Women's Top</h4>
-                    <p class="ee-product-description">Simple and versatile top designed to pair with skirts, jeans or trousers.</p>
-                    <div class="ee-price">GH₵120.00</div>
-                    <div class="ee-size-label">Available Sizes</div>
-                    <div class="ee-size-options">
-                        <button data-size="XS">XS</button>
-                        <button data-size="S">S</button>
-                        <button data-size="M">M</button>
-                        <button data-size="L">L</button>
-                        <button data-size="XL">XL</button>
-                    </div>
-                    <button class="ee-add-fashion-cart" data-name="Classic Women's Top" data-price="120" data-category="Women">Add to Cart</button>
-                </div>
-            </article>
-
-            <article class="ee-fashion-card" data-category="women" data-type="skirt" data-gender="women">
-                <div class="ee-fashion-image">
-                    <img src="images/fashion/women-skirt.jpg" alt="Women's skirt" onerror="this.src='images/placeholder.jpg'">
-                    <span class="ee-badge">SKIRT</span>
-                </div>
-                <div class="ee-fashion-info">
-                    <h4>Classic Women's Skirt</h4>
-                    <p class="ee-product-description">A versatile skirt that can be paired with tops, blouses or jackets.</p>
-                    <div class="ee-price">GH₵180.00</div>
-                    <div class="ee-size-label">Available Sizes</div>
-                    <div class="ee-size-options">
-                        <button data-size="S">S</button>
-                        <button data-size="M">M</button>
-                        <button data-size="L">L</button>
-                        <button data-size="XL">XL</button>
-                        <button data-size="XXL">XXL</button>
-                    </div>
-                    <button class="ee-add-fashion-cart" data-name="Classic Women's Skirt" data-price="180" data-category="Women">Add to Cart</button>
-                </div>
-            </article>
-
-        </div>
-    </div>
-
-    <!-- MEN'S FASHION -->
-    <div class="ee-fashion-subsection">
-
-        <div class="ee-subsection-title">
-            <div>
-                <span>MEN</span>
-                <h3>Men's Collection</h3>
-            </div>
-        </div>
-
-        <div class="ee-product-grid">
-
-            <article class="ee-fashion-card" data-category="men" data-type="shirt" data-gender="men">
-                <div class="ee-fashion-image">
-                    <img src="images/fashion/men-shirt.jpg" alt="Men's shirt" onerror="this.src='images/placeholder.jpg'">
-                    <span class="ee-badge">SHIRT</span>
-                </div>
-                <div class="ee-fashion-info">
-                    <h4>Classic Men's Shirt</h4>
-                    <p class="ee-product-description">Smart casual shirt suitable for work, church, outings and special occasions.</p>
-                    <div class="ee-price">GH₵180.00</div>
-                    <div class="ee-size-label">Available Sizes</div>
-                    <div class="ee-size-options">
-                        <button data-size="S">S</button>
-                        <button data-size="M">M</button>
-                        <button data-size="L">L</button>
-                        <button data-size="XL">XL</button>
-                        <button data-size="XXL">XXL</button>
-                    </div>
-                    <button class="ee-add-fashion-cart" data-name="Classic Men's Shirt" data-price="180" data-category="Men">Add to Cart</button>
-                </div>
-            </article>
-
-            <article class="ee-fashion-card" data-category="men" data-type="trousers" data-gender="men">
-                <div class="ee-fashion-image">
-                    <img src="images/fashion/men-trousers.jpg" alt="Men's trousers" onerror="this.src='images/placeholder.jpg'">
-                    <span class="ee-badge">TROUSERS</span>
-                </div>
-                <div class="ee-fashion-info">
-                    <h4>Classic Men's Trousers</h4>
-                    <p class="ee-product-description">Smart and comfortable trousers designed to pair with shirts, polos and jackets.</p>
-                    <div class="ee-price">GH₵220.00</div>
-                    <div class="ee-size-label">Waist Sizes</div>
-                    <div class="ee-size-options">
-                        <button data-size="28">28</button>
-                        <button data-size="30">30</button>
-                        <button data-size="32">32</button>
-                        <button data-size="34">34</button>
-                        <button data-size="36">36</button>
-                        <button data-size="38">38</button>
-                        <button data-size="40">40</button>
-                    </div>
-                    <button class="ee-add-fashion-cart" data-name="Classic Men's Trousers" data-price="220" data-category="Men">Add to Cart</button>
-                </div>
-            </article>
-
-            <article class="ee-fashion-card" data-category="men" data-type="jacket" data-gender="men">
-                <div class="ee-fashion-image">
-                    <img src="images/fashion/men-jacket.jpg" alt="Men's jacket" onerror="this.src='images/placeholder.jpg'">
-                    <span class="ee-badge">JACKET</span>
-                </div>
-                <div class="ee-fashion-info">
-                    <h4>Men's Smart Jacket</h4>
-                    <p class="ee-product-description">A smart finishing piece that completes formal and semi-formal outfits.</p>
-                    <div class="ee-price">GH₵350.00</div>
-                    <div class="ee-size-label">Available Sizes</div>
-                    <div class="ee-size-options">
-                        <button data-size="S">S</button>
-                        <button data-size="M">M</button>
-                        <button data-size="L">L</button>
-                        <button data-size="XL">XL</button>
-                        <button data-size="XXL">XXL</button>
-                    </div>
-                    <button class="ee-add-fashion-cart" data-name="Men's Smart Jacket" data-price="350" data-category="Men">Add to Cart</button>
-                </div>
-            </article>
-
-        </div>
-    </div>
-
-    <!-- COMPLETE LOOKS -->
-    <div class="ee-fashion-subsection ee-complete-looks">
-
-        <div class="ee-subsection-title">
-            <div>
-                <span>STYLE GUIDE</span>
-                <h3>Complete the Look</h3>
-            </div>
-        </div>
-
-        <p class="ee-look-intro">Don't know what to pair together? We've created complete looks to make choosing easier.</p>
-
-        <div class="ee-look-grid">
-
-            <article class="ee-look-card">
-                <div class="ee-look-image">
-                    <img src="images/fashion/women-complete-look.jpg" alt="Complete women's outfit" onerror="this.src='images/placeholder.jpg'">
-                </div>
-                <div class="ee-look-content">
-                    <span>WOMEN'S LOOK</span>
-                    <h4>Elegant Evening Look</h4>
-                    <p>Dress + Necklace + Bracelet + Earrings</p>
-                    <strong>Complete Look: GH₵450.00</strong>
-                    <button class="ee-add-fashion-cart" data-name="Women's Elegant Evening Complete Look" data-price="450" data-category="Complete Look">Add Complete Look</button>
-                </div>
-            </article>
-
-            <article class="ee-look-card">
-                <div class="ee-look-image">
-                    <img src="images/fashion/men-complete-look.jpg" alt="Complete men's outfit" onerror="this.src='images/placeholder.jpg'">
-                </div>
-                <div class="ee-look-content">
-                    <span>MEN'S LOOK</span>
-                    <h4>Smart Casual Look</h4>
-                    <p>Shirt + Trousers + Watch + Bracelet</p>
-                    <strong>Complete Look: GH₵520.00</strong>
-                    <button class="ee-add-fashion-cart" data-name="Men's Smart Casual Complete Look" data-price="520" data-category="Complete Look">Add Complete Look</button>
-                </div>
-            </article>
-
-        </div>
-    </div>
-
-  </div>
-
-
-  <!-- =========================================================
-       JEWELRY
-  ========================================================= -->
-
-  <div class="shop-category" id="jewelry-section">
-
-    <div class="category-heading">
-      <div>
-        <p class="eyebrow">ACCESSORIES</p>
-        <h3>Jewelry</h3>
-      </div>
-      <p>Necklaces, rings, bracelets, earrings and watches to finish any outfit.</p>
-    </div>
-
-    <div class="ee-fashion-subsection">
-        <div class="ee-product-grid">
-
-            <article class="ee-fashion-card" data-category="jewelry">
-                <div class="ee-fashion-image">
-                    <img src="images/jewelry/gold-necklace.jpg" alt="Gold necklace" onerror="this.src='images/placeholder.jpg'">
-                    <span class="ee-badge">NECKLACE</span>
-                </div>
-                <div class="ee-fashion-info">
-                    <h4>Elegant Gold Necklace</h4>
-                    <p class="ee-product-description">A simple statement necklace suitable for everyday and special occasions.</p>
-                    <div class="ee-price">GH₵150.00</div>
-                    <button class="ee-add-fashion-cart" data-name="Elegant Gold Necklace" data-price="150" data-category="Jewelry">Add to Cart</button>
-                </div>
-            </article>
-
-            <article class="ee-fashion-card" data-category="jewelry">
-                <div class="ee-fashion-image">
-                    <img src="images/jewelry/ring.jpg" alt="Fashion ring" onerror="this.src='images/placeholder.jpg'">
-                    <span class="ee-badge">RING</span>
-                </div>
-                <div class="ee-fashion-info">
-                    <h4>Classic Fashion Ring</h4>
-                    <p class="ee-product-description">Minimalist ring suitable for everyday wear.</p>
-                    <div class="ee-price">GH₵90.00</div>
-                    <div class="ee-size-label">Ring Sizes</div>
-                    <div class="ee-size-options">
-                        <button data-size="6">6</button>
-                        <button data-size="7">7</button>
-                        <button data-size="8">8</button>
-                        <button data-size="9">9</button>
-                        <button data-size="10">10</button>
-                        <button data-size="11">11</button>
-                    </div>
-                    <button class="ee-add-fashion-cart" data-name="Classic Fashion Ring" data-price="90" data-category="Jewelry">Add to Cart</button>
-                </div>
-            </article>
-
-            <article class="ee-fashion-card" data-category="jewelry">
-                <div class="ee-fashion-image">
-                    <img src="images/jewelry/bracelet.jpg" alt="Fashion bracelet" onerror="this.src='images/placeholder.jpg'">
-                    <span class="ee-badge">BRACELET</span>
-                </div>
-                <div class="ee-fashion-info">
-                    <h4>Classic Bracelet</h4>
-                    <p class="ee-product-description">A versatile bracelet that complements casual and formal outfits.</p>
-                    <div class="ee-price">GH₵100.00</div>
-                    <button class="ee-add-fashion-cart" data-name="Classic Bracelet" data-price="100" data-category="Jewelry">Add to Cart</button>
-                </div>
-            </article>
-
-            <article class="ee-fashion-card" data-category="jewelry">
-                <div class="ee-fashion-image">
-                    <img src="images/jewelry/earrings.jpg" alt="Fashion earrings" onerror="this.src='images/placeholder.jpg'">
-                    <span class="ee-badge">EARRINGS</span>
-                </div>
-                <div class="ee-fashion-info">
-                    <h4>Elegant Earrings</h4>
-                    <p class="ee-product-description">Stylish earrings designed to complete both casual and formal looks.</p>
-                    <div class="ee-price">GH₵80.00</div>
-                    <button class="ee-add-fashion-cart" data-name="Elegant Earrings" data-price="80" data-category="Jewelry">Add to Cart</button>
-                </div>
-            </article>
-
-            <article class="ee-fashion-card" data-category="jewelry">
-                <div class="ee-fashion-image">
-                    <img src="images/jewelry/watch.jpg" alt="Fashion watch" onerror="this.src='images/placeholder.jpg'">
-                    <span class="ee-badge">WATCH</span>
-                </div>
-                <div class="ee-fashion-info">
-                    <h4>Classic Fashion Watch</h4>
-                    <p class="ee-product-description">A clean and versatile watch for everyday style.</p>
-                    <div class="ee-price">GH₵280.00</div>
-                    <button class="ee-add-fashion-cart" data-name="Classic Fashion Watch" data-price="280" data-category="Jewelry">Add to Cart</button>
-                </div>
-            </article>
-
-            <article class="ee-fashion-card" data-category="jewelry">
-                <div class="ee-fashion-image">
-                    <img src="images/jewelry/jewelry-set.jpg" alt="Jewelry set" onerror="this.src='images/placeholder.jpg'">
-                    <span class="ee-badge">SET</span>
-                </div>
-                <div class="ee-fashion-info">
-                    <h4>Complete Jewelry Set</h4>
-                    <p class="ee-product-description">Necklace, bracelet and earrings designed to be worn together.</p>
-                    <div class="ee-price">GH₵300.00</div>
-                    <button class="ee-add-fashion-cart" data-name="Complete Jewelry Set" data-price="300" data-category="Jewelry">Add to Cart</button>
-                </div>
-            </article>
-
-        </div>
-    </div>
-
-  </div>
-
-
-  <!-- =========================================================
-       GIFTS
-  ========================================================= -->
-
-  <div class="shop-category" id="gifts-section">
-
-    <div class="category-heading">
-      <div>
-        <p class="eyebrow">GIFTING</p>
-        <h3>Gifts</h3>
-      </div>
-      <p>Not sure what to buy? Filter by occasion and we'll help you find something suitable.</p>
-    </div>
-
-    <div class="ee-gift-filter">
-        <button class="ee-gift-btn active" data-gift="all">All Gifts</button>
-        <button class="ee-gift-btn" data-gift="birthday">Birthday</button>
-        <button class="ee-gift-btn" data-gift="couples">Couples</button>
-        <button class="ee-gift-btn" data-gift="graduation">Graduation</button>
-        <button class="ee-gift-btn" data-gift="christian">Christian</button>
-        <button class="ee-gift-btn" data-gift="selfcare">Self-Care</button>
-    </div>
-
-    <div class="ee-fashion-subsection ee-gifts-section">
-        <div class="ee-product-grid">
-
-            <article class="ee-fashion-card ee-gift-card" data-category="gifts" data-gift-type="birthday">
-                <div class="ee-fashion-image">
-                    <img src="images/gifts/birthday-gift.jpg" alt="Birthday gift" onerror="this.src='images/placeholder.jpg'">
-                    <span class="ee-badge">BIRTHDAY</span>
-                </div>
-                <div class="ee-fashion-info">
-                    <h4>Birthday Gift Box</h4>
-                    <p class="ee-product-description">A thoughtful gift box suitable for birthdays and personal celebrations.</p>
-                    <div class="ee-price">GH₵250.00</div>
-                    <button class="ee-add-fashion-cart" data-name="Birthday Gift Box" data-price="250" data-category="Gift">Add to Cart</button>
-                </div>
-            </article>
-
-            <article class="ee-fashion-card ee-gift-card" data-category="gifts" data-gift-type="couples">
-                <div class="ee-fashion-image">
-                    <img src="images/gifts/couple-gift.jpg" alt="Couple gift" onerror="this.src='images/placeholder.jpg'">
-                    <span class="ee-badge">COUPLES</span>
-                </div>
-                <div class="ee-fashion-info">
-                    <h4>Couples Gift Set</h4>
-                    <p class="ee-product-description">A coordinated gift set designed for couples and special celebrations.</p>
-                    <div class="ee-price">GH₵350.00</div>
-                    <button class="ee-add-fashion-cart" data-name="Couples Gift Set" data-price="350" data-category="Gift">Add to Cart</button>
-                </div>
-            </article>
-
-            <article class="ee-fashion-card ee-gift-card" data-category="gifts" data-gift-type="graduation">
-                <div class="ee-fashion-image">
-                    <img src="images/gifts/graduation-gift.jpg" alt="Graduation gift" onerror="this.src='images/placeholder.jpg'">
-                    <span class="ee-badge">GRADUATION</span>
-                </div>
-                <div class="ee-fashion-info">
-                    <h4>Graduation Gift Box</h4>
-                    <p class="ee-product-description">A celebratory gift idea for someone completing school or university.</p>
-                    <div class="ee-price">GH₵300.00</div>
-                    <button class="ee-add-fashion-cart" data-name="Graduation Gift Box" data-price="300" data-category="Gift">Add to Cart</button>
-                </div>
-            </article>
-
-            <article class="ee-fashion-card ee-gift-card" data-category="gifts" data-gift-type="christian">
-                <div class="ee-fashion-image">
-                    <img src="images/gifts/christian-gift.jpg" alt="Christian gift" onerror="this.src='images/placeholder.jpg'">
-                    <span class="ee-badge">CHRISTIAN</span>
-                </div>
-                <div class="ee-fashion-info">
-                    <h4>Christian Gift Set</h4>
-                    <p class="ee-product-description">A meaningful faith-inspired gift suitable for friends, family and church members.</p>
-                    <div class="ee-price">GH₵220.00</div>
-                    <button class="ee-add-fashion-cart" data-name="Christian Gift Set" data-price="220" data-category="Gift">Add to Cart</button>
-                </div>
-            </article>
-
-            <article class="ee-fashion-card ee-gift-card" data-category="gifts" data-gift-type="selfcare">
-                <div class="ee-fashion-image">
-                    <img src="images/gifts/self-care-gift.jpg" alt="Self-care gift" onerror="this.src='images/placeholder.jpg'">
-                    <span class="ee-badge">SELF-CARE</span>
-                </div>
-                <div class="ee-fashion-info">
-                    <h4>Self-Care Gift Box</h4>
-                    <p class="ee-product-description">A relaxing collection designed for someone who deserves a thoughtful treat.</p>
-                    <div class="ee-price">GH₵280.00</div>
-                    <button class="ee-add-fashion-cart" data-name="Self-Care Gift Box" data-price="280" data-category="Gift">Add to Cart</button>
-                </div>
-            </article>
-
-        </div>
-    </div>
-
-  </div>
 
 </section>
 
 
+
 <!-- =========================================================
-     SIZE GUIDE
+     SHOP BY CATEGORY
 ========================================================= -->
 
-<section id="size-guide" class="ee-size-guide">
+<section class="section shop-section" id="categories">
 
-    <div class="ee-section-heading">
+    <div class="section-heading">
 
-        <span>FIND YOUR FIT</span>
+        <div>
 
-        <h2>Clothing Size Guide</h2>
+            <p class="eyebrow">
+                SHOP EVERYTHING
+            </p>
+
+            <h2>
+                Explore Our Store
+            </h2>
+
+        </div>
+
 
         <p>
-            Use these measurements as a general guide.
-            Individual products may vary.
+            From everyday groceries to fashion, jewelry and
+            thoughtful gifts, find everything you need in one place.
         </p>
 
     </div>
 
 
-    <div class="ee-size-table-wrapper">
-
-        <h3>Women's Clothing</h3>
-
-        <table class="ee-size-table">
-
-            <thead>
-                <tr>
-                    <th>Size</th>
-                    <th>Bust (cm)</th>
-                    <th>Waist (cm)</th>
-                    <th>Hips (cm)</th>
-                </tr>
-            </thead>
-
-            <tbody>
-
-                <tr>
-                    <td>XS</td>
-                    <td>80–84</td>
-                    <td>60–64</td>
-                    <td>86–90</td>
-                </tr>
-
-                <tr>
-                    <td>S</td>
-                    <td>85–89</td>
-                    <td>65–69</td>
-                    <td>91–95</td>
-                </tr>
-
-                <tr>
-                    <td>M</td>
-                    <td>90–94</td>
-                    <td>70–74</td>
-                    <td>96–100</td>
-                </tr>
-
-                <tr>
-                    <td>L</td>
-                    <td>95–100</td>
-                    <td>75–80</td>
-                    <td>101–106</td>
-                </tr>
-
-                <tr>
-                    <td>XL</td>
-                    <td>101–106</td>
-                    <td>81–86</td>
-                    <td>107–112</td>
-                </tr>
-
-                <tr>
-                    <td>XXL</td>
-                    <td>107–112</td>
-                    <td>87–92</td>
-                    <td>113–118</td>
-                </tr>
-
-            </tbody>
-
-        </table>
-
-    </div>
+    <div class="category-overview-grid">
 
 
-    <div class="ee-size-table-wrapper">
+        <!-- GROCERIES -->
 
-        <h3>Men's Clothing</h3>
+        <a
+            class="category-overview-card"
+            href="groceries.html"
+        >
 
-        <table class="ee-size-table">
+            <span class="category-overview-icon">
+                🛒
+            </span>
 
-            <thead>
-                <tr>
-                    <th>Size</th>
-                    <th>Chest (cm)</th>
-                    <th>Waist (cm)</th>
-                    <th>Typical Waist</th>
-                </tr>
-            </thead>
+            <h4>
+                Groceries
+            </h4>
 
-            <tbody>
+            <p>
+                Fresh ingredients and meal platters.
+            </p>
 
-                <tr>
-                    <td>S</td>
-                    <td>86–91</td>
-                    <td>71–76</td>
-                    <td>28–30"</td>
-                </tr>
+            <span class="category-link">
+                Shop Groceries →
+            </span>
 
-                <tr>
-                    <td>M</td>
-                    <td>92–97</td>
-                    <td>77–82</td>
-                    <td>30–32"</td>
-                </tr>
-
-                <tr>
-                    <td>L</td>
-                    <td>98–103</td>
-                    <td>83–88</td>
-                    <td>34–36"</td>
-                </tr>
-
-                <tr>
-                    <td>XL</td>
-                    <td>104–109</td>
-                    <td>89–94</td>
-                    <td>36–38"</td>
-                </tr>
-
-                <tr>
-                    <td>XXL</td>
-                    <td>110–116</td>
-                    <td>95–101</td>
-                    <td>40–42"</td>
-                </tr>
-
-            </tbody>
-
-        </table>
-
-    </div>
+        </a>
 
 
-    <div class="ee-size-table-wrapper">
 
-        <h3>Ring Size Guide</h3>
+        <!-- CLOTHING -->
 
-        <table class="ee-size-table">
+        <a
+            class="category-overview-card"
+            href="clothing.html"
+        >
 
-            <thead>
+            <span class="category-overview-icon">
+                👗
+            </span>
 
-                <tr>
-                    <th>US Size</th>
-                    <th>Approx. Diameter</th>
-                    <th>Approx. Circumference</th>
-                </tr>
+            <h4>
+                Clothing
+            </h4>
 
-            </thead>
+            <p>
+                Women's and men's fashion.
+            </p>
 
-            <tbody>
+            <span class="category-link">
+                Shop Clothing →
+            </span>
 
-                <tr>
-                    <td>6</td>
-                    <td>16.5 mm</td>
-                    <td>51.9 mm</td>
-                </tr>
+        </a>
 
-                <tr>
-                    <td>7</td>
-                    <td>17.3 mm</td>
-                    <td>54.4 mm</td>
-                </tr>
 
-                <tr>
-                    <td>8</td>
-                    <td>18.2 mm</td>
-                    <td>57.0 mm</td>
-                </tr>
 
-                <tr>
-                    <td>9</td>
-                    <td>18.9 mm</td>
-                    <td>59.5 mm</td>
-                </tr>
+        <!-- JEWELRY -->
 
-                <tr>
-                    <td>10</td>
-                    <td>19.8 mm</td>
-                    <td>62.1 mm</td>
-                </tr>
+        <a
+            class="category-overview-card"
+            href="jewelry.html"
+        >
 
-                <tr>
-                    <td>11</td>
-                    <td>20.6 mm</td>
-                    <td>64.6 mm</td>
-                </tr>
+            <span class="category-overview-icon">
+                💍
+            </span>
 
-            </tbody>
+            <h4>
+                Jewelry
+            </h4>
 
-        </table>
+            <p>
+                Necklaces, rings, bracelets, earrings and watches.
+            </p>
+
+            <span class="category-link">
+                Shop Jewelry →
+            </span>
+
+        </a>
+
+
+
+        <!-- GIFTS -->
+
+        <a
+            class="category-overview-card"
+            href="gifts.html"
+        >
+
+            <span class="category-overview-icon">
+                🎁
+            </span>
+
+            <h4>
+                Gifts
+            </h4>
+
+            <p>
+                Thoughtful gifts for every occasion.
+            </p>
+
+            <span class="category-link">
+                Shop Gifts →
+            </span>
+
+        </a>
+
+
+
+        <!-- PLATTER -->
+
+        <a
+            class="category-overview-card platter-category-card"
+            href="platter.html"
+        >
+
+            <span class="category-overview-icon">
+                🍽️
+            </span>
+
+            <h4>
+                Platter
+            </h4>
+
+            <p>
+                Combine products from every category into one order.
+            </p>
+
+            <span class="category-link">
+                Build Your Platter →
+            </span>
+
+        </a>
 
     </div>
 
 </section>
 
-</section>
 
 
-    <!-- =========================================================
-         BUILD A PLATTER — combines everything above
-    ========================================================= -->
+<!-- =========================================================
+     PLATTER PROMOTION
+========================================================= -->
 
-    <section class="section build" id="build">
+<section class="section platter-promo">
 
-  <div>
-    <p class="eyebrow">BUILD YOUR OWN</p>
-    <h2>Create your <span>custom platter.</span></h2>
-    <p>Pick a meal, tick off exactly the ingredients you need, and we'll put together a grocery platter priced to match.</p>
-  </div>
+    <div class="platter-promo-content">
 
-  <div class="builder-card">
+        <p class="eyebrow">
+            YOUR CHOICE. YOUR COMBINATION.
+        </p>
 
-    <label for="meal">Choose a meal</label>
-    <select id="meal">
-      <option value="English Breakfast">English Breakfast</option>
-      <option value="Rice &amp; Stew">Rice &amp; Stew</option>
-      <option value="Jollof">Jollof</option>
-      <option value="Fried Rice">Fried Rice</option>
-      <option value="Fufu">Fufu</option>
-      <option value="Waakye">Waakye</option>
-      <option value="Banku &amp; Tilapia">Banku &amp; Tilapia</option>
-      <option value="Kenkey &amp; Fish">Kenkey &amp; Fish</option>
-    </select>
+        <h2>
+            Build your
+            <span>own platter.</span>
+        </h2>
 
-    <div class="ingredient-heading">
-      <strong>Select your ingredients</strong>
-      <small>Tick everything you'd like included</small>
+        <p>
+            Why choose just one category?
+            Pick your favourite groceries, clothing, jewelry
+            and gifts and combine them into one custom order.
+        </p>
+
+        <a
+            href="platter.html"
+            class="btn primary"
+        >
+            Start Building
+        </a>
+
     </div>
 
-    <div class="ingredient-list" id="ingredientList"></div>
 
-    <div class="builder-total">
-      <span>Total</span>
-      <strong id="builderTotal">GH₵0</strong>
-    </div>
+    <div class="platter-promo-visual">
 
-    <button class="btn primary full" onclick="addCustomPlatter()">Add to Cart</button>
-
-  </div>
-
-</section>
-
-
-
-    <section class="section about" id="about">
-      <div class="about-card">
-        <p class="eyebrow">WHY EVERYTHING EVERYTHING?</p>
-        <h2>Everything you need, in one place.</h2>
-        <p>We make grocery shopping simpler by putting the ingredients you need for everyday meals together in convenient packs.</p>
-        <div class="features">
-          <div><b>🧺 Wide Variety</b><span>Meal essentials in convenient packs.</span></div>
-          <div><b>💰 Affordable Prices</b><span>Great value for your everyday shopping.</span></div>
-          <div><b>🛵 Reliable Delivery</b><span>We deliver your groceries with care.</span></div>
-          <div><b>✨ Flexible Shopping</b><span>Buy a platter or individual items.</span></div>
+        <div class="platter-item">
+            🛒
+            <span>Groceries</span>
         </div>
-      </div>
-    </section>
 
-    <section class="section contact" id="contact">
-      <div>
-        <p class="eyebrow">READY TO ORDER?</p>
-        <h2>Let's get your groceries to you.</h2>
-        <p>Place an order through WhatsApp and we'll confirm availability, delivery and payment.</p>
-      </div>
-      <a class="whatsapp" href="https://wa.me/233595485044" target="_blank">💬 Order on WhatsApp</a>
-    </section>
-  </main>
+        <div class="platter-item">
+            👗
+            <span>Clothing</span>
+        </div>
 
-  <footer>
-    <div>
-      <strong>EVERYTHING EVERYTHING</strong>
-      <p>Your One-Stop Groceries Platter.</p>
+        <div class="platter-item">
+            💍
+            <span>Jewelry</span>
+        </div>
+
+        <div class="platter-item">
+            🎁
+            <span>Gifts</span>
+        </div>
+
     </div>
-    <div>
-      <p>📞 +233 54 625 3878</p>
-      <p>📞 +233 54 702 6348</p>
+
+</section>
+
+
+
+<!-- =========================================================
+     ABOUT
+========================================================= -->
+
+<section
+    class="section about"
+    id="about"
+>
+
+    <div class="about-card">
+
+        <p class="eyebrow">
+            WHY EVERYTHING EVERYTHING?
+        </p>
+
+        <h2>
+            Everything you need,
+            in one place.
+        </h2>
+
+        <p>
+            Everything Everything is designed to make shopping
+            simple. Whether you're looking for groceries,
+            something to wear, jewelry for yourself or someone
+            special, or the perfect gift, you can find it here.
+        </p>
+
+
+        <div class="features">
+
+
+            <div>
+                <b>🧺 Wide Variety</b>
+
+                <span>
+                    Different products and categories
+                    in one store.
+                </span>
+            </div>
+
+
+            <div>
+                <b>💰 Affordable Prices</b>
+
+                <span>
+                    Great value for your everyday shopping.
+                </span>
+            </div>
+
+
+            <div>
+                <b>🛍️ Easy Shopping</b>
+
+                <span>
+                    Browse each category independently
+                    or combine your selections.
+                </span>
+            </div>
+
+
+            <div>
+                <b>✨ Flexible Shopping</b>
+
+                <span>
+                    Buy individual products or create
+                    a custom platter.
+                </span>
+            </div>
+
+
+        </div>
+
     </div>
-    <p>© 2026 Everything Everything</p>
-  </footer>
 
-  <div class="cart-overlay" id="cartOverlay" onclick="closeCart(event)">
-    <aside class="cart" onclick="event.stopPropagation()">
-      <div class="cart-header">
-        <h2>Your Cart</h2>
-        <button onclick="closeCart()">×</button>
-      </div>
-      <div id="cartItems"></div>
-      <div class="cart-total">
-        <span>Total</span><strong id="cartTotal">GH₵0</strong>
-      </div>
-            <label class="checkout-label">Your name
-        <input id="customerName" placeholder="Enter your name">
-      </label>
-      <label class="checkout-label">Delivery location
-        <input id="customerLocation" placeholder="e.g. UPSA, Accra">
-      </label>
-      <label class="checkout-label" id="emailField" style="display:none">Email (for payment receipt)
-        <input id="customerEmail" type="email" placeholder="you@example.com">
-      </label>
+</section>
 
-      <button class="btn secondary full" onclick="checkoutWhatsApp()">💬 Order via WhatsApp</button>
-      <button class="btn primary full" onclick="showEmailThenPay()" style="margin-top:10px">💳 Pay Now with Paystack</button>
+
+
+<!-- =========================================================
+     CONTACT
+========================================================= -->
+
+<section
+    class="section contact"
+    id="contact"
+>
+
+    <div>
+
+        <p class="eyebrow">
+            READY TO ORDER?
+        </p>
+
+        <h2>
+            Let's get your order ready.
+        </h2>
+
+        <p>
+            Select your products, add them to your platter
+            or cart, and place your order through WhatsApp.
+        </p>
+
+    </div>
+
+
+    <a
+        class="whatsapp"
+        href="https://wa.me/233595485044"
+        target="_blank"
+        rel="noopener"
+    >
+        💬 Order on WhatsApp
+    </a>
+
+</section>
+
+</main>
+
+
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+
+<footer>
+
+    <div>
+
+        <strong>
+            EVERYTHING EVERYTHING
+        </strong>
+
+        <p>
+            Everything you need, in one place.
+        </p>
+
+    </div>
+
+
+    <div>
+
+        <p>
+            📞 +233 54 625 3878
+        </p>
+
+        <p>
+            📞 +233 54 702 6348
+        </p>
+
+    </div>
+
+
+    <div>
+
+        <p>
+            © 2026 Everything Everything
+        </p>
+
+    </div>
+
+</footer>
+
+
+
+<!-- =========================================================
+     CART
+========================================================= -->
+
+<div
+    class="cart-overlay"
+    id="cartOverlay"
+    onclick="closeCart(event)"
+>
+
+    <aside
+        class="cart"
+        onclick="event.stopPropagation()"
+    >
+
+        <div class="cart-header">
+
+            <h2>
+                Your Cart
+            </h2>
+
+            <button
+                onclick="closeCart()"
+                aria-label="Close cart"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div id="cartItems"></div>
+
+
+        <div class="cart-total">
+
+            <span>
+                Total
+            </span>
+
+            <strong id="cartTotal">
+                GH₵0
+            </strong>
+
+        </div>
+
+
+        <label class="checkout-label">
+
+            Your name
+
+            <input
+                id="customerName"
+                placeholder="Enter your name"
+            >
+
+        </label>
+
+
+        <label class="checkout-label">
+
+            Delivery location
+
+            <input
+                id="customerLocation"
+                placeholder="e.g. UPSA, Accra"
+            >
+
+        </label>
+
+
+        <label
+            class="checkout-label"
+            id="emailField"
+            style="display:none"
+        >
+
+            Email
+            <small>
+                for payment receipt
+            </small>
+
+            <input
+                id="customerEmail"
+                type="email"
+                placeholder="you@example.com"
+            >
+
+        </label>
+
+
+        <button
+            class="btn secondary full"
+            onclick="checkoutWhatsApp()"
+        >
+            💬 Order via WhatsApp
+        </button>
+
+
+        <button
+            class="btn primary full"
+            onclick="showEmailThenPay()"
+            style="margin-top:10px"
+        >
+            💳 Pay Now with Paystack
+        </button>
 
     </aside>
-  </div>
 
-  <script src="script.js"></script>
+</div>
+
+
+
+<!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
+
+<script src="script.js"></script>
+
 </body>
 </html>
