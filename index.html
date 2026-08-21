@@ -1676,13 +1676,19 @@
       <div class="cart-total">
         <span>Total</span><strong id="cartTotal">GH₵0</strong>
       </div>
-      <label class="checkout-label">Your name
+            <label class="checkout-label">Your name
         <input id="customerName" placeholder="Enter your name">
       </label>
       <label class="checkout-label">Delivery location
         <input id="customerLocation" placeholder="e.g. UPSA, Accra">
       </label>
-      <button class="btn primary full" onclick="checkoutWhatsApp()">Order via WhatsApp</button>
+      <label class="checkout-label" id="emailField" style="display:none">Email (for payment receipt)
+        <input id="customerEmail" type="email" placeholder="you@example.com">
+      </label>
+
+      <button class="btn secondary full" onclick="checkoutWhatsApp()">💬 Order via WhatsApp</button>
+      <button class="btn primary full" onclick="showEmailThenPay()" style="margin-top:10px">💳 Pay Now with Paystack</button>
+
     </aside>
   </div>
 
