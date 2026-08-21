@@ -1,20 +1,10 @@
 /* =========================================================
    EVERYTHING EVERYTHING
-   MAIN SITE JAVASCRIPT
-   =========================================================
-   Features:
-   - Shared cart
-   - LocalStorage persistence
-   - Supabase grocery data
-   - Grocery/custom platter builder
-   - Clothing sizes
-   - Jewelry sizes
-   - Gift filters
-   - Platter page
-   - WhatsApp checkout
-   - Paystack checkout
-   - Mobile navigation
-   - Smooth navigation
+   SITE-WIDE JAVASCRIPT
+   ---------------------------------------------------------
+   Static products — NO SUPABASE
+   Paystack retained
+   WhatsApp retained
 ========================================================= */
 
 
@@ -22,17 +12,8 @@
    1. CONFIGURATION
 ========================================================= */
 
-const SUPABASE_URL =
-    "https://spplkkeeisaozamrsfwg.supabase.co";
-
-const SUPABASE_ANON_KEY =
-    "sb_publishable_py0X361Nk1IT8YGrsj_xsQ_OQe2jBYM";
-
 const PAYSTACK_PUBLIC_KEY =
     "PASTE_YOUR_PAYSTACK_PUBLIC_KEY_HERE";
-
-const VERIFY_FUNCTION_URL =
-    `${SUPABASE_URL}/functions/v1/verify-payment`;
 
 const WHATSAPP_NUMBER =
     "233595485044";
@@ -42,253 +23,291 @@ const CART_STORAGE_KEY =
 
 
 /* =========================================================
-   2. SUPABASE
+   2. PRODUCT DATABASE
+   ---------------------------------------------------------
+   Replace these products, prices and images later.
 ========================================================= */
 
-let supabase = null;
+const products = [
 
-if (
-    window.supabase &&
-    typeof window.supabase.createClient === "function"
-) {
-    supabase = window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_ANON_KEY
-    );
-}
+    /* =========================
+       GROCERIES
+    ========================= */
+
+    {
+        id: "grocery-rice",
+        name: "Premium Long Grain Rice",
+        category: "Groceries",
+        subcategory: "Staples",
+        price: 85,
+        image: "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=800&q=80",
+        description: "Quality long grain rice suitable for everyday meals.",
+        icon: "🍚"
+    },
+
+    {
+        id: "grocery-oil",
+        name: "Cooking Oil",
+        category: "Groceries",
+        subcategory: "Cooking Essentials",
+        price: 65,
+        image: "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&w=800&q=80",
+        description: "Everyday cooking oil for your kitchen.",
+        icon: "🫗"
+    },
+
+    {
+        id: "grocery-pasta",
+        name: "Premium Pasta",
+        category: "Groceries",
+        subcategory: "Staples",
+        price: 35,
+        image: "https://images.unsplash.com/photo-1551892374-ecf8754cf8b0?auto=format&fit=crop&w=800&q=80",
+        description: "Easy-to-prepare pasta for quick and delicious meals.",
+        icon: "🍝"
+    },
+
+    {
+        id: "grocery-cereal",
+        name: "Breakfast Cereal",
+        category: "Groceries",
+        subcategory: "Breakfast",
+        price: 55,
+        image: "https://images.unsplash.com/photo-1521483451569-e33803c0330c?auto=format&fit=crop&w=800&q=80",
+        description: "A convenient breakfast option for busy mornings.",
+        icon: "🥣"
+    },
+
+    {
+        id: "grocery-fruit",
+        name: "Fresh Fruit Selection",
+        category: "Groceries",
+        subcategory: "Fresh Produce",
+        price: 70,
+        image: "https://images.unsplash.com/photo-1610832958506-aa56368176cf?auto=format&fit=crop&w=800&q=80",
+        description: "A colourful selection of fresh fruits.",
+        icon: "🍎"
+    },
+
+    {
+        id: "grocery-snacks",
+        name: "Snack Selection",
+        category: "Groceries",
+        subcategory: "Snacks",
+        price: 45,
+        image: "https://images.unsplash.com/photo-1621939514649-280e2aa4c6b9?auto=format&fit=crop&w=800&q=80",
+        description: "A selection of tasty snacks for any occasion.",
+        icon: "🍿"
+    },
+
+
+    /* =========================
+       WOMEN'S CLOTHING
+    ========================= */
+
+    {
+        id: "women-dress",
+        name: "Classic Women's Dress",
+        category: "Clothing",
+        subcategory: "Women",
+        price: 280,
+        image: "https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=800&q=80",
+        description: "Elegant everyday dress with a clean modern silhouette.",
+        icon: "👗",
+        sizes: ["S", "M", "L", "XL"]
+    },
+
+    {
+        id: "women-top",
+        name: "Women's Casual Top",
+        category: "Clothing",
+        subcategory: "Women",
+        price: 150,
+        image: "https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?auto=format&fit=crop&w=800&q=80",
+        description: "Simple and versatile top for everyday styling.",
+        icon: "👚",
+        sizes: ["S", "M", "L", "XL"]
+    },
+
+    {
+        id: "women-skirt",
+        name: "Women's Pleated Skirt",
+        category: "Clothing",
+        subcategory: "Women",
+        price: 190,
+        image: "https://images.unsplash.com/photo-1583496661160-fb5886a13d27?auto=format&fit=crop&w=800&q=80",
+        description: "A stylish pleated skirt designed for effortless outfits.",
+        icon: "👗",
+        sizes: ["S", "M", "L", "XL"]
+    },
+
+
+    /* =========================
+       MEN'S CLOTHING
+    ========================= */
+
+    {
+        id: "men-shirt",
+        name: "Classic Men's Shirt",
+        category: "Clothing",
+        subcategory: "Men",
+        price: 180,
+        image: "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&w=800&q=80",
+        description: "Smart casual shirt suitable for different occasions.",
+        icon: "👔",
+        sizes: ["S", "M", "L", "XL", "XXL"]
+    },
+
+    {
+        id: "men-polo",
+        name: "Classic Polo Shirt",
+        category: "Clothing",
+        subcategory: "Men",
+        price: 160,
+        image: "https://images.unsplash.com/photo-1625910513413-5fc45b1f0c4f?auto=format&fit=crop&w=800&q=80",
+        description: "Comfortable polo shirt with a timeless design.",
+        icon: "👕",
+        sizes: ["S", "M", "L", "XL", "XXL"]
+    },
+
+    {
+        id: "men-trousers",
+        name: "Smart Casual Trousers",
+        category: "Clothing",
+        subcategory: "Men",
+        price: 220,
+        image: "https://images.unsplash.com/photo-1473966968600-fa801b869a1a?auto=format&fit=crop&w=800&q=80",
+        description: "Clean-cut trousers for smart and casual occasions.",
+        icon: "👖",
+        sizes: ["30", "32", "34", "36", "38", "40"]
+    },
+
+
+    /* =========================
+       JEWELRY
+    ========================= */
+
+    {
+        id: "jewelry-necklace",
+        name: "Elegant Gold Necklace",
+        category: "Jewelry",
+        subcategory: "Necklaces",
+        price: 350,
+        image: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=800&q=80",
+        description: "Elegant necklace designed to complement any outfit.",
+        icon: "📿"
+    },
+
+    {
+        id: "jewelry-bracelet",
+        name: "Classic Bracelet",
+        category: "Jewelry",
+        subcategory: "Bracelets",
+        price: 180,
+        image: "https://images.unsplash.com/photo-1611652022419-a9419f74343d?auto=format&fit=crop&w=800&q=80",
+        description: "A simple bracelet for everyday elegance.",
+        icon: "📿"
+    },
+
+    {
+        id: "jewelry-earrings",
+        name: "Elegant Earrings",
+        category: "Jewelry",
+        subcategory: "Earrings",
+        price: 150,
+        image: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=800&q=80",
+        description: "Elegant earrings that add a polished finishing touch.",
+        icon: "💎"
+    },
+
+    {
+        id: "jewelry-ring",
+        name: "Classic Fashion Ring",
+        category: "Jewelry",
+        subcategory: "Rings",
+        price: 120,
+        image: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=800&q=80",
+        description: "Minimal fashion ring with a sophisticated appearance.",
+        icon: "💍",
+        sizes: ["6", "7", "8", "9", "10"]
+    },
+
+
+    /* =========================
+       GIFTS
+    ========================= */
+
+    {
+        id: "gift-birthday",
+        name: "Birthday Gift Box",
+        category: "Gifts",
+        subcategory: "Birthday",
+        price: 250,
+        image: "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?auto=format&fit=crop&w=800&q=80",
+        description: "A thoughtful gift box prepared for birthdays.",
+        icon: "🎁"
+    },
+
+    {
+        id: "gift-romantic",
+        name: "Romantic Gift Set",
+        category: "Gifts",
+        subcategory: "Romantic",
+        price: 320,
+        image: "https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=800&q=80",
+        description: "A carefully selected gift set for someone special.",
+        icon: "❤️"
+    },
+
+    {
+        id: "gift-selfcare",
+        name: "Self-Care Gift Box",
+        category: "Gifts",
+        subcategory: "Self Care",
+        price: 280,
+        image: "https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?auto=format&fit=crop&w=800&q=80",
+        description: "A relaxing collection of self-care essentials.",
+        icon: "🧴"
+    },
+
+    {
+        id: "gift-premium",
+        name: "Premium Gift Box",
+        category: "Gifts",
+        subcategory: "Premium",
+        price: 450,
+        image: "https://images.unsplash.com/photo-1607344645866-009c320b63e0?auto=format&fit=crop&w=800&q=80",
+        description: "A premium gift collection for important occasions.",
+        icon: "🎁"
+    }
+
+];
 
 
 /* =========================================================
-   3. GLOBAL DATA
+   3. CART
 ========================================================= */
-
-let ingredients = {};
-let mealCategories = {};
 
 let cart = loadCart();
 
-
-/* =========================================================
-   4. DOM READY
-========================================================= */
-
-document.addEventListener(
-    "DOMContentLoaded",
-    initializeSite
-);
-
-
-function initializeSite() {
-
-    /*
-       Core site functions
-    */
-
-    updateCart();
-    updatePlatter();
-
-    initializeNavigation();
-    initializeCartButtons();
-
-    initializeProductButtons();
-    initializeSizeButtons();
-    initializeGiftFilters();
-
-    initializeStockButtons();
-
-    loadData();
-    handleMealURL();
-
-}
-
-
-/* =========================================================
-   5. NAVIGATION
-========================================================= */
-
-function initializeNavigation() {
-
-    const menuButton =
-        document.querySelector(
-            "[data-menu-toggle]"
-        );
-
-    const mobileMenu =
-        document.querySelector(
-            "[data-mobile-menu]"
-        );
-
-
-    if (
-        menuButton &&
-        mobileMenu
-    ) {
-
-        menuButton.addEventListener(
-            "click",
-            function () {
-
-                mobileMenu.classList.toggle(
-                    "open"
-                );
-
-                menuButton.classList.toggle(
-                    "active"
-                );
-
-            }
-        );
-
-
-        mobileMenu
-            .querySelectorAll("a")
-            .forEach(link => {
-
-                link.addEventListener(
-                    "click",
-                    function () {
-
-                        mobileMenu.classList.remove(
-                            "open"
-                        );
-
-                        menuButton.classList.remove(
-                            "active"
-                        );
-
-                    }
-                );
-
-            });
-
-    }
-
-
-    /*
-       Smooth scrolling for internal links.
-    */
-
-    document
-        .querySelectorAll(
-            'a[href^="#"]'
-        )
-        .forEach(link => {
-
-            link.addEventListener(
-                "click",
-                function(event) {
-
-                    const targetID =
-                        this.getAttribute("href");
-
-
-                    if (
-                        !targetID ||
-                        targetID === "#"
-                    ) {
-                        return;
-                    }
-
-
-                    const target =
-                        document.querySelector(
-                            targetID
-                        );
-
-
-                    if (!target) {
-                        return;
-                    }
-
-
-                    event.preventDefault();
-
-
-                    target.scrollIntoView({
-                        behavior: "smooth",
-                        block: "start"
-                    });
-
-                }
-            );
-
-        });
-
-}
-
-
-/* =========================================================
-   6. STOCK BUTTONS
-========================================================= */
-
-function initializeStockButtons() {
-
-    document
-        .querySelectorAll(
-            "[data-stock-link]"
-        )
-        .forEach(button => {
-
-            button.addEventListener(
-                "click",
-                function(event) {
-
-                    const target =
-                        document.getElementById(
-                            "stock"
-                        );
-
-
-                    if (!target) {
-                        return;
-                    }
-
-
-                    event.preventDefault();
-
-
-                    target.scrollIntoView({
-                        behavior: "smooth",
-                        block: "start"
-                    });
-
-                }
-            );
-
-        });
-
-}
-
-
-/* =========================================================
-   7. CART STORAGE
-========================================================= */
 
 function loadCart() {
 
     try {
 
         const saved =
-            localStorage.getItem(
-                CART_STORAGE_KEY
-            );
+            localStorage.getItem(CART_STORAGE_KEY);
 
-
-        if (!saved) {
-            return [];
-        }
-
+        if (!saved) return [];
 
         const parsed =
             JSON.parse(saved);
-
 
         return Array.isArray(parsed)
             ? parsed
             : [];
 
-
-    } catch(error) {
+    } catch (error) {
 
         console.error(
             "Cart loading error:",
@@ -296,58 +315,350 @@ function loadCart() {
         );
 
         return [];
-
     }
-
 }
 
 
 function saveCart() {
 
-    try {
-
-        localStorage.setItem(
-            CART_STORAGE_KEY,
-            JSON.stringify(cart)
-        );
-
-
-    } catch(error) {
-
-        console.error(
-            "Cart saving error:",
-            error
-        );
-
-    }
-
+    localStorage.setItem(
+        CART_STORAGE_KEY,
+        JSON.stringify(cart)
+    );
 }
 
 
 /* =========================================================
-   8. CART BUTTONS
+   4. PRODUCT RENDERING
 ========================================================= */
 
-function initializeCartButtons() {
+function renderProducts(
+    containerId,
+    productList = products
+) {
 
-    document
-        .querySelectorAll(
-            "[data-open-cart]"
-        )
-        .forEach(button => {
+    const container =
+        document.getElementById(containerId);
 
-            button.addEventListener(
-                "click",
-                openCart
-            );
+    if (!container) return;
+
+
+    if (!productList.length) {
+
+        container.innerHTML = `
+            <div class="empty-products">
+                <h3>No products found</h3>
+                <p>Try another category or search term.</p>
+            </div>
+        `;
+
+        return;
+    }
+
+
+    container.innerHTML =
+        productList.map(product => {
+
+            const sizes =
+                product.sizes || [];
+
+
+            return `
+                <article
+                    class="ee-fashion-card product-card"
+                    data-product-id="${product.id}"
+                >
+
+                    <div class="ee-fashion-image">
+
+                        <img
+                            src="${product.image}"
+                            alt="${escapeHTML(product.name)}"
+                            loading="lazy"
+                        >
+
+                        <span class="ee-badge">
+                            ${escapeHTML(product.category)}
+                        </span>
+
+                    </div>
+
+
+                    <div class="ee-fashion-info">
+
+                        <small class="product-category">
+                            ${escapeHTML(product.subcategory || "")}
+                        </small>
+
+                        <h4>
+                            ${escapeHTML(product.name)}
+                        </h4>
+
+                        <p class="ee-product-description">
+                            ${escapeHTML(product.description)}
+                        </p>
+
+
+                        <div class="ee-price">
+                            GH₵${formatMoney(product.price)}
+                        </div>
+
+
+                        ${
+                            sizes.length
+                            ? `
+                                <div class="ee-size-label">
+                                    Select size
+                                </div>
+
+                                <div class="ee-size-options">
+
+                                    ${sizes.map(size => `
+                                        <button
+                                            type="button"
+                                            data-size="${escapeHTML(size)}"
+                                        >
+                                            ${escapeHTML(size)}
+                                        </button>
+                                    `).join("")}
+
+                                </div>
+                            `
+                            : ""
+                        }
+
+
+                        <button
+                            class="ee-add-fashion-cart"
+                            type="button"
+                            onclick="addProductFromCard('${product.id}')"
+                        >
+                            Add to Cart
+                        </button>
+
+                    </div>
+
+                </article>
+            `;
+
+        }).join("");
+
+
+    initializeSizeButtons();
+}
+
+
+/* =========================================================
+   5. RENDER HOME PRODUCTS
+========================================================= */
+
+function renderHomeProducts() {
+
+    const container =
+        document.getElementById(
+            "homeProducts"
+        );
+
+    if (!container) return;
+
+
+    renderProducts(
+        "homeProducts",
+        products.slice(0, 8)
+    );
+}
+
+
+/* =========================================================
+   6. RENDER CATEGORY
+========================================================= */
+
+function renderCategoryProducts(
+    category,
+    containerId
+) {
+
+    const filtered =
+        products.filter(
+            product =>
+                product.category.toLowerCase() ===
+                category.toLowerCase()
+        );
+
+
+    renderProducts(
+        containerId,
+        filtered
+    );
+}
+
+
+/* =========================================================
+   7. SEARCH
+========================================================= */
+
+function searchProducts(
+    searchTerm,
+    containerId = "productGrid"
+) {
+
+    const term =
+        String(searchTerm || "")
+            .trim()
+            .toLowerCase();
+
+
+    if (!term) {
+
+        renderProducts(
+            containerId,
+            products
+        );
+
+        return;
+    }
+
+
+    const results =
+        products.filter(product => {
+
+            const searchable = [
+
+                product.name,
+
+                product.category,
+
+                product.subcategory,
+
+                product.description
+
+            ]
+                .join(" ")
+                .toLowerCase();
+
+
+            return searchable.includes(term);
 
         });
 
+
+    renderProducts(
+        containerId,
+        results
+    );
 }
 
 
 /* =========================================================
-   9. ADD TO CART
+   8. CATEGORY FILTER
+========================================================= */
+
+function filterProducts(
+    category,
+    containerId = "productGrid"
+) {
+
+    if (
+        !category ||
+        category.toLowerCase() === "all"
+    ) {
+
+        renderProducts(
+            containerId,
+            products
+        );
+
+        return;
+    }
+
+
+    const filtered =
+        products.filter(
+            product =>
+                product.category.toLowerCase() ===
+                category.toLowerCase()
+        );
+
+
+    renderProducts(
+        containerId,
+        filtered
+    );
+}
+
+
+/* =========================================================
+   9. ADD PRODUCT FROM CARD
+========================================================= */
+
+function addProductFromCard(productId) {
+
+    const product =
+        products.find(
+            item =>
+                item.id === productId
+        );
+
+
+    if (!product) {
+        return;
+    }
+
+
+    const card =
+        document.querySelector(
+            `[data-product-id="${productId}"]`
+        );
+
+
+    let selectedSize = "";
+
+
+    if (card) {
+
+        const selected =
+            card.querySelector(
+                ".ee-size-options button.selected"
+            );
+
+
+        if (selected) {
+
+            selectedSize =
+                selected.dataset.size ||
+                selected.textContent.trim();
+
+        }
+    }
+
+
+    if (
+        product.sizes &&
+        product.sizes.length &&
+        !selectedSize
+    ) {
+
+        alert(
+            "Please select a size before adding this item."
+        );
+
+        return;
+    }
+
+
+    addToCart({
+
+        ...product,
+
+        size:
+            selectedSize
+
+    });
+}
+
+
+/* =========================================================
+   10. ADD TO CART
 ========================================================= */
 
 function addToCart(item) {
@@ -359,31 +670,27 @@ function addToCart(item) {
             createCartItemId(),
 
         name:
-            item.name ||
-            "Product",
+            item.name || "Product",
 
         price:
             Number(item.price) || 0,
 
+        image:
+            item.image || "",
+
         icon:
-            item.icon ||
-            "🛍️",
+            item.icon || "🛍️",
 
         category:
-            item.category ||
-            "General",
+            item.category || "General",
 
         desc:
+            item.description ||
             item.desc ||
             "",
 
         size:
-            item.size ||
-            "",
-
-        details:
-            item.details ||
-            null,
+            item.size || "",
 
         quantity:
             Number(item.quantity) || 1
@@ -394,18 +701,13 @@ function addToCart(item) {
     const existingIndex =
         cart.findIndex(existing =>
 
-            existing.name === cartItem.name &&
-            existing.price === cartItem.price &&
-            existing.size === cartItem.size &&
-            existing.desc === cartItem.desc
+            existing.id === cartItem.id &&
+            existing.size === cartItem.size
 
         );
 
 
-    if (
-        existingIndex !== -1 &&
-        !cartItem.details
-    ) {
+    if (existingIndex !== -1) {
 
         cart[existingIndex].quantity +=
             cartItem.quantity;
@@ -420,17 +722,17 @@ function addToCart(item) {
     saveCart();
 
     updateCart();
+
     updatePlatter();
 
     showCartToast(
         `${cartItem.name} added to cart`
     );
-
 }
 
 
 /* =========================================================
-   10. CART ID
+   11. CART ID
 ========================================================= */
 
 function createCartItemId() {
@@ -443,33 +745,32 @@ function createCartItemId() {
             .toString(36)
             .substring(2, 9)
     );
-
 }
 
 
 /* =========================================================
-   11. UPDATE CART
+   12. UPDATE CART
 ========================================================= */
 
 function updateCart() {
 
-    const cartCount =
+    const countElement =
         document.getElementById(
             "cartCount"
         );
 
-    const cartItems =
+    const itemsElement =
         document.getElementById(
             "cartItems"
         );
 
-    const cartTotal =
+    const totalElement =
         document.getElementById(
             "cartTotal"
         );
 
 
-    const itemCount =
+    const count =
         cart.reduce(
             (sum, item) =>
                 sum +
@@ -478,183 +779,160 @@ function updateCart() {
         );
 
 
-    if (cartCount) {
+    if (countElement) {
 
-        cartCount.textContent =
-            itemCount;
-
+        countElement.textContent =
+            count;
     }
 
 
-    if (!cartItems) {
+    if (!itemsElement) {
         return;
     }
 
 
     if (!cart.length) {
 
-        cartItems.innerHTML = `
+        itemsElement.innerHTML = `
             <div class="empty-cart">
-                <div class="empty-cart-icon">🛒</div>
+                <div>🛒</div>
                 <h3>Your cart is empty</h3>
-                <p>Add something from our stock to get started.</p>
+                <p>Add something from our store.</p>
             </div>
         `;
 
 
-        if (cartTotal) {
+        if (totalElement) {
 
-            cartTotal.textContent =
+            totalElement.textContent =
                 "GH₵0.00";
-
         }
 
-        return;
 
+        return;
     }
 
 
-    cartItems.innerHTML =
-        cart
-            .map(
-                (item,index) => {
+    itemsElement.innerHTML =
+        cart.map((item, index) => {
 
-                    const quantity =
-                        item.quantity || 1;
+            const quantity =
+                item.quantity || 1;
 
 
-                    const subtotal =
-                        Number(item.price) *
-                        quantity;
+            const subtotal =
+                Number(item.price) *
+                quantity;
 
 
-                    return `
-                        <div class="cart-item">
+            return `
+                <div class="cart-item">
 
-                            <div class="cart-item-info">
+                    <div class="cart-item-info">
 
-                                <div class="cart-item-name">
-
-                                    <span>
-                                        ${item.icon}
-                                    </span>
-
-                                    <strong>
-                                        ${escapeHTML(item.name)}
-                                    </strong>
-
-                                </div>
-
-
-                                ${
-                                    item.category
-                                    ? `
-                                        <small>
-                                            ${escapeHTML(item.category)}
-                                        </small>
-                                    `
-                                    : ""
-                                }
-
-
-                                ${
-                                    item.size
-                                    ? `
-                                        <small>
-                                            Size:
-                                            ${escapeHTML(item.size)}
-                                        </small>
-                                    `
-                                    : ""
-                                }
-
-
-                                ${
-                                    item.desc
-                                    ? `
-                                        <small>
-                                            ${escapeHTML(item.desc)}
-                                        </small>
-                                    `
-                                    : ""
-                                }
-
-
-                                <strong class="cart-item-price">
-                                    GH₵${formatMoney(subtotal)}
-                                </strong>
-
-                            </div>
-
-
-                            <div class="cart-item-actions">
-
-                                ${
-                                    !item.details
-                                    ? `
-                                        <div class="quantity-controls">
-
-                                            <button
-                                                type="button"
-                                                onclick="changeQuantity(${index}, -1)"
-                                            >
-                                                −
-                                            </button>
-
-                                            <span>
-                                                ${quantity}
-                                            </span>
-
-                                            <button
-                                                type="button"
-                                                onclick="changeQuantity(${index}, 1)"
-                                            >
-                                                +
-                                            </button>
-
-                                        </div>
-                                    `
-                                    : ""
-                                }
-
-
-                                <button
-                                    type="button"
-                                    class="remove"
-                                    onclick="removeItem(${index})"
+                        ${
+                            item.image
+                            ? `
+                                <img
+                                    src="${item.image}"
+                                    alt=""
+                                    class="cart-product-image"
                                 >
-                                    Remove
-                                </button>
+                            `
+                            : `
+                                <span class="cart-product-icon">
+                                    ${item.icon}
+                                </span>
+                            `
+                        }
 
-                            </div>
+
+                        <div>
+
+                            <b>
+                                ${escapeHTML(item.name)}
+                            </b>
+
+                            <small>
+                                ${escapeHTML(item.category)}
+                            </small>
+
+                            ${
+                                item.size
+                                ? `
+                                    <small>
+                                        Size: ${escapeHTML(item.size)}
+                                    </small>
+                                `
+                                : ""
+                            }
+
+                            <strong>
+                                GH₵${formatMoney(subtotal)}
+                            </strong>
 
                         </div>
-                    `;
 
-                }
-            )
-            .join("");
+                    </div>
 
 
-    const total =
-        getCartTotal();
+                    <div class="cart-item-actions">
+
+                        <div class="quantity-controls">
+
+                            <button
+                                type="button"
+                                onclick="changeQuantity(${index}, -1)"
+                            >
+                                −
+                            </button>
+
+                            <span>
+                                ${quantity}
+                            </span>
+
+                            <button
+                                type="button"
+                                onclick="changeQuantity(${index}, 1)"
+                            >
+                                +
+                            </button>
+
+                        </div>
 
 
-    if (cartTotal) {
+                        <button
+                            class="remove"
+                            type="button"
+                            onclick="removeItem(${index})"
+                        >
+                            Remove
+                        </button>
 
-        cartTotal.textContent =
-            `GH₵${formatMoney(total)}`;
+                    </div>
 
+                </div>
+            `;
+
+        }).join("");
+
+
+    if (totalElement) {
+
+        totalElement.textContent =
+            `GH₵${formatMoney(getCartTotal())}`;
     }
-
 }
 
 
 /* =========================================================
-   12. CHANGE QUANTITY
+   13. QUANTITY
 ========================================================= */
 
-function changeQuantity(index, amount) {
+function changeQuantity(
+    index,
+    amount
+) {
 
     if (!cart[index]) {
         return;
@@ -670,7 +948,7 @@ function changeQuantity(index, amount) {
         cart[index].quantity <= 0
     ) {
 
-        cart.splice(index,1);
+        cart.splice(index, 1);
 
     }
 
@@ -678,13 +956,13 @@ function changeQuantity(index, amount) {
     saveCart();
 
     updateCart();
-    updatePlatter();
 
+    updatePlatter();
 }
 
 
 /* =========================================================
-   13. REMOVE ITEM
+   14. REMOVE
 ========================================================= */
 
 function removeItem(index) {
@@ -697,18 +975,39 @@ function removeItem(index) {
     }
 
 
-    cart.splice(index,1);
+    cart.splice(index, 1);
 
     saveCart();
 
     updateCart();
-    updatePlatter();
 
+    updatePlatter();
 }
 
 
 /* =========================================================
-   14. OPEN CART
+   15. CART TOTAL
+========================================================= */
+
+function getCartTotal() {
+
+    return cart.reduce(
+        (total, item) => {
+
+            return total +
+                (
+                    Number(item.price) *
+                    (item.quantity || 1)
+                );
+
+        },
+        0
+    );
+}
+
+
+/* =========================================================
+   16. OPEN CART
 ========================================================= */
 
 function openCart() {
@@ -730,12 +1029,11 @@ function openCart() {
 
 
     updateCart();
-
 }
 
 
 /* =========================================================
-   15. CLOSE CART
+   17. CLOSE CART
 ========================================================= */
 
 function closeCart(event) {
@@ -759,670 +1057,12 @@ function closeCart(event) {
         overlay.classList.remove(
             "open"
         );
-
     }
-
 }
 
 
 /* =========================================================
-   16. SUPABASE GROCERY DATA
-========================================================= */
-
-async function loadData() {
-
-    const ingredientList =
-        document.getElementById(
-            "ingredientList"
-        );
-
-    const mealSelect =
-        document.getElementById(
-            "meal"
-        );
-
-
-    /*
-       No grocery builder on this page.
-    */
-
-    if (
-        !ingredientList ||
-        !mealSelect
-    ) {
-
-        return;
-
-    }
-
-
-    if (!supabase) {
-
-        ingredientList.innerHTML = `
-            <p>
-                Grocery data could not be connected.
-                Please refresh the page.
-            </p>
-        `;
-
-        return;
-
-    }
-
-
-    try {
-
-        const [
-            ingredientResponse,
-            mealResponse
-        ] =
-            await Promise.all([
-
-                supabase
-                    .from("ingredients")
-                    .select("*")
-                    .eq("in_stock",true),
-
-                supabase
-                    .from("meals")
-                    .select("*")
-
-            ]);
-
-
-        if (
-            ingredientResponse.error
-        ) {
-
-            throw ingredientResponse.error;
-
-        }
-
-
-        if (
-            mealResponse.error
-        ) {
-
-            throw mealResponse.error;
-
-        }
-
-
-        ingredients = {};
-
-
-        (
-            ingredientResponse.data ||
-            []
-        )
-        .forEach(row => {
-
-            ingredients[row.id] = {
-
-                id:
-                    row.id,
-
-                name:
-                    row.name,
-
-                price:
-                    Number(row.price) || 0,
-
-                unit:
-                    row.unit || "",
-
-                icon:
-                    row.icon || "🛒"
-
-            };
-
-        });
-
-
-        mealCategories = {};
-
-
-        (
-            mealResponse.data ||
-            []
-        )
-        .forEach(row => {
-
-            let ids =
-                row.ingredient_ids;
-
-
-            if (
-                typeof ids ===
-                "string"
-            ) {
-
-                try {
-
-                    ids =
-                        JSON.parse(ids);
-
-                } catch {
-
-                    ids = [];
-
-                }
-
-            }
-
-
-            if (
-                !Array.isArray(ids)
-            ) {
-
-                ids = [];
-
-            }
-
-
-            mealCategories[
-                row.name
-            ] = ids;
-
-        });
-
-
-        populateMealSelect();
-
-
-    } catch(error) {
-
-        console.error(
-            "Supabase error:",
-            error
-        );
-
-
-        ingredientList.innerHTML = `
-            <p>
-                Sorry, we couldn't load the grocery menu.
-                Please refresh the page.
-            </p>
-        `;
-
-    }
-
-}
-
-
-/* =========================================================
-   17. MEAL SELECT
-========================================================= */
-
-function populateMealSelect() {
-
-    const mealSelect =
-        document.getElementById(
-            "meal"
-        );
-
-
-    if (!mealSelect) {
-        return;
-    }
-
-
-    const meals =
-        Object.keys(
-            mealCategories
-        );
-
-
-    if (!meals.length) {
-
-        mealSelect.innerHTML = `
-            <option>
-                No meals available
-            </option>
-        `;
-
-        return;
-
-    }
-
-
-    mealSelect.innerHTML =
-        meals
-            .map(
-                meal => `
-                    <option value="${escapeHTML(meal)}">
-                        ${escapeHTML(meal)}
-                    </option>
-                `
-            )
-            .join("");
-
-
-    showIngredients(
-        mealSelect.value
-    );
-
-
-    if (
-        !mealSelect.dataset.listenerAttached
-    ) {
-
-        mealSelect.addEventListener(
-            "change",
-            function() {
-
-                showIngredients(
-                    this.value
-                );
-
-            }
-        );
-
-
-        mealSelect.dataset.listenerAttached =
-            "true";
-
-    }
-
-}
-
-
-/* =========================================================
-   18. INGREDIENTS
-========================================================= */
-
-function showIngredients(
-    mealName
-) {
-
-    const container =
-        document.getElementById(
-            "ingredientList"
-        );
-
-
-    if (!container) {
-        return;
-    }
-
-
-    const selectedIngredients =
-        mealCategories[
-            mealName
-        ];
-
-
-    if (!selectedIngredients) {
-
-        container.innerHTML = "";
-
-        updateCustomTotal();
-
-        return;
-
-    }
-
-
-    container.innerHTML =
-        selectedIngredients
-            .map(
-                id => {
-
-                    const item =
-                        ingredients[id];
-
-
-                    if (!item) {
-                        return "";
-                    }
-
-
-                    return `
-                        <label class="ingredient-option">
-
-                            <input
-                                type="checkbox"
-                                value="${escapeHTML(item.id)}"
-                                onchange="updateCustomTotal()"
-                            >
-
-                            <span class="ingredient-icon">
-                                ${item.icon}
-                            </span>
-
-                            <span class="ingredient-info">
-
-                                <strong>
-                                    ${escapeHTML(item.name)}
-                                </strong>
-
-                                <small>
-                                    GH₵${formatMoney(item.price)}
-                                    ${escapeHTML(item.unit)}
-                                </small>
-
-                            </span>
-
-                        </label>
-                    `;
-
-                }
-            )
-            .join("");
-
-
-    updateCustomTotal();
-
-}
-
-
-/* =========================================================
-   19. CUSTOM TOTAL
-========================================================= */
-
-function updateCustomTotal() {
-
-    const container =
-        document.getElementById(
-            "ingredientList"
-        );
-
-    const totalElement =
-        document.getElementById(
-            "builderTotal"
-        );
-
-
-    if (
-        !container ||
-        !totalElement
-    ) {
-
-        return;
-
-    }
-
-
-    const selected =
-        container.querySelectorAll(
-            "input[type='checkbox']:checked"
-        );
-
-
-    let total = 0;
-
-
-    selected.forEach(
-        input => {
-
-            const item =
-                ingredients[
-                    input.value
-                ];
-
-
-            if (item) {
-
-                total +=
-                    item.price;
-
-            }
-
-        }
-    );
-
-
-    totalElement.textContent =
-        `GH₵${formatMoney(total)}`;
-
-}
-
-
-/* =========================================================
-   20. ADD CUSTOM PLATTER
-========================================================= */
-
-function addCustomPlatter() {
-
-    const mealSelect =
-        document.getElementById(
-            "meal"
-        );
-
-    const ingredientList =
-        document.getElementById(
-            "ingredientList"
-        );
-
-
-    if (
-        !mealSelect ||
-        !ingredientList
-    ) {
-
-        return;
-
-    }
-
-
-    const selected =
-        ingredientList.querySelectorAll(
-            "input[type='checkbox']:checked"
-        );
-
-
-    if (!selected.length) {
-
-        alert(
-            "Please select at least one ingredient."
-        );
-
-        return;
-
-    }
-
-
-    const selectedItems = [];
-
-
-    selected.forEach(
-        input => {
-
-            const item =
-                ingredients[
-                    input.value
-                ];
-
-
-            if (!item) {
-                return;
-            }
-
-
-            selectedItems.push({
-
-                name:
-                    item.name,
-
-                price:
-                    item.price,
-
-                unit:
-                    item.unit,
-
-                icon:
-                    item.icon
-
-            });
-
-        }
-    );
-
-
-    const total =
-        selectedItems.reduce(
-            (sum,item) =>
-                sum +
-                Number(item.price),
-            0
-        );
-
-
-    addToCart({
-
-        name:
-            `${mealSelect.value} Grocery Platter`,
-
-        price:
-            total,
-
-        icon:
-            "🧺",
-
-        category:
-            "Groceries",
-
-        desc:
-            selectedItems
-                .map(
-                    item => item.name
-                )
-                .join(", "),
-
-        details:
-            selectedItems
-
-    });
-
-
-    openCart();
-
-}
-
-
-/* =========================================================
-   21. PRODUCT BUTTONS
-========================================================= */
-
-function initializeProductButtons() {
-
-    document
-        .querySelectorAll(
-            ".ee-add-fashion-cart"
-        )
-        .forEach(
-            button => {
-
-                if (
-                    button.dataset.cartListener
-                ) {
-                    return;
-                }
-
-
-                button.addEventListener(
-                    "click",
-                    function() {
-
-                        const name =
-                            this.dataset.name ||
-                            "Product";
-
-
-                        const price =
-                            Number(
-                                this.dataset.price
-                            ) || 0;
-
-
-                        const category =
-                            this.dataset.category ||
-                            "General";
-
-
-                        const card =
-                            this.closest(
-                                ".ee-fashion-card"
-                            );
-
-
-                        let selectedSize =
-                            "";
-
-
-                        if (card) {
-
-                            const selected =
-                                card.querySelector(
-                                    ".ee-size-options button.selected"
-                                );
-
-
-                            if (selected) {
-
-                                selectedSize =
-                                    selected.dataset.size ||
-                                    selected.textContent.trim();
-
-                            }
-
-                        }
-
-
-                        const hasSizes =
-                            card &&
-                            card.querySelector(
-                                ".ee-size-options"
-                            );
-
-
-                        if (
-                            hasSizes &&
-                            !selectedSize
-                        ) {
-
-                            alert(
-                                "Please select a size before adding this item."
-                            );
-
-                            return;
-
-                        }
-
-
-                        addToCart({
-
-                            name,
-
-                            price,
-
-                            category,
-
-                            size:
-                                selectedSize,
-
-                            icon:
-                                getProductIcon(
-                                    category
-                                )
-
-                        });
-
-                    }
-                );
-
-
-                button.dataset.cartListener =
-                    "true";
-
-            }
-        );
-
-}
-
-
-/* =========================================================
-   22. SIZE BUTTONS
+   18. SIZE BUTTONS
 ========================================================= */
 
 function initializeSizeButtons() {
@@ -1431,108 +1071,52 @@ function initializeSizeButtons() {
         .querySelectorAll(
             ".ee-size-options button"
         )
-        .forEach(
-            button => {
+        .forEach(button => {
 
-                if (
-                    button.dataset.sizeListener
-                ) {
-                    return;
-                }
-
-
-                button.addEventListener(
-                    "click",
-                    function() {
-
-                        const container =
-                            this.parentElement;
+            if (
+                button.dataset.sizeListener
+            ) {
+                return;
+            }
 
 
-                        container
-                            .querySelectorAll(
-                                "button"
-                            )
-                            .forEach(
-                                btn =>
-                                    btn.classList.remove(
-                                        "selected"
-                                    )
-                            );
+            button.addEventListener(
+                "click",
+                function () {
+
+                    const parent =
+                        this.parentElement;
 
 
-                        this.classList.add(
-                            "selected"
+                    parent
+                        .querySelectorAll(
+                            "button"
+                        )
+                        .forEach(
+                            item =>
+                                item.classList.remove(
+                                    "selected"
+                                )
                         );
 
-                    }
-                );
+
+                    this.classList.add(
+                        "selected"
+                    );
+
+                }
+            );
 
 
-                button.dataset.sizeListener =
-                    "true";
+            button.dataset.sizeListener =
+                "true";
 
-            }
-        );
-
+        });
 }
 
 
 /* =========================================================
-   23. PRODUCT ICON
-========================================================= */
-
-function getProductIcon(
-    category
-) {
-
-    const value =
-        String(category)
-            .toLowerCase();
-
-
-    if (
-        value.includes("jewelry")
-    ) {
-        return "💍";
-    }
-
-
-    if (
-        value.includes("women")
-    ) {
-        return "👗";
-    }
-
-
-    if (
-        value.includes("men")
-    ) {
-        return "👔";
-    }
-
-
-    if (
-        value.includes("gift")
-    ) {
-        return "🎁";
-    }
-
-
-    if (
-        value.includes("grocery")
-    ) {
-        return "🛒";
-    }
-
-
-    return "🛍️";
-
-}
-
-
-/* =========================================================
-   24. GIFT FILTERS
+   19. GIFT FILTER
 ========================================================= */
 
 function initializeGiftFilters() {
@@ -1542,77 +1126,63 @@ function initializeGiftFilters() {
             ".ee-gift-btn"
         );
 
-    const cards =
-        document.querySelectorAll(
-            ".ee-gift-card"
-        );
-
 
     if (!buttons.length) {
         return;
     }
 
 
-    buttons.forEach(
-        button => {
+    buttons.forEach(button => {
 
-            button.addEventListener(
-                "click",
-                function() {
+        button.addEventListener(
+            "click",
+            function () {
 
-                    const filter =
-                        this.dataset.gift;
-
-
-                    buttons.forEach(
-                        btn =>
-                            btn.classList.remove(
-                                "active"
-                            )
-                    );
+                const filter =
+                    this.dataset.gift;
 
 
-                    this.classList.add(
+                buttons.forEach(btn =>
+                    btn.classList.remove(
                         "active"
-                    );
+                    )
+                );
 
 
-                    cards.forEach(
-                        card => {
-
-                            const type =
-                                card.dataset.giftType;
+                this.classList.add(
+                    "active"
+                );
 
 
-                            if (
+                document
+                    .querySelectorAll(
+                        ".ee-gift-card"
+                    )
+                    .forEach(card => {
+
+                        const type =
+                            card.dataset.giftType;
+
+
+                        card.style.display =
+                            (
                                 filter === "all" ||
                                 type === filter
-                            ) {
+                            )
+                            ? ""
+                            : "none";
 
-                                card.style.display =
-                                    "";
+                    });
 
-                            } else {
+            }
+        );
 
-                                card.style.display =
-                                    "none";
-
-                            }
-
-                        }
-                    );
-
-                }
-            );
-
-        }
-    );
-
+    });
 }
 
 
 /* =========================================================
-   25. PLATTER
+   20. PLATTER
 ========================================================= */
 
 function updatePlatter() {
@@ -1621,6 +1191,7 @@ function updatePlatter() {
         document.getElementById(
             "platterItems"
         );
+
 
     const totalElement =
         document.getElementById(
@@ -1638,7 +1209,7 @@ function updatePlatter() {
         container.innerHTML = `
             <div class="empty-platter">
 
-                <div class="empty-platter-icon">
+                <div>
                     🍽️
                 </div>
 
@@ -1647,8 +1218,9 @@ function updatePlatter() {
                 </h3>
 
                 <p>
-                    Browse our stock and add
-                    something to your order.
+                    Add groceries, clothing,
+                    jewelry or gifts to create
+                    your custom platter.
                 </p>
 
             </div>
@@ -1659,124 +1231,84 @@ function updatePlatter() {
 
             totalElement.textContent =
                 "GH₵0.00";
-
         }
 
-        return;
 
+        return;
     }
 
 
     container.innerHTML =
-        cart
-            .map(
-                (item,index) => {
+        cart.map((item, index) => {
 
-                    const quantity =
-                        item.quantity || 1;
+            const quantity =
+                item.quantity || 1;
 
 
-                    const subtotal =
-                        Number(item.price) *
-                        quantity;
+            const subtotal =
+                Number(item.price) *
+                quantity;
 
 
-                    return `
-                        <div class="platter-item-row">
+            return `
+                <div class="platter-item-row">
 
-                            <div class="platter-item-icon">
-                                ${item.icon}
-                            </div>
+                    <div class="platter-item-icon">
+                        ${item.icon}
+                    </div>
 
 
-                            <div class="platter-item-info">
+                    <div class="platter-item-info">
 
-                                <strong>
-                                    ${escapeHTML(item.name)}
-                                </strong>
+                        <strong>
+                            ${escapeHTML(item.name)}
+                        </strong>
 
+                        <small>
+                            ${escapeHTML(item.category)}
+                        </small>
+
+                        ${
+                            item.size
+                            ? `
                                 <small>
-                                    ${escapeHTML(item.category)}
+                                    Size: ${escapeHTML(item.size)}
                                 </small>
+                            `
+                            : ""
+                        }
 
-                                ${
-                                    item.size
-                                    ? `
-                                        <small>
-                                            Size:
-                                            ${escapeHTML(item.size)}
-                                        </small>
-                                    `
-                                    : ""
-                                }
+                    </div>
 
 
-                                ${
-                                    item.desc
-                                    ? `
-                                        <small>
-                                            ${escapeHTML(item.desc)}
-                                        </small>
-                                    `
-                                    : ""
-                                }
+                    <div class="platter-item-price">
 
-                            </div>
+                        GH₵${formatMoney(subtotal)}
 
+                        <button
+                            onclick="removeItem(${index})"
+                        >
+                            Remove
+                        </button>
 
-                            <div class="platter-item-price">
+                    </div>
 
-                                GH₵${formatMoney(subtotal)}
+                </div>
+            `;
 
-                                <button
-                                    onclick="removeItem(${index})"
-                                >
-                                    Remove
-                                </button>
-
-                            </div>
-
-                        </div>
-                    `;
-
-                }
-            )
-            .join("");
+        }).join("");
 
 
     if (totalElement) {
 
         totalElement.textContent =
-            `GH₵${formatMoney(
-                getCartTotal()
-            )}`;
-
+            `GH₵${formatMoney(getCartTotal())}`;
     }
-
 }
 
 
 /* =========================================================
-   26. CART TOTAL
-========================================================= */
-
-function getCartTotal() {
-
-    return cart.reduce(
-        (sum,item) =>
-            sum +
-            (
-                Number(item.price) *
-                (item.quantity || 1)
-            ),
-        0
-    );
-
-}
-
-
-/* =========================================================
-   27. WHATSAPP CHECKOUT
+   21. WHATSAPP CHECKOUT
 ========================================================= */
 
 function checkoutWhatsApp() {
@@ -1788,7 +1320,6 @@ function checkoutWhatsApp() {
         );
 
         return;
-
     }
 
 
@@ -1804,105 +1335,81 @@ function checkoutWhatsApp() {
         );
 
 
-    if (
-        !name ||
-        !location
-    ) {
+    if (!name || !location) {
 
         alert(
-            "Please fill in your name and delivery location."
+            "Please enter your name and delivery location."
         );
 
         return;
-
     }
 
 
     const lines =
-        cart.map(
-            item => {
+        cart.map(item => {
 
-                const quantity =
-                    item.quantity || 1;
-
-
-                const subtotal =
-                    Number(item.price) *
-                    quantity;
+            const quantity =
+                item.quantity || 1;
 
 
-                let line =
-                    `• ${item.name}`;
+            const subtotal =
+                Number(item.price) *
+                quantity;
 
 
-                if (
-                    quantity > 1
-                ) {
-
-                    line +=
-                        ` × ${quantity}`;
-
-                }
+            let line =
+                `• ${item.name}`;
 
 
-                if (item.size) {
-
-                    line +=
-                        ` — Size: ${item.size}`;
-
-                }
-
+            if (quantity > 1) {
 
                 line +=
-                    ` — GH₵${formatMoney(
-                        subtotal
-                    )}`;
-
-
-                if (item.desc) {
-
-                    line +=
-                        ` (${item.desc})`;
-
-                }
-
-
-                return line;
-
+                    ` × ${quantity}`;
             }
-        );
+
+
+            if (item.size) {
+
+                line +=
+                    ` — Size: ${item.size}`;
+            }
+
+
+            line +=
+                ` — GH₵${formatMoney(subtotal)}`;
+
+
+            return line;
+
+        });
 
 
     const message =
-`Hi Everything Everything! I'd like to place an order:
+`Hello Everything Everything! 👋
+
+I'd like to place an order:
 
 ${lines.join("\n")}
 
-Total: GH₵${formatMoney(
-        getCartTotal()
-    )}
+Total: GH₵${formatMoney(getCartTotal())}
 
 Name: ${name}
 Delivery location: ${location}`;
 
 
     const url =
-        `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
-            message
-        )}`;
+        `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
 
 
     window.open(
         url,
-        "_blank",
-        "noopener"
+        "_blank"
     );
-
 }
 
 
 /* =========================================================
-   28. PAYSTACK EMAIL
+   22. SHOW EMAIL THEN PAY
 ========================================================= */
 
 function showEmailThenPay() {
@@ -1918,13 +1425,12 @@ function showEmailThenPay() {
         checkoutPaystack();
 
         return;
-
     }
 
 
     if (
         emailField.style.display ===
-            "none" ||
+        "none" ||
         !emailField.style.display
     ) {
 
@@ -1932,31 +1438,27 @@ function showEmailThenPay() {
             "block";
 
 
-        const emailInput =
+        const input =
             document.getElementById(
                 "customerEmail"
             );
 
 
-        if (emailInput) {
-
-            emailInput.focus();
-
+        if (input) {
+            input.focus();
         }
 
 
         return;
-
     }
 
 
     checkoutPaystack();
-
 }
 
 
 /* =========================================================
-   29. PAYSTACK
+   23. PAYSTACK
 ========================================================= */
 
 function checkoutPaystack() {
@@ -1968,7 +1470,6 @@ function checkoutPaystack() {
         );
 
         return;
-
     }
 
 
@@ -2003,11 +1504,10 @@ function checkoutPaystack() {
     ) {
 
         alert(
-            "Please fill in your name, delivery location, and email."
+            "Please enter your name, delivery location and email."
         );
 
         return;
-
     }
 
 
@@ -2023,7 +1523,6 @@ function checkoutPaystack() {
         );
 
         return;
-
     }
 
 
@@ -2037,29 +1536,11 @@ function checkoutPaystack() {
         );
 
         return;
-
     }
-
-
-    const total =
-        getCartTotal();
 
 
     const reference =
         createPaymentReference();
-
-
-    const customer = {
-
-        name,
-
-        phone,
-
-        location,
-
-        email
-
-    };
 
 
     const popup =
@@ -2075,7 +1556,7 @@ function checkoutPaystack() {
 
         amount:
             Math.round(
-                total * 100
+                getCartTotal() * 100
             ),
 
         currency:
@@ -2084,65 +1565,65 @@ function checkoutPaystack() {
         reference,
 
         firstName:
-            name.split(" ")[0] ||
-            "",
+            name.split(" ")[0] || "",
 
         phone,
 
         metadata: {
 
-            name,
+            customer_name:
+                name,
 
-            phone,
-
-            location,
+            delivery_location:
+                location,
 
             cart:
-                cart.map(
-                    item => ({
+                cart.map(item => ({
 
-                        name:
-                            item.name,
+                    name:
+                        item.name,
 
-                        price:
-                            item.price,
+                    price:
+                        item.price,
 
-                        quantity:
-                            item.quantity ||
-                            1,
+                    quantity:
+                        item.quantity || 1,
 
-                        category:
-                            item.category,
+                    category:
+                        item.category,
 
-                        size:
-                            item.size ||
-                            "",
+                    size:
+                        item.size || ""
 
-                        desc:
-                            item.desc ||
-                            ""
-
-                    })
-                )
+                }))
 
         },
 
 
         onSuccess:
-            async function(
-                transaction
-            ) {
+            function(transaction) {
 
-                const paymentReference =
-                    transaction.reference ||
-                    reference;
-
-
-                await finalizeOrder(
-                    paymentReference,
-                    customer,
-                    total
+                alert(
+                    "Payment successful!\n\n" +
+                    "Reference: " +
+                    transaction.reference
                 );
+
+
+                /*
+                   Clear cart after successful
+                   payment.
+                */
+
+                cart = [];
+
+                saveCart();
+
+                updateCart();
+
+                updatePlatter();
+
+                closeCart();
 
             },
 
@@ -2167,18 +1648,17 @@ function checkoutPaystack() {
 
 
                 alert(
-                    "There was a problem opening the payment window."
+                    "There was a problem opening Paystack."
                 );
 
             }
 
     });
-
 }
 
 
 /* =========================================================
-   30. PAYMENT REFERENCE
+   24. PAYMENT REFERENCE
 ========================================================= */
 
 function createPaymentReference() {
@@ -2191,265 +1671,116 @@ function createPaymentReference() {
             Math.random() * 100000
         )
     );
-
 }
 
 
 /* =========================================================
-   31. FINALIZE ORDER
+   25. PRODUCT ICON
 ========================================================= */
 
-async function finalizeOrder(
-    reference,
-    customer,
-    total
+function getProductIcon(
+    category
 ) {
 
-    const itemsSnapshot =
-        cart.map(
-            item => ({
-
-                name:
-                    item.name,
-
-                price:
-                    Number(item.price),
-
-                quantity:
-                    item.quantity ||
-                    1,
-
-                category:
-                    item.category,
-
-                size:
-                    item.size ||
-                    "",
-
-                desc:
-                    item.desc ||
-                    ""
-
-            })
-        );
+    const value =
+        String(category)
+            .toLowerCase();
 
 
-    try {
-
-        const response =
-            await fetch(
-                VERIFY_FUNCTION_URL,
-                {
-
-                    method:
-                        "POST",
-
-                    headers: {
-
-                        "Content-Type":
-                            "application/json",
-
-                        Authorization:
-                            `Bearer ${SUPABASE_ANON_KEY}`
-
-                    },
-
-                    body:
-                        JSON.stringify({
-
-                            reference,
-
-                            customer,
-
-                            items:
-                                itemsSnapshot,
-
-                            total
-
-                        })
-
-                }
-            );
-
-
-        const result =
-            await response.json();
-
-
-        if (
-            !response.ok ||
-            result.error
-        ) {
-
-            console.error(
-                "Verification failed:",
-                result
-            );
-
-
-            alert(
-                "Payment was completed, but we couldn't automatically confirm the order.\n\n" +
-                "Payment reference: " +
-                reference
-            );
-
-
-            return;
-
-        }
-
-
-        cart = [];
-
-        saveCart();
-
-        updateCart();
-        updatePlatter();
-
-        closeCart();
-
-
-        alert(
-            `Payment successful!\n\nReference: ${reference}`
-        );
-
-
-    } catch(error) {
-
-        console.error(
-            "Order finalization error:",
-            error
-        );
-
-
-        alert(
-            "Payment was completed, but there was a problem confirming your order.\n\n" +
-            "Payment reference: " +
-            reference
-        );
-
+    if (
+        value.includes("jewelry")
+    ) {
+        return "💍";
     }
 
+
+    if (
+        value.includes("clothing")
+    ) {
+        return "👕";
+    }
+
+
+    if (
+        value.includes("gift")
+    ) {
+        return "🎁";
+    }
+
+
+    if (
+        value.includes("grocery")
+    ) {
+        return "🛒";
+    }
+
+
+    return "🛍️";
 }
 
 
 /* =========================================================
-   32. CHOOSE MEAL
+   26. INPUT HELPER
 ========================================================= */
 
-function chooseMeal(
-    mealName
-) {
+function getInputValue(id) {
 
-    const mealSelect =
-        document.getElementById(
-            "meal"
-        );
+    const element =
+        document.getElementById(id);
 
 
-    if (!mealSelect) {
-
-        const url =
-            `index.html?meal=${encodeURIComponent(
-                mealName
-            )}#stock`;
-
-
-        window.location.href =
-            url;
-
-
-        return;
-
-    }
-
-
-    mealSelect.value =
-        mealName;
-
-
-    showIngredients(
-        mealName
-    );
-
-
-    const build =
-        document.getElementById(
-            "build"
-        );
-
-
-    if (build) {
-
-        build.scrollIntoView({
-            behavior:
-                "smooth"
-        });
-
-    }
-
+    return element
+        ? element.value.trim()
+        : "";
 }
 
 
 /* =========================================================
-   33. MEAL URL
+   27. MONEY
 ========================================================= */
 
-function handleMealURL() {
+function formatMoney(value) {
 
-    const params =
-        new URLSearchParams(
-            window.location.search
-        );
-
-
-    const meal =
-        params.get(
-            "meal"
-        );
-
-
-    if (!meal) {
-        return;
-    }
-
-
-    const mealSelect =
-        document.getElementById(
-            "meal"
-        );
-
-
-    if (!mealSelect) {
-        return;
-    }
-
-
-    setTimeout(
-        () => {
-
-            if (
-                mealCategories[meal]
-            ) {
-
-                mealSelect.value =
-                    meal;
-
-                showIngredients(
-                    meal
-                );
-
-            }
-
-        },
-        500
-    );
-
+    return Number(
+        value || 0
+    ).toFixed(2);
 }
 
 
 /* =========================================================
-   34. CART TOAST
+   28. HTML ESCAPE
+========================================================= */
+
+function escapeHTML(value) {
+
+    return String(
+        value ?? ""
+    )
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+        .replace(
+            /</g,
+            "&lt;"
+        )
+        .replace(
+            />/g,
+            "&gt;"
+        )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+}
+
+
+/* =========================================================
+   29. CART TOAST
 ========================================================= */
 
 function showCartToast(
@@ -2481,7 +1812,6 @@ function showCartToast(
         document.body.appendChild(
             toast
         );
-
     }
 
 
@@ -2510,76 +1840,278 @@ function showCartToast(
             },
             2200
         );
-
 }
 
 
 /* =========================================================
-   35. INPUT HELPER
+   30. MOBILE MENU
 ========================================================= */
 
-function getInputValue(
-    id
-) {
+function initializeMobileMenu() {
 
-    const element =
+    const menuButton =
         document.getElementById(
-            id
+            "mobileMenuButton"
         );
 
 
-    return element
-        ? element.value.trim()
-        : "";
-
-}
-
-
-/* =========================================================
-   36. MONEY
-========================================================= */
-
-function formatMoney(
-    value
-) {
-
-    return Number(
-        value || 0
-    ).toFixed(2);
-
-}
+    const mobileMenu =
+        document.getElementById(
+            "mobileMenu"
+        );
 
 
-/* =========================================================
-   37. HTML ESCAPE
-========================================================= */
+    if (
+        !menuButton ||
+        !mobileMenu
+    ) {
+        return;
+    }
 
-function escapeHTML(
-    value
-) {
 
-    return String(
-        value ?? ""
-    )
-    .replace(
-        /&/g,
-        "&amp;"
-    )
-    .replace(
-        /</g,
-        "&lt;"
-    )
-    .replace(
-        />/g,
-        "&gt;"
-    )
-    .replace(
-        /"/g,
-        "&quot;"
-    )
-    .replace(
-        /'/g,
-        "&#039;"
+    menuButton.addEventListener(
+        "click",
+        () => {
+
+            mobileMenu.classList.toggle(
+                "open"
+            );
+
+        }
     );
-
 }
+
+
+/* =========================================================
+   31. GLOBAL SEARCH INPUT
+========================================================= */
+
+function initializeSearch() {
+
+    const searchInputs =
+        document.querySelectorAll(
+            "[data-product-search]"
+        );
+
+
+    searchInputs.forEach(input => {
+
+        input.addEventListener(
+            "input",
+            function () {
+
+                const target =
+                    this.dataset.productSearch ||
+                    "productGrid";
+
+
+                searchProducts(
+                    this.value,
+                    target
+                );
+
+            }
+        );
+
+    });
+}
+
+
+/* =========================================================
+   32. CATEGORY BUTTONS
+========================================================= */
+
+function initializeCategoryButtons() {
+
+    document
+        .querySelectorAll(
+            "[data-category-filter]"
+        )
+        .forEach(button => {
+
+            button.addEventListener(
+                "click",
+                function () {
+
+                    const category =
+                        this.dataset.categoryFilter;
+
+
+                    const target =
+                        this.dataset.target ||
+                        "productGrid";
+
+
+                    document
+                        .querySelectorAll(
+                            "[data-category-filter]"
+                        )
+                        .forEach(btn =>
+                            btn.classList.remove(
+                                "active"
+                            )
+                        );
+
+
+                    this.classList.add(
+                        "active"
+                    );
+
+
+                    filterProducts(
+                        category,
+                        target
+                    );
+
+                }
+            );
+
+        });
+}
+
+
+/* =========================================================
+   33. INITIALIZATION
+========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        /*
+           Cart
+        */
+
+        updateCart();
+
+        updatePlatter();
+
+
+        /*
+           Product sections.
+           These only render when the
+           matching containers exist.
+        */
+
+        renderHomeProducts();
+
+
+        if (
+            document.getElementById(
+                "groceriesGrid"
+            )
+        ) {
+
+            renderCategoryProducts(
+                "Groceries",
+                "groceriesGrid"
+            );
+
+        }
+
+
+        if (
+            document.getElementById(
+                "clothingGrid"
+            )
+        ) {
+
+            renderCategoryProducts(
+                "Clothing",
+                "clothingGrid"
+            );
+
+        }
+
+
+        if (
+            document.getElementById(
+                "jewelryGrid"
+            )
+        ) {
+
+            renderCategoryProducts(
+                "Jewelry",
+                "jewelryGrid"
+            );
+
+        }
+
+
+        if (
+            document.getElementById(
+                "giftsGrid"
+            )
+        ) {
+
+            renderCategoryProducts(
+                "Gifts",
+                "giftsGrid"
+            );
+
+        }
+
+
+        /*
+           UI
+        */
+
+        initializeSizeButtons();
+
+        initializeGiftFilters();
+
+        initializeMobileMenu();
+
+        initializeSearch();
+
+        initializeCategoryButtons();
+
+    }
+);
+
+
+/* =========================================================
+   34. MAKE FUNCTIONS AVAILABLE TO HTML
+========================================================= */
+
+window.openCart =
+    openCart;
+
+window.closeCart =
+    closeCart;
+
+window.addToCart =
+    addToCart;
+
+window.addProductFromCard =
+    addProductFromCard;
+
+window.changeQuantity =
+    changeQuantity;
+
+window.removeItem =
+    removeItem;
+
+window.checkoutWhatsApp =
+    checkoutWhatsApp;
+
+window.showEmailThenPay =
+    showEmailThenPay;
+
+window.checkoutPaystack =
+    checkoutPaystack;
+
+window.filterProducts =
+    filterProducts;
+
+window.searchProducts =
+    searchProducts;
+
+window.renderProducts =
+    renderProducts;
+
+window.updateCart =
+    updateCart;
+
+window.updatePlatter =
+    updatePlatter;
