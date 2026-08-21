@@ -32,7 +32,7 @@ const SUPABASE_URL =
     "https://spplkkeeisaozamrsfwg.supabase.co";
 
 const SUPABASE_ANON_KEY =
-    "PASTE_YOUR_EXISTING_SUPABASE_ANON_KEY_HERE";
+    "sb_publishable_py0X361Nk1IT8YGrsj_xsQ_OQe2jBYM";
 
 const PAYSTACK_PUBLIC_KEY =
     "PASTE_YOUR_PAYSTACK_PUBLIC_KEY_HERE";
