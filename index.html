@@ -2,74 +2,48 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <meta
         name="description"
-        content="Everything Everything — groceries, clothing, jewelry, gifts and custom platters."
+        content="Everything Everything — groceries, clothing, jewelry and gifts."
     >
 
-    <title>Everything Everything | Everything You Need</title>
+    <title>Everything Everything</title>
 
-    <link rel="stylesheet" href="style.css">
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
 </head>
 
 <body>
 
+
 <!-- =========================================================
-     NAVIGATION
+     HEADER
 ========================================================= -->
 
-<header class="navbar">
+<header class="site-header">
 
-    <a href="#home" class="brand">
-        <span class="brand-mark">✦</span>
-
-        <span class="brand-text">
-            EVERYTHING <b>EVERYTHING</b>
-        </span>
+    <a
+        href="#top"
+        class="site-brand"
+    >
+        EVERYTHING EVERYTHING
     </a>
 
-
-    <nav class="main-nav">
-
-        <a href="#home" class="active">
-            Home
-        </a>
-
-        <a href="#stock">
-            Browse Stock
-        </a>
-
-        <a href="#groceries">
-            Groceries
-        </a>
-
-        <a href="#clothing">
-            Clothing
-        </a>
-
-        <a href="#jewelry">
-            Jewelry
-        </a>
-
-        <a href="#gifts">
-            Gifts
-        </a>
-
-        <a href="#platter">
-            Platter
-        </a>
-
-    </nav>
-
-
     <button
-        class="cart-button"
+        class="basket-button"
+        id="basketButton"
         type="button"
         onclick="openCart()"
     >
-        Cart
+        Basket
         <span id="cartCount">0</span>
     </button>
 
@@ -81,7 +55,7 @@
      MAIN
 ========================================================= -->
 
-<main id="home">
+<main id="top">
 
 
 <!-- =========================================================
@@ -90,20 +64,22 @@
 
 <section class="hero">
 
-    <div class="hero-content">
+    <div class="hero-inner">
 
-        <p class="eyebrow">
-            EVERYTHING YOU NEED. ALL IN ONE PLACE.
+        <p class="hero-label">
+            A PLATTER MALL
         </p>
 
         <h1>
-            Everything,
-            <span>for everyone.</span>
+            Everything you need,
+            <br>
+            all in one place.
         </h1>
 
-        <p class="hero-text">
-            Shop everyday essentials, fashion, jewelry and
-            thoughtful gifts — all from one convenient store.
+        <p class="hero-description">
+            Browse groceries, clothing, jewelry and gifts,
+            then order straight to WhatsApp — no stores to
+            visit, delivered safely to your doorstep.
         </p>
 
 
@@ -111,119 +87,21 @@
 
             <a
                 href="#stock"
-                class="btn primary"
+                class="hero-button hero-button-primary"
             >
-                Browse Stock
+                Browse stock ↓
             </a>
 
             <a
                 href="https://wa.me/233595485044"
-                class="btn secondary"
+                class="hero-button hero-button-secondary"
                 target="_blank"
                 rel="noopener"
             >
-                💬 Chat on WhatsApp
+                Chat on WhatsApp
             </a>
 
         </div>
-
-
-        <div class="trust-row">
-
-            <span>✓ Wide variety</span>
-
-            <span>✓ Affordable prices</span>
-
-            <span>✓ Convenient shopping</span>
-
-        </div>
-
-    </div>
-
-
-    <div class="hero-image">
-
-        <img
-            src="assets/hero.jpg"
-            alt="Everything Everything store"
-            onerror="this.src='Assets.jpeg'"
-        >
-
-    </div>
-
-</section>
-
-
-
-<!-- =========================================================
-     QUICK CATEGORY NAVIGATION
-========================================================= -->
-
-<section class="quick-categories">
-
-    <div class="quick-category-heading">
-
-        <p class="eyebrow">
-            SHOP BY CATEGORY
-        </p>
-
-        <h2>
-            Find what you're looking for.
-        </h2>
-
-    </div>
-
-
-    <div class="quick-category-grid">
-
-        <a
-            href="#groceries"
-            class="quick-category"
-        >
-            <span>🛒</span>
-            <strong>Groceries</strong>
-            <small>Everyday essentials</small>
-        </a>
-
-
-        <a
-            href="#clothing"
-            class="quick-category"
-        >
-            <span>👗</span>
-            <strong>Clothing</strong>
-            <small>Men's & women's fashion</small>
-        </a>
-
-
-        <a
-            href="#jewelry"
-            class="quick-category"
-        >
-            <span>💍</span>
-            <strong>Jewelry</strong>
-            <small>Accessories & watches</small>
-        </a>
-
-
-        <a
-            href="#gifts"
-            class="quick-category"
-        >
-            <span>🎁</span>
-            <strong>Gifts</strong>
-            <small>Something for everyone</small>
-        </a>
-
-
-        <a
-            href="#platter"
-            class="quick-category"
-        >
-            <span>🍽️</span>
-            <strong>Platter</strong>
-            <small>Create your own combination</small>
-        </a>
 
     </div>
 
@@ -236,683 +114,114 @@
 ========================================================= -->
 
 <section
-    class="section stock-section"
+    class="stock-section"
     id="stock"
 >
 
-    <div class="section-heading">
+    <div class="stock-inner">
 
-        <div>
 
-            <p class="eyebrow">
-                OUR STORE
+        <div class="stock-heading">
+
+            <p class="section-label">
+                GROCERIES
             </p>
 
             <h2>
-                Browse Our Stock
+                Fresh produce & pantry staples
             </h2>
 
-        </div>
-
-
-        <p>
-            Explore products from every part of
-            Everything Everything.
-        </p>
-
-    </div>
-
-
-    <!-- SEARCH -->
-
-    <div class="stock-controls">
-
-        <div class="search-box">
-
-            <span>⌕</span>
-
-            <input
-                id="productSearch"
-                type="search"
-                placeholder="Search products..."
-                autocomplete="off"
-            >
+            <p>
+                Fresh produce & pantry staples,
+                ready to deliver.
+            </p>
 
         </div>
 
+
+        <div class="stock-introduction">
+
+            <h3>
+                In stock now
+            </h3>
+
+            <p>
+                Prices and items shown are sample listings.
+                Replace them with your real stock, quantities
+                and prices any time.
+            </p>
+
+        </div>
+
+
+
+        <!-- =================================================
+             CATEGORY FILTERS
+        ================================================== -->
 
         <div
-            class="category-filter"
-            id="categoryFilter"
+            class="stock-filters"
+            id="stockFilters"
         >
 
             <button
-                class="filter-btn active"
-                data-filter="all"
+                type="button"
+                class="stock-filter active"
+                data-category="all"
             >
                 All
             </button>
 
             <button
-                class="filter-btn"
-                data-filter="Groceries"
-            >
-                Groceries
-            </button>
-
-            <button
-                class="filter-btn"
-                data-filter="Clothing"
-            >
-                Clothing
-            </button>
-
-            <button
-                class="filter-btn"
-                data-filter="Jewelry"
-            >
-                Jewelry
-            </button>
-
-            <button
-                class="filter-btn"
-                data-filter="Gifts"
-            >
-                Gifts
-            </button>
-
-        </div>
-
-    </div>
-
-
-    <!-- PRODUCT COUNT -->
-
-    <div class="stock-meta">
-
-        <span id="productCount">
-            Products
-        </span>
-
-        <span>
-            Prices shown in GH₵
-        </span>
-
-    </div>
-
-
-    <!-- ALL PRODUCTS -->
-
-    <div
-        class="product-grid"
-        id="productGrid"
-    >
-
-        <!-- JavaScript populates this -->
-
-    </div>
-
-
-    <!-- NO RESULTS -->
-
-    <div
-        class="no-results"
-        id="noResults"
-        style="display:none"
-    >
-
-        <div>🔎</div>
-
-        <h3>
-            No products found
-        </h3>
-
-        <p>
-            Try another search or category.
-        </p>
-
-    </div>
-
-</section>
-
-
-
-<!-- =========================================================
-     FEATURED PRODUCTS
-========================================================= -->
-
-<section class="section featured-section">
-
-    <div class="section-heading">
-
-        <div>
-
-            <p class="eyebrow">
-                CUSTOMER FAVOURITES
-            </p>
-
-            <h2>
-                Popular Picks
-            </h2>
-
-        </div>
-
-        <a
-            href="#stock"
-            class="text-link"
-        >
-            View all products →
-        </a>
-
-    </div>
-
-
-    <div
-        class="product-grid featured-grid"
-        id="featuredProducts"
-    >
-
-        <!-- JavaScript populates this -->
-
-    </div>
-
-</section>
-
-
-
-<!-- =========================================================
-     GROCERIES
-========================================================= -->
-
-<section
-    class="section category-section"
-    id="groceries"
->
-
-    <div class="category-banner groceries-banner">
-
-        <div>
-
-            <p class="eyebrow">
-                FRESH & ESSENTIAL
-            </p>
-
-            <h2>
-                Groceries
-            </h2>
-
-            <p>
-                Everyday ingredients and essentials
-                for your kitchen.
-            </p>
-
-        </div>
-
-
-        <span class="category-large-icon">
-            🛒
-        </span>
-
-    </div>
-
-
-    <div
-        class="product-grid"
-        id="groceryProducts"
-    >
-
-        <!-- JavaScript populates this -->
-
-    </div>
-
-</section>
-
-
-
-<!-- =========================================================
-     CUSTOM GROCERY BUILDER
-========================================================= -->
-
-<section
-    class="section build-section"
-    id="grocery-builder"
->
-
-    <div class="build-content">
-
-        <p class="eyebrow">
-            BUILD YOUR OWN
-        </p>
-
-        <h2>
-            Create a custom
-            <span>grocery basket.</span>
-        </h2>
-
-        <p>
-            Pick the ingredients you want and we'll
-            combine them into one custom grocery order.
-        </p>
-
-
-        <div class="build-benefits">
-
-            <span>✓ Choose exactly what you need</span>
-
-            <span>✓ See your total instantly</span>
-
-            <span>✓ Add it directly to your cart</span>
-
-        </div>
-
-    </div>
-
-
-    <div class="builder-card">
-
-        <label for="meal">
-
-            Choose a grocery collection
-
-            <select id="meal">
-
-                <option value="">
-                    Select a collection
-                </option>
-
-                <option value="Everyday Essentials">
-                    Everyday Essentials
-                </option>
-
-                <option value="Breakfast">
-                    Breakfast
-                </option>
-
-                <option value="Jollof Night">
-                    Jollof Night
-                </option>
-
-                <option value="Family Meal">
-                    Family Meal
-                </option>
-
-                <option value="Fresh Produce">
-                    Fresh Produce
-                </option>
-
-            </select>
-
-        </label>
-
-
-        <div class="ingredient-heading">
-
-            <strong>
-                Choose your items
-            </strong>
-
-            <small>
-                Select as many as you need.
-            </small>
-
-        </div>
-
-
-        <div
-            class="ingredient-list"
-            id="ingredientList"
-        >
-
-            <!-- JavaScript populates this -->
-
-        </div>
-
-
-        <div class="builder-total">
-
-            <span>
-                Basket total
-            </span>
-
-            <strong id="builderTotal">
-                GH₵0.00
-            </strong>
-
-        </div>
-
-
-        <button
-            type="button"
-            class="btn primary full"
-            onclick="addCustomPlatter()"
-        >
-            Add Custom Basket
-        </button>
-
-    </div>
-
-</section>
-
-
-
-<!-- =========================================================
-     CLOTHING
-========================================================= -->
-
-<section
-    class="section category-section"
-    id="clothing"
->
-
-    <div class="category-banner clothing-banner">
-
-        <div>
-
-            <p class="eyebrow">
-                STYLE FOR EVERYONE
-            </p>
-
-            <h2>
-                Clothing
-            </h2>
-
-            <p>
-                Everyday fashion for men and women.
-            </p>
-
-        </div>
-
-
-        <span class="category-large-icon">
-            👗
-        </span>
-
-    </div>
-
-
-    <div class="subcategory-tabs">
-
-        <button
-            class="sub-filter active"
-            data-product-filter="clothing"
-            data-subcategory="all"
-        >
-            All Clothing
-        </button>
-
-        <button
-            class="sub-filter"
-            data-product-filter="clothing"
-            data-subcategory="Women"
-        >
-            Women
-        </button>
-
-        <button
-            class="sub-filter"
-            data-product-filter="clothing"
-            data-subcategory="Men"
-        >
-            Men
-        </button>
-
-    </div>
-
-
-    <div
-        class="product-grid"
-        id="clothingProducts"
-    >
-
-        <!-- JavaScript populates this -->
-
-    </div>
-
-</section>
-
-
-
-<!-- =========================================================
-     JEWELRY
-========================================================= -->
-
-<section
-    class="section category-section"
-    id="jewelry"
->
-
-    <div class="category-banner jewelry-banner">
-
-        <div>
-
-            <p class="eyebrow">
-                COMPLETE THE LOOK
-            </p>
-
-            <h2>
-                Jewelry
-            </h2>
-
-            <p>
-                Simple pieces, statement accessories
-                and timeless gifts.
-            </p>
-
-        </div>
-
-
-        <span class="category-large-icon">
-            💍
-        </span>
-
-    </div>
-
-
-    <div
-        class="product-grid"
-        id="jewelryProducts"
-    >
-
-        <!-- JavaScript populates this -->
-
-    </div>
-
-</section>
-
-
-
-<!-- =========================================================
-     GIFTS
-========================================================= -->
-
-<section
-    class="section category-section"
-    id="gifts"
->
-
-    <div class="category-banner gifts-banner">
-
-        <div>
-
-            <p class="eyebrow">
-                SOMETHING SPECIAL
-            </p>
-
-            <h2>
-                Gifts
-            </h2>
-
-            <p>
-                Thoughtful gift ideas for birthdays,
-                celebrations and special moments.
-            </p>
-
-        </div>
-
-
-        <span class="category-large-icon">
-            🎁
-        </span>
-
-    </div>
-
-
-    <div class="gift-filters">
-
-        <button
-            class="gift-filter active"
-            data-gift-filter="all"
-        >
-            All Gifts
-        </button>
-
-        <button
-            class="gift-filter"
-            data-gift-filter="Birthday"
-        >
-            Birthday
-        </button>
-
-        <button
-            class="gift-filter"
-            data-gift-filter="Couples"
-        >
-            Couples
-        </button>
-
-        <button
-            class="gift-filter"
-            data-gift-filter="Women"
-        >
-            For Her
-        </button>
-
-        <button
-            class="gift-filter"
-            data-gift-filter="Men"
-        >
-            For Him
-        </button>
-
-        <button
-            class="gift-filter"
-            data-gift-filter="Celebration"
-        >
-            Celebration
-        </button>
-
-    </div>
-
-
-    <div
-        class="product-grid"
-        id="giftProducts"
-    >
-
-        <!-- JavaScript populates this -->
-
-    </div>
-
-</section>
-
-
-
-<!-- =========================================================
-     PLATTER
-========================================================= -->
-
-<section
-    class="section platter-section"
-    id="platter"
->
-
-    <div class="platter-intro">
-
-        <p class="eyebrow">
-            YOUR CHOICE. YOUR COMBINATION.
-        </p>
-
-        <h2>
-            Build your
-            <span>own platter.</span>
-        </h2>
-
-        <p>
-            Combine groceries, clothing, jewelry and
-            gifts into one order. Everything you select
-            across the store can come together here.
-        </p>
-
-        <div class="platter-icons">
-
-            <span>🛒</span>
-            <span>👗</span>
-            <span>💍</span>
-            <span>🎁</span>
-
-        </div>
-
-    </div>
-
-
-    <div class="platter-card">
-
-        <div class="platter-card-header">
-
-            <div>
-
-                <p class="eyebrow">
-                    YOUR SELECTION
-                </p>
-
-                <h3>
-                    My Platter
-                </h3>
-
-            </div>
-
-            <span id="platterItemCount">
-                0 items
-            </span>
-
-        </div>
-
-
-        <div
-            id="platterItems"
-            class="platter-items"
-        >
-
-            <!-- JavaScript populates this -->
-
-        </div>
-
-
-        <div class="platter-bottom">
-
-            <div>
-
-                <span>
-                    Total
-                </span>
-
-                <strong id="platterTotal">
-                    GH₵0.00
-                </strong>
-
-            </div>
-
-
-            <button
-                class="btn primary"
                 type="button"
-                onclick="openCart()"
+                class="stock-filter"
+                data-category="groceries"
             >
-                View Cart
+                Groceries
+            </button>
+
+            <button
+                type="button"
+                class="stock-filter"
+                data-category="clothing"
+            >
+                Clothing
+            </button>
+
+            <button
+                type="button"
+                class="stock-filter"
+                data-category="jewelry"
+            >
+                Jewelry
+            </button>
+
+            <button
+                type="button"
+                class="stock-filter"
+                data-category="gifts"
+            >
+                Gifts
             </button>
 
         </div>
 
+
+
+        <!-- =================================================
+             PRODUCTS
+        ================================================== -->
+
+        <div
+            class="product-grid"
+            id="productGrid"
+        >
+
+            <!-- Products are generated by script.js -->
+
+        </div>
+
+
     </div>
 
 </section>
@@ -920,102 +229,84 @@
 
 
 <!-- =========================================================
-     WHY EVERYTHING EVERYTHING
+     BENEFITS
 ========================================================= -->
 
-<section
-    class="section about-section"
-    id="about"
->
+<section class="benefits-section">
 
-    <div class="about-card">
+    <div class="benefits-grid">
 
-        <div class="about-intro">
 
-            <p class="eyebrow">
-                WHY EVERYTHING EVERYTHING?
-            </p>
+        <article class="benefit">
 
-            <h2>
-                Everything you need,
-                <span>in one place.</span>
-            </h2>
+            <div class="benefit-icon">
+                🧺
+            </div>
+
+            <h3>
+                Sold in platters
+            </h3>
 
             <p>
-                Everything Everything brings different
-                parts of everyday shopping together in one
-                convenient place.
+                Carefully packed for you.
             </p>
 
-        </div>
+        </article>
 
 
-        <div class="features">
 
-            <div class="feature">
+        <article class="benefit">
 
-                <span>🧺</span>
-
-                <h3>
-                    Wide Variety
-                </h3>
-
-                <p>
-                    Groceries, clothing, jewelry and
-                    gifts all under one roof.
-                </p>
-
+            <div class="benefit-icon">
+                🚚
             </div>
 
+            <h3>
+                Fast & reliable delivery
+            </h3>
 
-            <div class="feature">
+            <p>
+                Delivered safely to your doorstep.
+            </p>
 
-                <span>💰</span>
+        </article>
 
-                <h3>
-                    Affordable
-                </h3>
 
-                <p>
-                    Products selected with everyday
-                    value in mind.
-                </p>
 
+        <article class="benefit">
+
+            <div class="benefit-icon">
+                💳
             </div>
 
+            <h3>
+                Safe & easy shopping
+            </h3>
 
-            <div class="feature">
+            <p>
+                Secure payments & great support.
+            </p>
 
-                <span>🛍️</span>
+        </article>
 
-                <h3>
-                    Easy Shopping
-                </h3>
 
-                <p>
-                    Browse, select and add everything
-                    you want to one cart.
-                </p>
 
+        <article class="benefit">
+
+            <div class="benefit-icon">
+                ✨
             </div>
 
+            <h3>
+                Quality assured
+            </h3>
 
-            <div class="feature">
+            <p>
+                We deliver only the best.
+            </p>
 
-                <span>✨</span>
+        </article>
 
-                <h3>
-                    Flexible
-                </h3>
-
-                <p>
-                    Shop individual products or create
-                    your own custom combination.
-                </p>
-
-            </div>
-
-        </div>
 
     </div>
 
@@ -1024,59 +315,50 @@
 
 
 <!-- =========================================================
-     CONTACT
+     ORDER
 ========================================================= -->
 
-<section
-    class="section contact-section"
-    id="contact"
->
+<section class="order-section">
 
-    <div>
+    <div class="order-inner">
 
-        <p class="eyebrow">
+        <p class="section-label">
             READY TO ORDER?
         </p>
 
         <h2>
-            Let's get your order ready.
+            Order now
         </h2>
 
-        <p>
-            Browse our stock, add your favourites to
-            your cart and order directly through WhatsApp
-            or Paystack.
-        </p>
+        <div class="order-contacts">
 
-    </div>
+            <a
+                href="tel:+233547023648"
+            >
+                +233 54 702 6348
+            </a>
 
+            <a
+                href="tel:+233595485044"
+            >
+                +233 59 548 5044
+            </a>
 
-    <div class="contact-actions">
+        </div>
+
 
         <a
             href="https://wa.me/233595485044"
             target="_blank"
             rel="noopener"
-            class="btn whatsapp"
+            class="order-whatsapp"
         >
-            💬 Chat on WhatsApp
-        </a>
-
-
-        <a
-            href="#stock"
-            class="btn light-btn"
-        >
-            Browse Stock
+            Chat on WhatsApp
         </a>
 
     </div>
 
 </section>
-
-
-
-</main>
 
 
 
@@ -1084,7 +366,7 @@
      FOOTER
 ========================================================= -->
 
-<footer>
+<footer class="site-footer">
 
     <div class="footer-brand">
 
@@ -1093,7 +375,8 @@
         </strong>
 
         <p>
-            Everything you need, in one place.
+            Everything you need,
+            all in one place.
         </p>
 
     </div>
@@ -1101,64 +384,27 @@
 
     <div class="footer-contact">
 
-        <strong>
-            Contact
-        </strong>
-
-        <p>
-            📞 +233 54 625 3878
-        </p>
-
-        <p>
-            📞 +233 54 702 6348
-        </p>
-
-    </div>
-
-
-    <div class="footer-links">
-
-        <strong>
-            Store
-        </strong>
-
-        <a href="#groceries">
-            Groceries
+        <a href="tel:+233547023648">
+            +233 54 702 6348
         </a>
 
-        <a href="#clothing">
-            Clothing
-        </a>
-
-        <a href="#jewelry">
-            Jewelry
-        </a>
-
-        <a href="#gifts">
-            Gifts
-        </a>
-
-        <a href="#platter">
-            Platter
+        <a href="tel:+233595485044">
+            +233 59 548 5044
         </a>
 
     </div>
 
 
-    <div class="footer-bottom">
-
-        <p>
-            © 2026 Everything Everything
-        </p>
-
-    </div>
+    <p class="copyright">
+        © 2026 Everything Everything
+    </p>
 
 </footer>
 
 
 
 <!-- =========================================================
-     CART OVERLAY
+     BASKET OVERLAY
 ========================================================= -->
 
 <div
@@ -1172,25 +418,17 @@
         onclick="event.stopPropagation()"
     >
 
+
         <div class="cart-header">
 
-            <div>
-
-                <p class="eyebrow">
-                    YOUR ORDER
-                </p>
-
-                <h2>
-                    Your Cart
-                </h2>
-
-            </div>
-
+            <h2>
+                Your Basket
+            </h2>
 
             <button
                 type="button"
                 onclick="closeCart()"
-                aria-label="Close cart"
+                aria-label="Close basket"
                 class="cart-close"
             >
                 ×
@@ -1199,38 +437,44 @@
         </div>
 
 
+
+        <!-- CART ITEMS -->
+
         <div
             id="cartItems"
             class="cart-items"
         >
 
-            <!-- JavaScript populates this -->
+            <p class="empty-cart">
+                Your basket is empty.
+            </p>
 
         </div>
 
 
-        <div class="cart-summary">
 
-            <div>
+        <!-- TOTAL -->
 
-                <span>
-                    Total
-                </span>
+        <div class="cart-total">
 
-                <strong id="cartTotal">
-                    GH₵0.00
-                </strong>
+            <span>
+                Total
+            </span>
 
-            </div>
+            <strong id="cartTotal">
+                GH₵0.00
+            </strong>
 
         </div>
 
 
-        <!-- CUSTOMER INFORMATION -->
 
-        <div class="checkout-form">
+        <!-- CUSTOMER DETAILS -->
 
-            <label class="checkout-label">
+        <div class="checkout-fields">
+
+
+            <label>
 
                 Your name
 
@@ -1243,7 +487,8 @@
             </label>
 
 
-            <label class="checkout-label">
+
+            <label>
 
                 Delivery location
 
@@ -1256,29 +501,12 @@
             </label>
 
 
-            <label class="checkout-label">
 
-                Phone number
-
-                <input
-                    id="customerPhone"
-                    type="tel"
-                    placeholder="e.g. 024 XXX XXXX"
-                >
-
-            </label>
-
-
-            <label
-                class="checkout-label"
-                id="emailField"
-                style="display:none"
-            >
+            <label>
 
                 Email
-
                 <small>
-                    Required for Paystack
+                    Required for online payment
                 </small>
 
                 <input
@@ -1289,34 +517,34 @@
 
             </label>
 
+
         </div>
 
 
-        <div class="checkout-actions">
+
+        <!-- CHECKOUT -->
+
+        <div class="checkout-buttons">
 
             <button
-                class="btn whatsapp full"
                 type="button"
+                class="checkout-whatsapp"
                 onclick="checkoutWhatsApp()"
             >
-                💬 Order via WhatsApp
+                💬 Checkout on WhatsApp
             </button>
 
 
             <button
-                class="btn primary full"
                 type="button"
-                onclick="showEmailThenPay()"
+                class="checkout-paystack"
+                onclick="checkoutPaystack()"
             >
-                💳 Pay with Paystack
+                💳 Pay Now
             </button>
 
         </div>
 
-
-        <p class="checkout-note">
-            Your cart is saved on this device while you shop.
-        </p>
 
     </aside>
 
@@ -1330,7 +558,7 @@
 
 <div
     id="eeCartToast"
-    class="ee-cart-toast"
+    class="cart-toast"
 >
 </div>
 
@@ -1341,6 +569,7 @@
 ========================================================= -->
 
 <script src="https://js.paystack.co/v2/inline.js"></script>
+
 
 
 <!-- =========================================================
