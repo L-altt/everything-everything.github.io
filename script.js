@@ -194,6 +194,61 @@ function closeCart(e) {
     document.getElementById("cartOverlay").classList.remove("open");
   }
 }
+// ======================================
+// CHECKOUT — WHATSAPP
+// ======================================
+
+function checkoutWhatsApp() {
+  if (!cart.length) {
+    alert("Please add something to your cart first.");
+    return;
+  }
+
+  const name = document.getElementById("customerName").value.trim();
+  const location = document.getElementById("customerLocation").value.trim();
+
+  if (!name || !location) {
+    alert("Please fill in your name and delivery location.");
+    return;
+  }
+
+  const total = cart.reduce((sum, item) => sum + item.price, 0);
+
+  const lines = cart.map(item =>
+    `• ${item.name} — GH₵${item.price}${item.desc ? ` (${item.desc})` : ""}`
+  );
+
+  const message =
+`Hi Everything Everything! I'd like to place an order:
+
+${lines.join("\n")}
+
+Total: GH₵${total}
+
+Name: ${name}
+Delivery location: ${location}`;
+
+  const phone = "233595485044"; // matches your existing WhatsApp link
+  const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+  window.open(url, "_blank");
+}
+
+
+// ======================================
+// SHOW EMAIL FIELD BEFORE PAYSTACK
+// ======================================
+
+function showEmailThenPay() {
+  const emailField = document.getElementById("emailField");
+
+  if (emailField.style.display === "none") {
+    emailField.style.display = "block";
+    document.getElementById("customerEmail").focus();
+    return; // give them a chance to fill it in before triggering payment
+  }
+
+  checkoutPaystack();
+}
 
 
 // ======================================
