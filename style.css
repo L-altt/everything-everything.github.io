@@ -1,5 +1,5 @@
 /* =========================================================
-   EVERYTHING EVERYTHING — CARBON COPY OF SITE 1
+   EVERYTHING EVERYTHING — PROPER STORE BUILD
 ========================================================= */
 
 * {
@@ -33,7 +33,8 @@ body {
     line-height: 1.55;
 }
 
-body.cart-open { overflow: hidden; }
+body.cart-open,
+body.nav-open { overflow: hidden; }
 
 a { color: inherit; text-decoration: none; }
 button, input { font: inherit; }
@@ -48,8 +49,9 @@ button, input { font: inherit; }
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 20px;
 
-    padding: 18px 6%;
+    padding: 16px 6%;
 
     background: #fff;
     border-bottom: 1px solid var(--line);
@@ -60,6 +62,29 @@ button, input { font: inherit; }
     font-weight: 900;
     letter-spacing: 1px;
     color: var(--ink);
+    white-space: nowrap;
+}
+
+.site-nav {
+    display: flex;
+    gap: 26px;
+    flex: 1;
+    justify-content: center;
+}
+
+.site-nav a {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--muted);
+    transition: color .2s ease;
+}
+
+.site-nav a:hover { color: var(--primary); }
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 .basket-button {
@@ -74,9 +99,7 @@ button, input { font: inherit; }
     transition: .2s ease;
 }
 
-.basket-button:hover {
-    background: var(--primary-dark);
-}
+.basket-button:hover { background: var(--primary-dark); }
 
 .basket-button span {
     display: inline-flex;
@@ -92,10 +115,29 @@ button, input { font: inherit; }
     font-size: 11px;
 }
 
+.nav-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+    width: 34px;
+    height: 34px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+}
+
+.nav-toggle span {
+    display: block;
+    height: 2px;
+    background: var(--ink);
+    border-radius: 2px;
+}
+
 /* HERO */
 
 .hero {
-    padding: 90px 7% 80px;
+    padding: 90px 7% 60px;
     background: linear-gradient(180deg, #f8fbff 0%, #ffffff 100%);
 }
 
@@ -160,9 +202,23 @@ button, input { font: inherit; }
 .hero-button-secondary { background: #fff; color: var(--primary); border-color: var(--line); }
 .hero-button-secondary:hover { border-color: var(--primary); background: var(--primary-light); }
 
+.trust-badges {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px 22px;
+    margin-top: 34px;
+}
+
+.trust-badges span {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--muted);
+}
+
 /* STOCK SECTION */
 
-.stock-section { background: #fff; padding: 85px 7%; }
+.stock-section { background: #fff; padding: 75px 7%; }
 
 .stock-inner { max-width: 1200px; margin: 0 auto; }
 
@@ -189,11 +245,33 @@ button, input { font: inherit; }
 .stock-introduction h3 { font-size: 20px; margin-bottom: 6px; }
 .stock-introduction p { font-size: 13px; max-width: 600px; }
 
+.stock-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 28px;
+}
+
+.product-search {
+    flex: 1;
+    min-width: 220px;
+    padding: 11px 16px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--soft);
+    color: var(--ink);
+    outline: none;
+    transition: border-color .2s ease;
+}
+
+.product-search:focus { border-color: var(--primary); background: #fff; }
+
 .stock-filters {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
-    margin-bottom: 32px;
 }
 
 .stock-filter {
@@ -213,6 +291,13 @@ button, input { font: inherit; }
     background: var(--primary);
     border-color: var(--primary);
     color: #fff;
+}
+
+.no-results {
+    text-align: center;
+    color: var(--muted);
+    font-size: 13px;
+    padding: 30px 0;
 }
 
 /* PRODUCT GRID */
@@ -348,6 +433,82 @@ button, input { font: inherit; }
 .benefit h3 { font-size: 15px; margin-bottom: 6px; }
 .benefit p { font-size: 12px; }
 
+/* ABOUT */
+
+.about-section { padding: 85px 7%; background: #fff; }
+
+.about-inner { max-width: 720px; margin: 0 auto; text-align: center; }
+
+.about-inner h2 {
+    font-size: clamp(26px, 4vw, 36px);
+    letter-spacing: -1px;
+    margin-bottom: 18px;
+}
+
+.about-text {
+    color: var(--muted);
+    font-size: 15px;
+    line-height: 1.8;
+    margin-bottom: 34px;
+}
+
+.delivery-areas h4 {
+    font-size: 13px;
+    font-weight: 800;
+    margin-bottom: 14px;
+}
+
+.area-tags {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+}
+
+.area-tags span {
+    padding: 7px 14px;
+    border-radius: 999px;
+    background: var(--primary-light);
+    color: var(--primary);
+    font-size: 12px;
+    font-weight: 700;
+}
+
+/* TESTIMONIALS */
+
+.testimonials-section { padding: 85px 7%; background: var(--soft); }
+
+.testimonials-inner { max-width: 1100px; margin: 0 auto; text-align: center; }
+
+.testimonials-inner h2 {
+    font-size: clamp(26px, 4vw, 36px);
+    letter-spacing: -1px;
+    margin-bottom: 36px;
+}
+
+.testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+}
+
+.testimonial {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 26px 22px;
+    text-align: left;
+}
+
+.testimonial p {
+    font-size: 13px;
+    color: var(--ink);
+    line-height: 1.7;
+    margin-bottom: 14px;
+}
+
+.testimonial strong { font-size: 12px; color: var(--primary); }
+
 /* ORDER SECTION */
 
 .order-section { padding: 85px 7%; background: var(--primary); text-align: center; }
@@ -402,6 +563,16 @@ button, input { font: inherit; }
 
 .footer-contact { display: flex; flex-direction: column; gap: 6px; }
 .footer-contact a { color: #dce6f2; }
+
+.footer-payments p { color: #b8c8dc; margin-bottom: 8px; font-weight: 700; }
+.footer-payments span {
+    display: inline-block;
+    margin: 0 8px 6px 0;
+    padding: 5px 10px;
+    border-radius: 999px;
+    background: rgba(255,255,255,.08);
+    font-size: 11px;
+}
 
 .copyright { width: 100%; margin-top: 20px; color: #8ea3bd; font-size: 11px; }
 
@@ -528,7 +699,7 @@ button, input { font: inherit; }
 
 .checkout-buttons { display: flex; flex-direction: column; gap: 10px; }
 
-.checkout-whatsapp, .checkout-paystack {
+.checkout-whatsapp {
     width: 100%;
     padding: 13px;
     border: none;
@@ -537,13 +708,11 @@ button, input { font: inherit; }
     font-weight: 800;
     cursor: pointer;
     transition: .2s ease;
+    background: #1fa855;
+    color: #fff;
 }
 
-.checkout-whatsapp { background: #1fa855; color: #fff; }
 .checkout-whatsapp:hover { background: #178a45; }
-
-.checkout-paystack { background: var(--primary); color: #fff; }
-.checkout-paystack:hover { background: var(--primary-dark); }
 
 /* TOAST */
 
@@ -574,15 +743,36 @@ button, input { font: inherit; }
 @media (max-width: 1000px) {
     .product-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .benefits-grid { grid-template-columns: repeat(2, 1fr); }
+    .testimonials-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 800px) {
+    .site-nav {
+        position: fixed;
+        top: 64px;
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        gap: 0;
+        background: #fff;
+        border-bottom: 1px solid var(--line);
+        transform: translateY(-130%);
+        transition: transform .25s ease;
+        z-index: 99;
+    }
+    .site-nav.open { transform: translateY(0); }
+    .site-nav a { padding: 16px 7%; border-bottom: 1px solid var(--line); }
+    .nav-toggle { display: flex; }
 }
 
 @media (max-width: 650px) {
     .site-header { padding: 16px 5%; }
-    .hero { padding: 70px 6% 60px; }
-    .stock-section, .benefits-section, .order-section { padding: 60px 6%; }
+    .hero { padding: 70px 6% 50px; }
+    .stock-section, .benefits-section, .about-section, .testimonials-section, .order-section { padding: 60px 6%; }
     .product-grid { grid-template-columns: 1fr; }
     .benefits-grid { grid-template-columns: 1fr; }
+    .stock-controls { flex-direction: column; align-items: stretch; }
     .site-footer { display: block; }
-    .footer-contact { margin-top: 16px; }
+    .footer-contact, .footer-payments { margin-top: 16px; }
     .cart { padding: 20px; }
 }
