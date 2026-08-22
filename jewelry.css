@@ -1,0 +1,170 @@
+/* =========================================================
+   JEWELRY — "the display case"
+   Palette: black ground, warm gold accent, cream text.
+   Signature: cards sit behind a thin gold hairline frame
+   that brightens on hover, like glass catching light.
+========================================================= */
+
+body[data-shop="jewelry"] {
+    --accent: #b08d57;
+    --accent-dark: #8a6d3f;
+    --accent-light: #2a2416;
+    --bg: #0d0d0f;
+    --surface: #17161a;
+    --ink: #f2ece0;
+    --muted: #948d7d;
+    --line: #2c2a26;
+    --font-display: 'Cormorant Garamond', Georgia, serif;
+}
+
+body[data-shop="jewelry"] .site-header,
+body[data-shop="jewelry"] .site-nav {
+    background: var(--bg);
+    border-bottom: 1px solid var(--line);
+}
+
+body[data-shop="jewelry"] .site-brand,
+body[data-shop="jewelry"] .site-nav a { color: var(--ink); }
+body[data-shop="jewelry"] .site-nav a:hover,
+body[data-shop="jewelry"] .site-nav a.current { color: var(--accent); }
+body[data-shop="jewelry"] .site-nav a { border-bottom: 1px solid var(--line); }
+body[data-shop="jewelry"] .nav-toggle span { background: var(--ink); }
+body[data-shop="jewelry"] .nav-toggle:hover { background: var(--surface); border-color: var(--line); }
+
+body[data-shop="jewelry"] .basket-button {
+    background: var(--accent);
+    color: #1a1408;
+}
+body[data-shop="jewelry"] .basket-button:hover { background: var(--accent-dark); }
+body[data-shop="jewelry"] .basket-button span { background: #1a1408; color: var(--accent); }
+
+.display-hero {
+    padding: 100px 7% 70px;
+    background: var(--bg);
+    text-align: center;
+}
+
+.display-hero .section-label { color: var(--accent); letter-spacing: 5px; }
+
+.display-hero h1 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(40px, 7vw, 72px);
+    color: var(--ink);
+    letter-spacing: 1px;
+    margin: 16px 0 20px;
+}
+
+.display-hero p.display-sub {
+    max-width: 460px;
+    margin: 0 auto;
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.9;
+    letter-spacing: .4px;
+}
+
+.display-rule {
+    width: 60px;
+    height: 1px;
+    background: var(--accent);
+    margin: 26px auto 0;
+}
+
+.display-shop { padding: 30px 7% 100px; background: var(--bg); }
+.display-inner { max-width: 1200px; margin: 0 auto; }
+
+.sub-filters { justify-content: center; gap: 10px 22px; margin-bottom: 30px; }
+
+.sub-filter {
+    padding: 6px 2px;
+    border: none;
+    background: transparent;
+    color: var(--muted);
+    font-family: var(--font-display);
+    font-size: 15px;
+    letter-spacing: .5px;
+    position: relative;
+}
+
+.sub-filter::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -4px;
+    width: 0;
+    height: 1px;
+    background: var(--accent);
+    transition: .2s ease;
+    transform: translateX(-50%);
+}
+
+.sub-filter:hover { color: var(--ink); }
+.sub-filter.active { color: var(--accent); }
+.sub-filter.active::after { width: 100%; }
+
+body[data-shop="jewelry"] .product-search {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    color: var(--ink);
+    text-align: center;
+}
+
+body[data-shop="jewelry"] .product-search::placeholder { color: var(--muted); }
+body[data-shop="jewelry"] .product-search:focus { border-color: var(--accent); }
+
+body[data-shop="jewelry"] .no-results { color: var(--muted); }
+
+body[data-shop="jewelry"] .product-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    transition: border-color .3s ease, box-shadow .3s ease;
+}
+
+body[data-shop="jewelry"] .product-card:hover {
+    transform: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 1px var(--accent), 0 18px 40px rgba(176,141,87,.15);
+}
+
+body[data-shop="jewelry"] .ee-fashion-image {
+    height: 220px;
+    background: #131215;
+}
+
+body[data-shop="jewelry"] .ee-fashion-info { text-align: center; }
+
+body[data-shop="jewelry"] .ee-fashion-info h4 {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--ink);
+    letter-spacing: .3px;
+}
+
+body[data-shop="jewelry"] .ee-product-description { color: var(--muted); }
+
+body[data-shop="jewelry"] .ee-price {
+    font-family: var(--font-display);
+    color: var(--accent);
+    font-size: 20px;
+    font-weight: 500;
+}
+
+body[data-shop="jewelry"] .ee-add-fashion-cart {
+    background: transparent;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    text-transform: uppercase;
+    font-size: 11px;
+    letter-spacing: 2px;
+    border-radius: 2px;
+}
+
+body[data-shop="jewelry"] .ee-add-fashion-cart:hover {
+    background: var(--accent);
+    color: #1a1408;
+}
+
+.display-note { max-width: 600px; margin: 10px auto 0; color: var(--muted); font-size: 12px; text-align: center; }
