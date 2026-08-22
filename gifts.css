@@ -1,0 +1,130 @@
+/* =========================================================
+   GIFTS — "the wrapping table"
+   Palette: warm cream ground, coral + teal accents.
+   Signature: every card carries a folded ribbon corner,
+   like a wrapped box mid-bow.
+========================================================= */
+
+body[data-shop="gifts"] {
+    --accent: #d6534a;
+    --accent-dark: #b83f38;
+    --accent-light: #fbe9e7;
+    --bg: #fff8f2;
+    --surface: #fdeee6;
+    --ink: #3a2a24;
+    --muted: #8a7268;
+    --line: #f1ddd0;
+    --font-display: 'Baloo 2', 'Segoe UI', sans-serif;
+    --teal: #2f8f83;
+}
+
+body[data-shop="gifts"] .site-header { background: var(--bg); border-bottom: 1px solid var(--line); }
+
+.wrap-hero {
+    padding: 80px 7% 55px;
+    background: var(--bg);
+    text-align: center;
+}
+
+.wrap-hero .section-label { color: var(--accent); }
+
+.wrap-hero h1 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(36px, 7vw, 60px);
+    color: var(--ink);
+    margin: 12px 0 16px;
+}
+
+.wrap-hero p.wrap-sub {
+    max-width: 500px;
+    margin: 0 auto;
+    color: var(--muted);
+    font-size: 15px;
+    line-height: 1.7;
+}
+
+.wrap-shop { padding: 20px 7% 90px; background: var(--bg); }
+.wrap-inner { max-width: 1200px; margin: 0 auto; }
+
+.sub-filter {
+    padding: 9px 16px;
+    border: 2px solid transparent;
+    border-radius: 999px;
+    background: var(--surface);
+    color: var(--accent-dark);
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 12px;
+    transition: .15s ease;
+}
+
+.sub-filter:hover { border-color: var(--accent); }
+
+.sub-filter.active {
+    background: var(--accent);
+    color: #fff;
+}
+
+body[data-shop="gifts"] .product-search {
+    border-radius: 999px;
+    border: 2px solid var(--line);
+    background: #fff;
+}
+
+body[data-shop="gifts"] .product-search:focus { border-color: var(--accent); }
+
+body[data-shop="gifts"] .product-card {
+    background: #fff;
+    border: none;
+    border-radius: 22px;
+    position: relative;
+    box-shadow: 0 6px 18px rgba(58, 42, 36, .06);
+}
+
+body[data-shop="gifts"] .product-card::before {
+    content: "🎀";
+    position: absolute;
+    top: -10px;
+    right: 14px;
+    font-size: 26px;
+    z-index: 2;
+    filter: drop-shadow(0 2px 3px rgba(0,0,0,.15));
+}
+
+body[data-shop="gifts"] .product-card:hover {
+    box-shadow: 0 16px 32px rgba(58, 42, 36, .12);
+}
+
+body[data-shop="gifts"] .ee-fashion-image {
+    height: 190px;
+    background: var(--surface);
+    border-radius: 22px 22px 0 0;
+}
+
+body[data-shop="gifts"] .ee-fashion-info h4 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--ink);
+}
+
+body[data-shop="gifts"] .ee-product-description { color: var(--muted); }
+
+body[data-shop="gifts"] .ee-price {
+    color: var(--teal);
+    font-family: var(--font-display);
+    font-weight: 700;
+}
+
+body[data-shop="gifts"] .ee-add-fashion-cart {
+    background: var(--accent);
+    border-radius: 999px;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 13px;
+}
+
+body[data-shop="gifts"] .ee-add-fashion-cart:hover { background: var(--accent-dark); }
+
+.wrap-note { max-width: 600px; margin: 24px 0 0; color: var(--muted); font-size: 13px; }
