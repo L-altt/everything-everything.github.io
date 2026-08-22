@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Classic jewelry pieces from Everything Everything.">
+    <title>Jewelry — Everything Everything</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="shared.css">
+    <link rel="stylesheet" href="jewelry.css">
+</head>
+<body data-shop="jewelry">
+
+<header class="site-header">
+    <a href="index.html" class="site-brand">EVERYTHING EVERYTHING</a>
+
+    <nav class="site-nav" id="siteNav">
+        <a href="index.html">Home</a>
+        <a href="groceries.html">Groceries</a>
+        <a href="clothing.html">Clothing</a>
+        <a href="jewelry.html" class="current">Jewelry</a>
+        <a href="gifts.html">Gifts</a>
+    </nav>
+
+    <div class="header-actions">
+        <button class="basket-button" id="basketButton" type="button" onclick="openCart()">
+            Basket <span id="cartCount">0</span>
+        </button>
+        <button class="nav-toggle" id="navToggle" type="button" aria-label="Open menu">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
+</header>
+
+<main>
+
+<section class="display-hero">
+    <p class="section-label">THE DISPLAY CASE</p>
+    <h1>Timeless pieces</h1>
+    <p class="display-sub">Necklaces, rings, watches and more — classic jewelry chosen to last well beyond a season.</p>
+    <div class="display-rule"></div>
+</section>
+
+<section class="display-shop">
+    <div class="display-inner">
+
+        <div class="stock-controls">
+            <input type="text" id="productSearch" class="product-search" placeholder="Search jewelry...">
+        </div>
+
+        <div class="sub-filters">
+            <button type="button" class="sub-filter active" data-sub="all">All</button>
+            <button type="button" class="sub-filter" data-sub="necklaces">Necklaces</button>
+            <button type="button" class="sub-filter" data-sub="bracelets">Bracelets</button>
+            <button type="button" class="sub-filter" data-sub="earrings">Earrings</button>
+            <button type="button" class="sub-filter" data-sub="rings">Rings</button>
+            <button type="button" class="sub-filter" data-sub="watches">Watches</button>
+        </div>
+
+        <div class="product-grid" id="productGrid"></div>
+
+        <p class="no-results" id="noResults" hidden>No pieces match your search.</p>
+
+        <p class="display-note">Prices and items shown are sample listings — replace them with your real stock, quantities and prices any time.</p>
+
+    </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+    <div class="footer-brand">
+        <strong>EVERYTHING EVERYTHING</strong>
+        <p>Everything you need, all in one place.</p>
+    </div>
+    <div class="footer-contact">
+        <a href="tel:+233547023648">+233 54 702 6348</a>
+        <a href="tel:+233595485044">+233 59 548 5044</a>
+    </div>
+    <div class="footer-payments">
+        <p>We accept:</p>
+        <span>Mobile Money</span>
+        <span>Cash on Delivery</span>
+        <span>Card Payment</span>
+    </div>
+    <p class="copyright">© 2026 Everything Everything</p>
+</footer>
+
+<div class="cart-overlay" id="cartOverlay" onclick="closeCart(event)">
+    <aside class="cart" onclick="event.stopPropagation()">
+        <div class="cart-header">
+            <h2>Your Basket</h2>
+            <button type="button" onclick="closeCart()" aria-label="Close basket" class="cart-close">×</button>
+        </div>
+        <div id="cartItems" class="cart-items">
+            <p class="empty-cart">Your basket is empty.</p>
+        </div>
+        <div class="cart-total">
+            <span>Total</span>
+            <strong id="cartTotal">GH₵0.00</strong>
+        </div>
+        <div class="checkout-fields">
+            <label>Your name<input id="customerName" type="text" placeholder="Enter your name"></label>
+            <label>Delivery location<input id="customerLocation" type="text" placeholder="e.g. UPSA, Accra"></label>
+            <label>Email<small>Required for online payment</small><input id="customerEmail" type="email" placeholder="you@example.com"></label>
+        </div>
+        <div class="checkout-buttons">
+            <button type="button" class="checkout-whatsapp" onclick="checkoutWhatsApp()">💬 Checkout on WhatsApp</button>
+        </div>
+    </aside>
+</div>
+
+<div id="eeCartToast" class="cart-toast"></div>
+
+<script src="shared.js"></script>
+
+</body>
+</html>
