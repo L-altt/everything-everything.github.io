@@ -1,0 +1,170 @@
+/* =========================================================
+   CLOTHING — "the lookbook"
+   Palette: near-black ground, bone white text, a single
+   muted burgundy accent. Sharp corners, generous whitespace,
+   serif display type — a fashion editorial, not a market.
+   Signature: prices set in italic serif, size chips as
+   underlined tabs rather than boxed buttons.
+========================================================= */
+
+body[data-shop="clothing"] {
+    --accent: #8a2432;
+    --accent-dark: #631a24;
+    --accent-light: #2a1417;
+    --bg: #121212;
+    --surface: #1a1a1a;
+    --ink: #f3f1ec;
+    --muted: #a7a29b;
+    --line: #2e2e2e;
+    --font-display: 'Playfair Display', Georgia, serif;
+}
+
+body[data-shop="clothing"] .site-header {
+    background: #121212;
+    border-bottom: 1px solid var(--line);
+}
+
+body[data-shop="clothing"] .site-brand,
+body[data-shop="clothing"] .site-nav a { color: var(--ink); }
+body[data-shop="clothing"] .site-nav a:hover,
+body[data-shop="clothing"] .site-nav a.current { color: var(--accent); }
+body[data-shop="clothing"] .nav-toggle span { background: var(--ink); }
+body[data-shop="clothing"] .nav-toggle:hover { background: var(--surface); border-color: var(--line); }
+
+body[data-shop="clothing"] .site-nav {
+    background: #121212;
+    border-bottom: 1px solid var(--line);
+}
+body[data-shop="clothing"] .site-nav a { border-bottom: 1px solid var(--line); }
+
+.lookbook-hero {
+    padding: 90px 7% 60px;
+    background: var(--bg);
+    text-align: center;
+}
+
+.lookbook-hero .section-label { color: var(--accent); letter-spacing: 4px; }
+
+.lookbook-hero h1 {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: clamp(38px, 7vw, 68px);
+    color: var(--ink);
+    letter-spacing: -1px;
+    margin: 14px 0 18px;
+}
+
+.lookbook-hero p.lookbook-sub {
+    max-width: 480px;
+    margin: 0 auto;
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.8;
+    letter-spacing: .3px;
+}
+
+.lookbook-shop { padding: 30px 7% 100px; background: var(--bg); }
+.lookbook-inner { max-width: 1200px; margin: 0 auto; }
+
+.sub-filter {
+    padding: 8px 4px;
+    border: none;
+    border-bottom: 2px solid transparent;
+    background: transparent;
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    transition: .2s ease;
+}
+
+.sub-filter:hover { color: var(--ink); }
+
+.sub-filter.active {
+    color: var(--ink);
+    border-bottom-color: var(--accent);
+}
+
+.sub-filters { gap: 26px; }
+
+body[data-shop="clothing"] .product-search {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    color: var(--ink);
+}
+
+body[data-shop="clothing"] .product-search::placeholder { color: var(--muted); }
+body[data-shop="clothing"] .product-search:focus { border-color: var(--accent); background: var(--surface); }
+
+body[data-shop="clothing"] .no-results { color: var(--muted); }
+
+body[data-shop="clothing"] .product-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 0;
+    transition: border-color .2s ease;
+}
+
+body[data-shop="clothing"] .product-card:hover {
+    transform: none;
+    border-color: var(--accent);
+    box-shadow: none;
+}
+
+body[data-shop="clothing"] .ee-fashion-image {
+    height: 280px;
+    background: #0c0c0c;
+}
+
+body[data-shop="clothing"] .ee-fashion-info h4 {
+    font-family: var(--font-display);
+    font-size: 18px;
+    color: var(--ink);
+    font-weight: 500;
+}
+
+body[data-shop="clothing"] .ee-product-description { color: var(--muted); }
+
+body[data-shop="clothing"] .ee-price {
+    font-family: var(--font-display);
+    font-style: italic;
+    color: var(--ink);
+    font-size: 17px;
+    font-weight: 400;
+}
+
+body[data-shop="clothing"] .ee-size-label { color: var(--muted); }
+
+body[data-shop="clothing"] .ee-size-options button {
+    border: none;
+    border-bottom: 1px solid var(--line);
+    border-radius: 0;
+    background: transparent;
+    color: var(--muted);
+}
+
+body[data-shop="clothing"] .ee-size-options button:hover,
+body[data-shop="clothing"] .ee-size-options button.selected {
+    border-bottom-color: var(--accent);
+    color: var(--ink);
+    background: transparent;
+}
+
+body[data-shop="clothing"] .ee-add-fashion-cart {
+    background: transparent;
+    border: 1px solid var(--ink);
+    border-radius: 0;
+    color: var(--ink);
+    text-transform: uppercase;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    font-weight: 600;
+}
+
+body[data-shop="clothing"] .ee-add-fashion-cart:hover {
+    background: var(--ink);
+    color: var(--bg);
+}
+
+.lookbook-note { max-width: 600px; margin: 30px 0 0; color: var(--muted); font-size: 12px; }
